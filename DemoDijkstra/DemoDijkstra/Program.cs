@@ -10,7 +10,12 @@ namespace DemoDijkstra
     {
         static void Main(string[] args)
         {
-            Dijkstra d = new Dijkstra(2,3);
+            City a = new City();
+            a.CityID = "HNN";
+            City b = new City();
+            b.CityID = "NYK";
+            Dijkstra d = new Dijkstra(a,b);
+            d.GetShortestPath();
             Console.ReadKey();
         }
     }
