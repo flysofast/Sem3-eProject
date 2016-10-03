@@ -8,15 +8,16 @@ namespace DemoDijkstra
 {
     class Dijkstra
     {
+        AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
         int n;
-        int[,] mat; // Graph
+        double[,] mat; // Graph
         int firstVer, lastVer; // Đỉnh đầu và đỉnh cuối
         int[] label;
         int[] length;
         int[] prev;
-        Dijkstra(int verticesCount, int firstVer, int lastVer)
+        public Dijkstra(int firstVer, int lastVer)
         {
-            n = verticesCount;
+            n = db.Cities.Count();
             this.firstVer = firstVer;
             this.lastVer = lastVer;
 
@@ -29,7 +30,7 @@ namespace DemoDijkstra
             label = new int[n];
             length = new int[n];
             prev = new int[n];
-            mat = new int[n, n];
+            mat = new double[n, n];
 
 
             // Khởi tạo
@@ -41,16 +42,49 @@ namespace DemoDijkstra
             }
             length[firstVer] = 0;
 
+            List<City> cities = db.Cities.ToList();
+
+            Console.WriteLine("Input:-----------------------");
             // Đọc Graph matrix
             for (int i = 0; i < n; i++)
             {
+                if (i == 0)
+                {
+                    foreach(var cityID in cities.Select(p => p.CityID))
+                    {
+                        Console.Write("\t"+cityID);
+                    }
+                    Console.WriteLine();
+                }
                 for (int j = 0; j < n; j++)
                 {
-                    fi >> mat[i][j];
+                    if (j == 0)
+                    {
+                        Console.Write(cities[i].CityID+"\t");
+                    }
+                    if (i == j)
+                    {
+                        mat[i, j] = 0;
+                    }
+                    else
+                    {
+                        var route = cities[i].RoutesAsOriginal.SingleOrDefault(p => p.DestinationCity == cities[j]);
+                        if (route != null)
+                        {
+                            mat[i, j] = route.Distance;
+                        }
+                        else
+                        {
+                            //mat[i, j] = 0;
+                        }
+                    }
+
+                    Console.Write(mat[i,j]+"\t");
+                    //fi >> mat[i][j];
                 }
+                Console.WriteLine();
             }
 
-            fi.close();
         }
     }
 }

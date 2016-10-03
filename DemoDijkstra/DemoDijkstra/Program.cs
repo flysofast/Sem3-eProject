@@ -10,6 +10,8 @@ namespace DemoDijkstra
     {
         static void Main(string[] args)
         {
+            Dijkstra d = new Dijkstra(2,3);
+            Console.ReadKey();
         }
     }
 }
