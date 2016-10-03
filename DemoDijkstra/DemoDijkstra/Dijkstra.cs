@@ -11,7 +11,7 @@ namespace DemoDijkstra
         AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
         List<City> cities;
         double[,] mat; // Graph
-        int firstVer, lastVer; // Đỉnh đầu và đỉnh cuối
+        int firstVer, lastVer; // Original vertex and destination vertex
         int[] label;
         double[] length;
         int[] prev;
@@ -22,18 +22,16 @@ namespace DemoDijkstra
             firstVer = cities.IndexOf(cities.First(p => p.CityID == originalCity.CityID));
             lastVer = cities.IndexOf(cities.First(p => p.CityID == destinationCity.CityID));
 
-            // Cấp phát động
+            // Initialize
             label = new int[cities.Count];
             length = new double[cities.Count];
             prev = new int[cities.Count];
             mat = new double[cities.Count, cities.Count];
 
-
-            // Khởi tạo
             for (int i = 0; i < cities.Count; i++)
             {
                 label[i] = 1;
-                length[i] = -1; // Trọng số = -1 có nghĩa là inf
+                length[i] = -1; // -1 means infinite
                 prev[i] = -1;
             }
             length[firstVer] = 0;
@@ -41,7 +39,7 @@ namespace DemoDijkstra
 
 
             Console.WriteLine("Input:-----------------------");
-            // Đọc Graph matrix
+            // Read Graph matrix
             for (int i = 0; i < cities.Count; i++)
             {
                 if (i == 0)
@@ -71,12 +69,11 @@ namespace DemoDijkstra
                         }
                         else
                         {
-                            //mat[i, j] = 0;
+                            mat[i, j] = 0;
                         }
                     }
 
                     Console.Write(mat[i, j] + "\t");
-                    //fi >> mat[i][j];
                 }
                 Console.WriteLine();
             }
@@ -86,13 +83,13 @@ namespace DemoDijkstra
 
         bool FindShortestPath()
         {
-            // Chừng nào đỉnh lastVer vẫn chưa được đánh dấu thì ta còn xét
+            // While the lastVer hasn't been marked 
             while (label[lastVer] == 1)
             {
                 double min = -1;
                 int vertex = -1;
 
-                // Tìm min length
+                // Find shortest path
                 for (int i = 0; i < cities.Count; i++)
                 {
                     if (label[i] == 1 && length[i] != -1 && (length[i] < min || min == -1))
@@ -102,27 +99,27 @@ namespace DemoDijkstra
                     }
                 }
 
-                // Nếu ta không tìm được min nào, có nghĩa là không có đường đi từ firstVer -> lastVer
+                // If there's no min value then no route can be found from firstVer to lastVer
                 if (min == -1)
                 {
                     return false;
                 }
 
-                // Đánh dấu đỉnh vertex
+                // Mark the vertex
                 length[vertex] = min;
                 label[vertex] = 0;
 
 
                 for (int i = 0; i < cities.Count; i++)
                 {
-                    // Nếu đỉnh chưa được đánh dấu, và có đường đi từ vertex -> i
+                    // If the vertext hasn't been marked and there is a route from vertext -> i
                     if (label[i] == 1 && mat[vertex, i] != 0)
                     {
-                        // Nếu đường đi từ vertex -> i ngắn hơn đường đi đã lưu trong mảng length
+                        // If the path is shorter than the recorded found path in length array
                         if (length[i] == -1 || length[i] > length[vertex] + mat[vertex, i])
                         {
                             length[i] = length[vertex] + mat[vertex, i];
-                            // Tạo vết chân
+                            // Remember the step
                             prev[i] = vertex;
                         }
                     }
@@ -141,7 +138,7 @@ namespace DemoDijkstra
             }
             else
             {
-                // Dò ngược từ đỉnh cuối về đỉnh đầu
+                // Invert tracking
                 int k = lastVer;
                 while (k != firstVer)
                 {
@@ -150,7 +147,6 @@ namespace DemoDijkstra
                     // Tìm ngược lại bằng mảng prev lưu đỉnh trước đó
                     k = prev[k];
                 }
-                //fo << (firstVer + 1);
                 Console.Write(cities[firstVer].CityID);
             }
         }
