@@ -16,11 +16,17 @@ namespace DemoDijkstra
         double[] length;
         int[] prev;
 
-        public Dijkstra(City originalCity, City destinationCity)
+        public Dijkstra(string originalCityID, string destinationCityID)
         {
             cities = db.Cities.ToList();
-            firstVer = cities.IndexOf(cities.First(p => p.CityID == originalCity.CityID));
-            lastVer = cities.IndexOf(cities.First(p => p.CityID == destinationCity.CityID));
+            firstVer = cities.IndexOf(cities.FirstOrDefault(p => p.CityID == originalCityID));
+            lastVer = cities.IndexOf(cities.FirstOrDefault(p => p.CityID == destinationCityID));
+
+            if (firstVer == -1 || lastVer == -1)
+            {
+                Console.WriteLine("Invalid city IDs");
+                throw new KeyNotFoundException("There's no city matches one or all of these IDs");
+            }
 
             // Initialize
             label = new int[cities.Count];

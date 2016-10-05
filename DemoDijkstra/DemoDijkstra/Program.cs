@@ -10,12 +10,16 @@ namespace DemoDijkstra
     {
         static void Main(string[] args)
         {
-            City a = new City();
-            a.CityID = "HNN";
-            City b = new City();
-            b.CityID = "NYK";
-            Dijkstra d = new Dijkstra(a,b);
-            d.GetShortestPath();
+
+            try
+            {
+                Dijkstra d = new Dijkstra("HNN", "NYK");
+                d.GetShortestPath();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             Console.ReadKey();
         }
     }
