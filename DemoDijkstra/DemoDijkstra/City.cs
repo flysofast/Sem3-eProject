@@ -23,7 +23,7 @@ namespace DemoDijkstra
     
         public string CityID { get; set; }
         public string CityName { get; set; }
-        public Nullable<bool> InService { get; set; }
+        public bool InService { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Route> RoutesAsOriginal { get; set; }

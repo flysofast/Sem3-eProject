@@ -11,7 +11,7 @@
           </Key>
           <Property Name="CityID" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="CityName" Type="nvarchar" MaxLength="50" />
-          <Property Name="InService" Type="bit" />
+          <Property Name="InService" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Class">
           <Key>
@@ -26,8 +26,7 @@
           </Key>
           <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CurrentPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="DepartureTime" Type="datetime" />
-          <Property Name="ArrivalTime" Type="datetime" />
+          <Property Name="DepartureTime" Type="datetime" Nullable="false" />
           <Property Name="RouteID" Type="int" />
           <Property Name="Duration" Type="float" />
         </EntityType>
@@ -38,8 +37,8 @@
           <Property Name="RouteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OriginalCityID" Type="varchar" MaxLength="3" Nullable="false" />
           <Property Name="DestinationCityID" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="Distance" Type="float" Nullable="false" />
-          <Property Name="InService" Type="bit" />
+          <Property Name="Distance" Type="int" Nullable="false" />
+          <Property Name="InService" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Seat">
           <Key>
@@ -289,7 +288,7 @@
           </Key>
           <Property Name="CityID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="InService" Type="Boolean" />
+          <Property Name="InService" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RoutesAsOriginal" Relationship="Self.FK_Route_City" FromRole="City" ToRole="Route" />
           <NavigationProperty Name="RoutesAsDestination" Relationship="Self.FK_Route_City1" FromRole="City" ToRole="Route" />
         </EntityType>
@@ -308,8 +307,8 @@
           <Property Name="RouteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OriginalCityID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DestinationCityID" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Distance" Type="Double" Nullable="false" />
-          <Property Name="InService" Type="Boolean" />
+          <Property Name="Distance" Type="Int32" Nullable="false" />
+          <Property Name="InService" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="OriginalCity" Relationship="Self.FK_Route_City" FromRole="Route" ToRole="City" />
           <NavigationProperty Name="DestinationCity" Relationship="Self.FK_Route_City1" FromRole="Route" ToRole="City" />
           <NavigationProperty Name="Flights" Relationship="AirlineReservationSystemModel.FK_Flight_Route" FromRole="Route" ToRole="Flight" />
@@ -526,15 +525,14 @@
             <End Role="Flight" EntitySet="Flights" />
             <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Flight">
           <Key>
             <PropertyRef Name="FlightNo" />
           </Key>
           <Property Name="FlightNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CurrentPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="DepartureTime" Type="DateTime" Precision="3" />
-          <Property Name="ArrivalTime" Type="DateTime" Precision="3" />
+          <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RouteID" Type="Int32" />
           <Property Name="Duration" Type="Double" />
           <NavigationProperty Name="Route" Relationship="AirlineReservationSystemModel.FK_Flight_Route" FromRole="Flight" ToRole="Route" />
@@ -577,7 +575,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -686,7 +684,6 @@
               <MappingFragment StoreEntitySet="Flight">
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="RouteID" ColumnName="RouteID" />
-                <ScalarProperty Name="ArrivalTime" ColumnName="ArrivalTime" />
                 <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
                 <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
                 <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />

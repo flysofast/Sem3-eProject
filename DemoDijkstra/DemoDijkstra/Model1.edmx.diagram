@@ -21,11 +21,11 @@
         <AssociationConnector Association="AirlineReservationSystemModel.FK_TakenSeat_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Ticket_Flight_Ticket" ManuallyRouted="false" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Ticket_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AirlineReservationSystemModel.Flight" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="AirlineReservationSystemModel.Flight" Width="1.5" PointX="3" PointY="8.375" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Flight_Route" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_TakenSeat_Flight" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

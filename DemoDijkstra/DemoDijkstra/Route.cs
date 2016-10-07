@@ -23,8 +23,8 @@ namespace DemoDijkstra
         public int RouteID { get; set; }
         public string OriginalCityID { get; set; }
         public string DestinationCityID { get; set; }
-        public double Distance { get; set; }
-        public Nullable<bool> InService { get; set; }
+        public int Distance { get; set; }
+        public bool InService { get; set; }
     
         public virtual City OriginalCity { get; set; }
         public virtual City DestinationCity { get; set; }
