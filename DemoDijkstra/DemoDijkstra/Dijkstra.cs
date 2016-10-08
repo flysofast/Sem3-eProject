@@ -86,7 +86,10 @@ namespace DemoDijkstra
 
         }
 
-
+        /// <summary>
+        /// Use Dijkstra algorithm to find the shortest path
+        /// </summary>
+        /// <returns></returns>
         bool FindShortestPath()
         {
             // While the lastVer hasn't been marked 
@@ -134,13 +137,24 @@ namespace DemoDijkstra
             return true;
         }
 
-     
+        /// <summary>
+        /// Get the shortest path between the 2 cities
+        /// </summary>
+        /// <returns>Shortest path as an ordered list of cities</returns>
         public List<City> GetShortestPath()
         {
             List<City> result = new List<City>();
-            
-            bool pathExists = FindShortestPath();
-            if (!pathExists)
+
+            //If there is a direct route between the two cities then return them as the shortest path
+            if (db.Routes.FirstOrDefault(p => p.OriginalCityID == cities[firstVer].CityID
+            && p.DestinationCityID == cities[lastVer].CityID) != null)
+            {
+                result.Add(cities[firstVer]);
+                result.Add(cities[lastVer]);
+                return result;
+            }
+
+            if (!FindShortestPath())
             {
                 Console.WriteLine("There's no route between these cities");
             }

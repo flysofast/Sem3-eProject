@@ -15,16 +15,19 @@ namespace DemoDijkstra
             try
             {
                 Dijkstra d = new Dijkstra("HNN", "NYK");
-                //d.GetShortestPath();
-                RouteUtilities ru = new RouteUtilities();
-                var a=ru.FindFlight(d.GetShortestPath());
 
-                foreach(var item in a)
+                //Get sequence of flights for a route
+                //d.GetShortestPath();
+
+                RouteUtilities ru = new RouteUtilities();
+                var flightLists=ru.FindFlight(d.GetShortestPath());
+
+                foreach(var flights in flightLists)
                 {
-                    if (item != null)
+                    if (flights != null)
                     {
                         Console.WriteLine("-----------------------------");
-                        foreach (var flight in item)
+                        foreach (var flight in flights)
                         {
                             if (flight == null) continue;
                             Console.WriteLine(flight.Route.OriginalCity.CityID + " ---> " + flight.Route.DestinationCityID + " " + flight.DepartureTime.ToShortTimeString());
