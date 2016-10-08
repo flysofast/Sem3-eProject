@@ -139,7 +139,7 @@ namespace DemoDijkstra
         {
             List<City> result = new List<City>();
             
-            bool pathExists = this.FindShortestPath();
+            bool pathExists = FindShortestPath();
             if (!pathExists)
             {
                 Console.WriteLine("There's no route between these cities");
@@ -151,18 +151,18 @@ namespace DemoDijkstra
                 while (k != firstVer)
                 {
                     result.Add(cities[k]);
-                    Console.Write(cities[k].CityID + "<------------");
+                    //Console.Write(cities[k].CityID + "<------------");
                     //fo << (k + 1) << " <--- ";
                     // Tìm ngược lại bằng mảng prev lưu đỉnh trước đó
                     k = prev[k];
                 }
-                Console.Write(cities[firstVer].CityID);
+                //Console.Write(cities[firstVer].CityID);
                 result.Add(cities[firstVer]);
                 result.Reverse();
-                foreach (var item in result)
-                {
-                    Console.WriteLine(item.CityID);
-                }
+                //foreach (var item in result)
+                //{
+                //    Console.WriteLine(item.CityID);
+                //}
             }
 
             return result;

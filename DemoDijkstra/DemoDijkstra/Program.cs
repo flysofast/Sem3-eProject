@@ -12,18 +12,33 @@ namespace DemoDijkstra
 
         static void Main(string[] args)
         {
-            //try
-            //{
-            //    Dijkstra d = new Dijkstra("HNN", "NYK");
-            //    d.GetShortestPath();
-            //}
-            //catch (KeyNotFoundException ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
-            //Console.ReadKey();
+            try
+            {
+                Dijkstra d = new Dijkstra("HNN", "NYK");
+                //d.GetShortestPath();
+                RouteUtilities ru = new RouteUtilities();
+                var a=ru.FindFlight(d.GetShortestPath());
 
-            GenerateFlights();
+                foreach(var item in a)
+                {
+                    if (item != null)
+                    {
+                        Console.WriteLine("-----------------------------");
+                        foreach (var flight in item)
+                        {
+                            if (flight == null) continue;
+                            Console.WriteLine(flight.Route.OriginalCity.CityID + " ---> " + flight.Route.DestinationCityID + " " + flight.DepartureTime.ToShortTimeString());
+                        }
+                    }
+                }
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.ReadKey();
+
+            //GenerateFlights();
 
 
         }
@@ -36,7 +51,7 @@ namespace DemoDijkstra
             DateTime startingDate = DateTime.Now.Date;
             Random r = new Random();
             var routeList = db.Routes.Where(p => p.InService).ToList();
-            Console.WriteLine("DANG THEM RECORD");
+            Console.WriteLine("Adding new routes");
             for (int day = 0; day < numberOfDays; day++)
             {
                 for (int i = 0; i < numberOfFlightPerday; i++)
@@ -59,13 +74,13 @@ namespace DemoDijkstra
                     if (db.SaveChanges() <= 0)
                     {
                         i--;
-                        Console.WriteLine("CO LOI 1 record " + flight.FlightNo);
+                        Console.WriteLine("Cannot create new route number: " + flight.FlightNo);
                     }
                 }
 
             }
 
-            Console.WriteLine("XONG");
+            Console.WriteLine("DONE");
         }
     }
 }

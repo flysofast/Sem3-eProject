@@ -89,6 +89,7 @@
     <Compile Include="Route.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="RouteUtilities.cs" />
     <Compile Include="Seat.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
