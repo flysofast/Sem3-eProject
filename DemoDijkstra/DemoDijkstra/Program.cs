@@ -12,6 +12,7 @@ namespace DemoDijkstra
 
         static void Main(string[] args)
         {
+            GenerateFlights();
             try
             {
                 Dijkstra d = new Dijkstra("HNN", "NYK");
@@ -20,6 +21,8 @@ namespace DemoDijkstra
                 //d.GetShortestPath();
 
                 RouteUtilities ru = new RouteUtilities();
+
+                //Find all possible flight for a route
                 var flightLists=ru.FindFlight(d.GetShortestPath());
 
                 foreach(var flights in flightLists)
@@ -30,7 +33,7 @@ namespace DemoDijkstra
                         foreach (var flight in flights)
                         {
                             if (flight == null) continue;
-                            Console.WriteLine(flight.Route.OriginalCity.CityID + " ---> " + flight.Route.DestinationCityID + " " + flight.DepartureTime.ToShortTimeString());
+                            Console.WriteLine(flight.Route.OriginalCity.CityID + " ---> " + flight.Route.DestinationCityID + " " + flight.DepartureTime.ToString());
                         }
                     }
                 }
@@ -54,7 +57,7 @@ namespace DemoDijkstra
             DateTime startingDate = DateTime.Now.Date;
             Random r = new Random();
             var routeList = db.Routes.Where(p => p.InService).ToList();
-            Console.WriteLine("Adding new routes");
+            Console.WriteLine("Adding new flights");
             for (int day = 0; day < numberOfDays; day++)
             {
                 for (int i = 0; i < numberOfFlightPerday; i++)

@@ -19,7 +19,7 @@ namespace DemoDijkstra
         public int SequenceNo { get; set; }
         public bool IsReturn { get; set; }
     
-        public virtual Ticket Ticket { get; set; }
         public virtual Flight Flight { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }

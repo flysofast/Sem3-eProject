@@ -8,6 +8,7 @@ namespace DemoDijkstra
 {
     class Dijkstra
     {
+
         AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
         List<City> cities;
         double[,] mat; // Graph
@@ -18,7 +19,7 @@ namespace DemoDijkstra
 
         public Dijkstra(string originalCityID, string destinationCityID)
         {
-            cities = db.Cities.ToList();
+            cities = db.Cities.Where(p=>p.InService).ToList();
             firstVer = cities.IndexOf(cities.FirstOrDefault(p => p.CityID == originalCityID));
             lastVer = cities.IndexOf(cities.FirstOrDefault(p => p.CityID == destinationCityID));
 
@@ -68,7 +69,7 @@ namespace DemoDijkstra
                     }
                     else
                     {
-                        var route = cities[i].RoutesAsOriginal.SingleOrDefault(p => p.DestinationCity == cities[j]);
+                        var route = cities[i].RoutesAsOriginal.SingleOrDefault(p => p.InService && p.DestinationCity == cities[j]);
                         if (route != null)
                         {
                             mat[i, j] = route.Distance;
@@ -144,10 +145,13 @@ namespace DemoDijkstra
         public List<City> GetShortestPath()
         {
             List<City> result = new List<City>();
+            var originalID = cities[firstVer].CityID;
+            var destinationID = cities[lastVer].CityID;
 
             //If there is a direct route between the two cities then return them as the shortest path
-            if (db.Routes.FirstOrDefault(p => p.OriginalCityID == cities[firstVer].CityID
-            && p.DestinationCityID == cities[lastVer].CityID) != null)
+            if (db.Routes.FirstOrDefault(p => p.InService
+            && p.OriginalCityID.Equals(originalID)
+            && p.DestinationCityID.Equals(destinationID)) != null)
             {
                 result.Add(cities[firstVer]);
                 result.Add(cities[lastVer]);

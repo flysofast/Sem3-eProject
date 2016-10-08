@@ -20,12 +20,10 @@ class RouteUtilities
         return db.Flights.Where(p => p.RouteID == route.RouteID && p.DepartureTime >= new DateTime()).ToList();
     }
 
-    public List<List<Flight>> FindFlight(string originalCityID, string destinationCityID)
+    public List<List<Flight>> FindFlight(List<City> citySequence)
     {
-        var d = new Dijkstra(originalCityID, destinationCityID);
-        var citySequence = d.GetShortestPath();
-        var result = new List<List<Flight>>();
-        for (int i = 0; i < citySequence.Count - 1; i++)
+        List<List<Flight>> result = new List<List<Flight>>();
+        for (int i = 0; i < citySequence.Count-1; i++)
         {
             result.Add(FindFlightsOfRoute(citySequence[i], citySequence[i + 1]));
         }
