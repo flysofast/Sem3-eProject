@@ -183,10 +183,14 @@
     <Content Include="Bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Fonts\cataleya.otf" />
+    <Content Include="Fonts\LeParisien.ttf" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\group.png" />
     <Content Include="Images\header.jpg" />
+    <Content Include="Images\Loading.gif" />
     <Content Include="Scripts\AirReservation\AirReservationHome.js" />
+    <Content Include="Scripts\modernizr.js" />
     <Content Include="Scripts\MultiFormStep.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
