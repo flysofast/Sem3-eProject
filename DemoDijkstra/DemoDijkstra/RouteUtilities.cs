@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 class RouteUtilities
 {
     AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
-    public List<Flight> FindFlightsOfRoute(City originalCity, City destinationCity)
+    List<Flight> FindFlightsOfRoute(City originalCity, City destinationCity)
     {
         var route = db.Routes.FirstOrDefault(p => p.InService && p.OriginalCityID == originalCity.CityID && p.DestinationCityID == destinationCity.CityID);
 
@@ -23,11 +23,13 @@ class RouteUtilities
     public List<List<Flight>> FindFlight(List<City> citySequence)
     {
         List<List<Flight>> result = new List<List<Flight>>();
-        for (int i = 0; i < citySequence.Count-1; i++)
+        for (int i = 0; i < citySequence.Count - 1; i++)
         {
             result.Add(FindFlightsOfRoute(citySequence[i], citySequence[i + 1]));
         }
 
         return result;
     }
+
+  
 }

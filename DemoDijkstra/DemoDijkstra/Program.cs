@@ -12,7 +12,7 @@ namespace DemoDijkstra
 
         static void Main(string[] args)
         {
-            GenerateFlights();
+            //GenerateFlights();
             try
             {
                 Dijkstra d = new Dijkstra("HNN", "NYK");

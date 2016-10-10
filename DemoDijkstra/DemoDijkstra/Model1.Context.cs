@@ -31,9 +31,9 @@ namespace DemoDijkstra
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<Seat> Seats { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<TakenSeat> TakenSeats { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Ticket_Flight> Ticket_Flight { get; set; }
-        public virtual DbSet<User> Users { get; set; }
     }
 }
