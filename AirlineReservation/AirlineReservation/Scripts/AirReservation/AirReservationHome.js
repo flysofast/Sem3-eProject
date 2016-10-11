@@ -3,6 +3,7 @@
     $("#returnDateForm").hide();
     $("#lblReturnClass").hide();
     $("#returnClass").hide();
+    $("#step1-result").hide();
     //Check ticket type, show/hide input return date 
     $("input[name=optFlight]:radio").change(function () {
         if ($('#optFlightReturn').is(':checked')) {
@@ -26,4 +27,8 @@ function swapLocation() {
     }
     $("#fromLocation").val(to);
     $("#toLocation").val(from);
+}
+
+function searchStep1() {
+    $("#step1-result").show("slow");
 }
