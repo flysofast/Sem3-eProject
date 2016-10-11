@@ -291,7 +291,7 @@
           <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InService" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RoutesAsOriginal" Relationship="Self.FK_Route_City" FromRole="City" ToRole="Route" />
-          <NavigationProperty Name="Routes1" Relationship="Self.FK_Route_City1" FromRole="City" ToRole="Route" />
+          <NavigationProperty Name="RoutesAsDestination" Relationship="Self.FK_Route_City1" FromRole="City" ToRole="Route" />
         </EntityType>
         <EntityType Name="Class">
           <Key>

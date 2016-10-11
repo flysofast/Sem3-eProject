@@ -150,9 +150,10 @@ namespace DemoDijkstra
             var destinationID = cities[lastVer].CityID;
 
             //If there is a direct route between the two cities then return them as the shortest path
+           
             if (db.Routes.FirstOrDefault(p => p.InService
-            && p.OriginalCityID.Equals(originalID)
-            && p.DestinationCityID.Equals(destinationID)) != null)
+              && p.OriginalCityID.Equals(originalID)
+              && p.DestinationCityID.Equals(destinationID)) != null)
             {
                 result.Add(cities[firstVer]);
                 result.Add(cities[lastVer]);

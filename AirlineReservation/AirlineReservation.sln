@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirlineReservation", "AirlineReservation\AirlineReservation.csproj", "{E6B3BD9D-2EBA-480D-AD4A-2A03509AB3D8}"
 EndProject
 Global
