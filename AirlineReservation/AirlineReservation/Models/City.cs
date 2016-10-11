@@ -17,7 +17,7 @@ namespace AirlineReservation.Models
         public City()
         {
             this.RoutesAsOriginal = new HashSet<Route>();
-            this.Routes1 = new HashSet<Route>();
+            this.RoutesAsDestination = new HashSet<Route>();
         }
     
         public string CityID { get; set; }
@@ -25,6 +25,6 @@ namespace AirlineReservation.Models
         public bool InService { get; set; }
     
         public virtual ICollection<Route> RoutesAsOriginal { get; set; }
-        public virtual ICollection<Route> Routes1 { get; set; }
+        public virtual ICollection<Route> RoutesAsDestination { get; set; }
     }
 }
