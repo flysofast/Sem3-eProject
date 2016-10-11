@@ -24,8 +24,8 @@ namespace DemoDijkstra
         public string FlightNo { get; set; }
         public decimal CurrentPrice { get; set; }
         public System.DateTime DepartureTime { get; set; }
-        public Nullable<int> RouteID { get; set; }
-        public Nullable<double> Duration { get; set; }
+        public int RouteID { get; set; }
+        public double Duration { get; set; }
     
         public virtual Route Route { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

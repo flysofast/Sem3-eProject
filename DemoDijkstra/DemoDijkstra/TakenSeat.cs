@@ -16,10 +16,10 @@ namespace DemoDijkstra
     {
         public string SeatID { get; set; }
         public string FlightNo { get; set; }
-        public string TicketNo { get; set; }
+        public int TicketNo { get; set; }
     
+        public virtual Flight Flight { get; set; }
         public virtual Seat Seat { get; set; }
         public virtual Ticket Ticket { get; set; }
-        public virtual Flight Flight { get; set; }
     }
 }

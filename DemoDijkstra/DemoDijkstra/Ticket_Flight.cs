@@ -14,12 +14,12 @@ namespace DemoDijkstra
     
     public partial class Ticket_Flight
     {
-        public string TicketNo { get; set; }
+        public int TicketNo { get; set; }
         public string FlightNo { get; set; }
         public int SequenceNo { get; set; }
         public bool IsReturn { get; set; }
     
-        public virtual Ticket Ticket { get; set; }
         public virtual Flight Flight { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }

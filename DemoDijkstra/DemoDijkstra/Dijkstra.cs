@@ -8,6 +8,7 @@ namespace DemoDijkstra
 {
     class Dijkstra
     {
+
         AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
         List<City> cities;
         double[,] mat; // Graph
@@ -18,7 +19,7 @@ namespace DemoDijkstra
 
         public Dijkstra(string originalCityID, string destinationCityID)
         {
-            cities = db.Cities.ToList();
+            cities = db.Cities.Where(p=>p.InService).ToList();
             firstVer = cities.IndexOf(cities.FirstOrDefault(p => p.CityID == originalCityID));
             lastVer = cities.IndexOf(cities.FirstOrDefault(p => p.CityID == destinationCityID));
 
@@ -68,7 +69,7 @@ namespace DemoDijkstra
                     }
                     else
                     {
-                        var route = cities[i].RoutesAsOriginal.SingleOrDefault(p => p.DestinationCity == cities[j]);
+                        var route = cities[i].RoutesAsOriginal.SingleOrDefault(p => p.InService && p.DestinationCity == cities[j]);
                         if (route != null)
                         {
                             mat[i, j] = route.Distance;
@@ -86,7 +87,10 @@ namespace DemoDijkstra
 
         }
 
-
+        /// <summary>
+        /// Use Dijkstra algorithm to find the shortest path
+        /// </summary>
+        /// <returns></returns>
         bool FindShortestPath()
         {
             // While the lastVer hasn't been marked 
@@ -134,13 +138,27 @@ namespace DemoDijkstra
             return true;
         }
 
-     
+        /// <summary>
+        /// Get the shortest path between the 2 cities
+        /// </summary>
+        /// <returns>Shortest path as an ordered list of cities</returns>
         public List<City> GetShortestPath()
         {
             List<City> result = new List<City>();
-            
-            bool pathExists = FindShortestPath();
-            if (!pathExists)
+            var originalID = cities[firstVer].CityID;
+            var destinationID = cities[lastVer].CityID;
+
+            //If there is a direct route between the two cities then return them as the shortest path
+            if (db.Routes.FirstOrDefault(p => p.InService
+            && p.OriginalCityID.Equals(originalID)
+            && p.DestinationCityID.Equals(destinationID)) != null)
+            {
+                result.Add(cities[firstVer]);
+                result.Add(cities[lastVer]);
+                return result;
+            }
+
+            if (!FindShortestPath())
             {
                 Console.WriteLine("There's no route between these cities");
             }

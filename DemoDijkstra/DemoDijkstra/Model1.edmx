@@ -27,8 +27,8 @@
           <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="CurrentPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="DepartureTime" Type="datetime" Nullable="false" />
-          <Property Name="RouteID" Type="int" />
-          <Property Name="Duration" Type="float" />
+          <Property Name="RouteID" Type="int" Nullable="false" />
+          <Property Name="Duration" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -64,13 +64,13 @@
           </Key>
           <Property Name="SeatID" Type="varchar" MaxLength="4" Nullable="false" />
           <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="TicketNo" Type="varchar" MaxLength="10" />
+          <Property Name="TicketNo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
             <PropertyRef Name="TicketNo" />
           </Key>
-          <Property Name="TicketNo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TicketNo" Type="int" Nullable="false" />
           <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ConfirmationNo" Type="varchar" MaxLength="10" />
           <Property Name="BlockNo" Type="varchar" MaxLength="10" />
@@ -87,7 +87,7 @@
             <PropertyRef Name="TicketNo" />
             <PropertyRef Name="FlightNo" />
           </Key>
-          <Property Name="TicketNo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TicketNo" Type="int" Nullable="false" />
           <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="SequenceNo" Type="int" Nullable="false" />
           <Property Name="IsReturn" Type="bit" Nullable="false" />
@@ -107,7 +107,7 @@
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
         </EntityType>
         <Association Name="FK_Flight_Route">
-          <End Role="Route" Type="Self.Route" Multiplicity="0..1" />
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
           <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Route">
@@ -179,7 +179,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TakenSeat_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
           <End Role="TakenSeat" Type="Self.TakenSeat" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ticket">
@@ -300,6 +300,19 @@
           <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Seats" Relationship="Self.FK_Seat_Class" FromRole="Class" ToRole="Seat" />
         </EntityType>
+        <EntityType Name="Flight">
+          <Key>
+            <PropertyRef Name="FlightNo" />
+          </Key>
+          <Property Name="FlightNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CurrentPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RouteID" Type="Int32" Nullable="false" />
+          <Property Name="Duration" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_Flight_Route" FromRole="Flight" ToRole="Route" />
+          <NavigationProperty Name="TakenSeats" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Flight" FromRole="Flight" ToRole="TakenSeat" />
+          <NavigationProperty Name="Ticket_Flight" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" FromRole="Flight" ToRole="Ticket_Flight" />
+        </EntityType>
         <EntityType Name="Route">
           <Key>
             <PropertyRef Name="RouteID" />
@@ -311,8 +324,8 @@
           <Property Name="InService" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="OriginalCity" Relationship="Self.FK_Route_City" FromRole="Route" ToRole="City" />
           <NavigationProperty Name="DestinationCity" Relationship="Self.FK_Route_City1" FromRole="Route" ToRole="City" />
-          <NavigationProperty Name="Flights" Relationship="AirlineReservationSystemModel.FK_Flight_Route" FromRole="Route" ToRole="Flight" />
-          </EntityType>
+          <NavigationProperty Name="Flights" Relationship="Self.FK_Flight_Route" FromRole="Route" ToRole="Flight" />
+        </EntityType>
         <EntityType Name="Seat">
           <Key>
             <PropertyRef Name="SeatID" />
@@ -320,7 +333,7 @@
           <Property Name="ClassID" Type="Int32" />
           <Property Name="SeatID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Class" Relationship="Self.FK_Seat_Class" FromRole="Seat" ToRole="Class" />
-          <NavigationProperty Name="TakenSeats" Relationship="Self.FK_TakenSeat_Seat" FromRole="Seat" ToRole="TakenSeat" />
+          <NavigationProperty Name="TakenSeats" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Seat" FromRole="Seat" ToRole="TakenSeat" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -331,49 +344,6 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TakenSeat">
-          <Key>
-            <PropertyRef Name="SeatID" />
-            <PropertyRef Name="FlightNo" />
-          </Key>
-          <Property Name="SeatID" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FlightNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TicketNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Seat" Relationship="Self.FK_TakenSeat_Seat" FromRole="TakenSeat" ToRole="Seat" />
-          <NavigationProperty Name="Ticket" Relationship="Self.FK_TakenSeat_Ticket" FromRole="TakenSeat" ToRole="Ticket" />
-          <NavigationProperty Name="Flight" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Flight" FromRole="TakenSeat" ToRole="Flight" />
-        </EntityType>
-        <EntityType Name="Ticket">
-          <Key>
-            <PropertyRef Name="TicketNo" />
-          </Key>
-          <Property Name="TicketNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ConfirmationNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="BlockNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CancellationNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="NumberOfAdults" Type="Int32" />
-          <Property Name="NumberOfChildren" Type="Int32" />
-          <Property Name="NumberOfSeniorCitizens" Type="Int32" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TakenSeats" Relationship="Self.FK_TakenSeat_Ticket" FromRole="Ticket" ToRole="TakenSeat" />
-          <NavigationProperty Name="Ticket_Flight" Relationship="Self.FK_Ticket_Flight_Ticket" FromRole="Ticket" ToRole="Ticket_Flight" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Ticket_User" FromRole="Ticket" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Ticket_Flight">
-          <Key>
-            <PropertyRef Name="TicketNo" />
-            <PropertyRef Name="FlightNo" />
-          </Key>
-          <Property Name="TicketNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FlightNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SequenceNo" Type="Int32" Nullable="false" />
-          <Property Name="IsReturn" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Ticket" Relationship="Self.FK_Ticket_Flight_Ticket" FromRole="Ticket_Flight" ToRole="Ticket" />
-          <NavigationProperty Name="Flight" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" FromRole="Ticket_Flight" ToRole="Flight" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -388,7 +358,7 @@
           <Property Name="Sex" Type="Boolean" Nullable="false" />
           <Property Name="CreditcardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_User" FromRole="User" ToRole="Ticket" />
+          <NavigationProperty Name="Tickets" Relationship="AirlineReservationSystemModel.FK_Ticket_User" FromRole="User" ToRole="Ticket" />
         </EntityType>
         <Association Name="FK_Route_City">
           <End Role="City" Type="Self.City" Multiplicity="1" />
@@ -426,63 +396,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TakenSeat_Seat">
-          <End Role="Seat" Type="Self.Seat" Multiplicity="1" />
-          <End Role="TakenSeat" Type="Self.TakenSeat" Multiplicity="*" />
+        <Association Name="FK_Flight_Route">
+          <End Role="Route" Type="Self.Route" Multiplicity="1" />
+          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Seat">
-              <PropertyRef Name="SeatID" />
+            <Principal Role="Route">
+              <PropertyRef Name="RouteID" />
             </Principal>
-            <Dependent Role="TakenSeat">
-              <PropertyRef Name="SeatID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TakenSeat_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="0..1" />
-          <End Role="TakenSeat" Type="Self.TakenSeat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="TicketNo" />
-            </Principal>
-            <Dependent Role="TakenSeat">
-              <PropertyRef Name="TicketNo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ticket_Flight_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
-          <End Role="Ticket_Flight" Type="Self.Ticket_Flight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ticket">
-              <PropertyRef Name="TicketNo" />
-            </Principal>
-            <Dependent Role="Ticket_Flight">
-              <PropertyRef Name="TicketNo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Ticket_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Ticket">
-              <PropertyRef Name="UserID" />
+            <Dependent Role="Flight">
+              <PropertyRef Name="RouteID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AirlineReservationSystemEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cities" EntityType="Self.City" />
           <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="Flights" EntityType="Self.Flight" />
           <EntitySet Name="Routes" EntityType="Self.Route" />
           <EntitySet Name="Seats" EntityType="Self.Seat" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="TakenSeats" EntityType="Self.TakenSeat" />
-          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
-          <EntitySet Name="Ticket_Flight" EntityType="Self.Ticket_Flight" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK_Route_City" Association="Self.FK_Route_City">
             <End Role="City" EntitySet="Cities" />
@@ -496,27 +428,13 @@
             <End Role="Class" EntitySet="Classes" />
             <End Role="Seat" EntitySet="Seats" />
           </AssociationSet>
-          <AssociationSet Name="FK_TakenSeat_Seat" Association="Self.FK_TakenSeat_Seat">
-            <End Role="Seat" EntitySet="Seats" />
-            <End Role="TakenSeat" EntitySet="TakenSeats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TakenSeat_Ticket" Association="Self.FK_TakenSeat_Ticket">
-            <End Role="Ticket" EntitySet="Tickets" />
-            <End Role="TakenSeat" EntitySet="TakenSeats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Flight_Ticket" Association="Self.FK_Ticket_Flight_Ticket">
-            <End Role="Ticket" EntitySet="Tickets" />
-            <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_User" Association="Self.FK_Ticket_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Ticket" EntitySet="Tickets" />
-          </AssociationSet>
-          <EntitySet Name="Flights" EntityType="AirlineReservationSystemModel.Flight" />
-          <AssociationSet Name="FK_Flight_Route" Association="AirlineReservationSystemModel.FK_Flight_Route">
+          <AssociationSet Name="FK_Flight_Route" Association="Self.FK_Flight_Route">
             <End Role="Route" EntitySet="Routes" />
             <End Role="Flight" EntitySet="Flights" />
           </AssociationSet>
+          <EntitySet Name="TakenSeats" EntityType="AirlineReservationSystemModel.TakenSeat" />
+          <EntitySet Name="Tickets" EntityType="AirlineReservationSystemModel.Ticket" />
+          <EntitySet Name="Ticket_Flight" EntityType="AirlineReservationSystemModel.Ticket_Flight" />
           <AssociationSet Name="FK_TakenSeat_Flight" Association="AirlineReservationSystemModel.FK_TakenSeat_Flight">
             <End Role="Flight" EntitySet="Flights" />
             <End Role="TakenSeat" EntitySet="TakenSeats" />
@@ -525,32 +443,66 @@
             <End Role="Flight" EntitySet="Flights" />
             <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
           </AssociationSet>
+          <AssociationSet Name="FK_TakenSeat_Seat" Association="AirlineReservationSystemModel.FK_TakenSeat_Seat">
+            <End Role="Seat" EntitySet="Seats" />
+            <End Role="TakenSeat" EntitySet="TakenSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TakenSeat_Ticket" Association="AirlineReservationSystemModel.FK_TakenSeat_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="TakenSeat" EntitySet="TakenSeats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Flight_Ticket" Association="AirlineReservationSystemModel.FK_Ticket_Flight_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_User" Association="AirlineReservationSystemModel.FK_Ticket_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Flight">
+        <EntityType Name="TakenSeat">
           <Key>
+            <PropertyRef Name="SeatID" />
             <PropertyRef Name="FlightNo" />
           </Key>
+          <Property Name="SeatID" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="FlightNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CurrentPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="DepartureTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RouteID" Type="Int32" />
-          <Property Name="Duration" Type="Double" />
-          <NavigationProperty Name="Route" Relationship="AirlineReservationSystemModel.FK_Flight_Route" FromRole="Flight" ToRole="Route" />
-          <NavigationProperty Name="TakenSeats" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Flight" FromRole="Flight" ToRole="TakenSeat" />
-          <NavigationProperty Name="Ticket_Flight" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" FromRole="Flight" ToRole="Ticket_Flight" />
+          <Property Name="TicketNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Flight" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Flight" FromRole="TakenSeat" ToRole="Flight" />
+          <NavigationProperty Name="Seat" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Seat" FromRole="TakenSeat" ToRole="Seat" />
+          <NavigationProperty Name="Ticket" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Ticket" FromRole="TakenSeat" ToRole="Ticket" />
         </EntityType>
-        <Association Name="FK_Flight_Route">
-          <End Type="AirlineReservationSystemModel.Route" Role="Route" Multiplicity="0..1" />
-          <End Type="AirlineReservationSystemModel.Flight" Role="Flight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Route">
-              <PropertyRef Name="RouteID" />
-            </Principal>
-            <Dependent Role="Flight">
-              <PropertyRef Name="RouteID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketNo" />
+          </Key>
+          <Property Name="TicketNo" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConfirmationNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="BlockNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CancellationNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumberOfAdults" Type="Int32" />
+          <Property Name="NumberOfChildren" Type="Int32" />
+          <Property Name="NumberOfSeniorCitizens" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TakenSeats" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Ticket" FromRole="Ticket" ToRole="TakenSeat" />
+          <NavigationProperty Name="Ticket_Flight" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Ticket" FromRole="Ticket" ToRole="Ticket_Flight" />
+          <NavigationProperty Name="User" Relationship="AirlineReservationSystemModel.FK_Ticket_User" FromRole="Ticket" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Ticket_Flight">
+          <Key>
+            <PropertyRef Name="TicketNo" />
+            <PropertyRef Name="FlightNo" />
+          </Key>
+          <Property Name="TicketNo" Type="Int32" Nullable="false" />
+          <Property Name="FlightNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SequenceNo" Type="Int32" Nullable="false" />
+          <Property Name="IsReturn" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Flight" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" FromRole="Ticket_Flight" ToRole="Flight" />
+          <NavigationProperty Name="Ticket" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Ticket" FromRole="Ticket_Flight" ToRole="Ticket" />
+        </EntityType>
         <Association Name="FK_TakenSeat_Flight">
           <End Type="AirlineReservationSystemModel.Flight" Role="Flight" Multiplicity="1" />
           <End Type="AirlineReservationSystemModel.TakenSeat" Role="TakenSeat" Multiplicity="*" />
@@ -575,7 +527,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+        <Association Name="FK_TakenSeat_Seat">
+          <End Type="AirlineReservationSystemModel.Seat" Role="Seat" Multiplicity="1" />
+          <End Type="AirlineReservationSystemModel.TakenSeat" Role="TakenSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seat">
+              <PropertyRef Name="SeatID" />
+            </Principal>
+            <Dependent Role="TakenSeat">
+              <PropertyRef Name="SeatID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TakenSeat_Ticket">
+          <End Type="AirlineReservationSystemModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="AirlineReservationSystemModel.TakenSeat" Role="TakenSeat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="TicketNo" />
+            </Principal>
+            <Dependent Role="TakenSeat">
+              <PropertyRef Name="TicketNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Flight_Ticket">
+          <End Type="AirlineReservationSystemModel.Ticket" Role="Ticket" Multiplicity="1" />
+          <End Type="AirlineReservationSystemModel.Ticket_Flight" Role="Ticket_Flight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="TicketNo" />
+            </Principal>
+            <Dependent Role="Ticket_Flight">
+              <PropertyRef Name="TicketNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_User">
+          <End Type="AirlineReservationSystemModel.User" Role="User" Multiplicity="1" />
+          <End Type="AirlineReservationSystemModel.Ticket" Role="Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -595,6 +595,17 @@
               <MappingFragment StoreEntitySet="Class">
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
                 <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Flights">
+            <EntityTypeMapping TypeName="AirlineReservationSystemModel.Flight">
+              <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
+                <ScalarProperty Name="RouteID" ColumnName="RouteID" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -628,42 +639,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TakenSeats">
-            <EntityTypeMapping TypeName="AirlineReservationSystemModel.TakenSeat">
-              <MappingFragment StoreEntitySet="TakenSeat">
-                <ScalarProperty Name="SeatID" ColumnName="SeatID" />
-                <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
-                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tickets">
-            <EntityTypeMapping TypeName="AirlineReservationSystemModel.Ticket">
-              <MappingFragment StoreEntitySet="Ticket">
-                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ConfirmationNo" ColumnName="ConfirmationNo" />
-                <ScalarProperty Name="BlockNo" ColumnName="BlockNo" />
-                <ScalarProperty Name="CancellationNo" ColumnName="CancellationNo" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
-                <ScalarProperty Name="NumberOfChildren" ColumnName="NumberOfChildren" />
-                <ScalarProperty Name="NumberOfSeniorCitizens" ColumnName="NumberOfSeniorCitizens" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Ticket_Flight">
-            <EntityTypeMapping TypeName="AirlineReservationSystemModel.Ticket_Flight">
-              <MappingFragment StoreEntitySet="Ticket_Flight">
-                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
-                <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
-                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
-                <ScalarProperty Name="IsReturn" ColumnName="IsReturn" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="AirlineReservationSystemModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -679,14 +654,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Flights">
-            <EntityTypeMapping TypeName="AirlineReservationSystemModel.Flight">
-              <MappingFragment StoreEntitySet="Flight">
-                <ScalarProperty Name="Duration" ColumnName="Duration" />
-                <ScalarProperty Name="RouteID" ColumnName="RouteID" />
-                <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />
-                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+          <EntitySetMapping Name="TakenSeats">
+            <EntityTypeMapping TypeName="AirlineReservationSystemModel.TakenSeat">
+              <MappingFragment StoreEntitySet="TakenSeat">
+                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
                 <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+                <ScalarProperty Name="SeatID" ColumnName="SeatID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="AirlineReservationSystemModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NumberOfSeniorCitizens" ColumnName="NumberOfSeniorCitizens" />
+                <ScalarProperty Name="NumberOfChildren" ColumnName="NumberOfChildren" />
+                <ScalarProperty Name="NumberOfAdults" ColumnName="NumberOfAdults" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CancellationNo" ColumnName="CancellationNo" />
+                <ScalarProperty Name="BlockNo" ColumnName="BlockNo" />
+                <ScalarProperty Name="ConfirmationNo" ColumnName="ConfirmationNo" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket_Flight">
+            <EntityTypeMapping TypeName="AirlineReservationSystemModel.Ticket_Flight">
+              <MappingFragment StoreEntitySet="Ticket_Flight">
+                <ScalarProperty Name="IsReturn" ColumnName="IsReturn" />
+                <ScalarProperty Name="SequenceNo" ColumnName="SequenceNo" />
+                <ScalarProperty Name="FlightNo" ColumnName="FlightNo" />
+                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

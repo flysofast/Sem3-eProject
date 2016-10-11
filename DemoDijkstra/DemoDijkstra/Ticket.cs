@@ -21,7 +21,7 @@ namespace DemoDijkstra
             this.Ticket_Flight = new HashSet<Ticket_Flight>();
         }
     
-        public string TicketNo { get; set; }
+        public int TicketNo { get; set; }
         public string UserID { get; set; }
         public string ConfirmationNo { get; set; }
         public string BlockNo { get; set; }
