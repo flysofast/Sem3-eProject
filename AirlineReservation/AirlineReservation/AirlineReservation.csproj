@@ -140,9 +140,6 @@
     <Compile Include="Models\Seat.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Models.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TakenSeat.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>

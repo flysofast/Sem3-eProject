@@ -53,6 +53,7 @@
                                         <option value="HNN">Ha Noi</option>
                                         <option value="HUI">Hue</option>
                                         <option value="SGN">Ho Chi Minh</option>
+                                        <option value="NYK">New York</option>
                                     </select>
                                 </div>
                             </div>
@@ -66,6 +67,7 @@
                                 <label class="control-label col-sm-2" for="To">To:</label>
                                 <div class="col-sm-10">
                                     <select class="form-control input-xlarg" id="toLocation">
+                                        <option value="NYK">New York</option>
                                         <option value="HNN">Ha Noi</option>
                                         <option value="HUI">Hue</option>
                                         <option value="SGN">Ho Chi Minh</option>
@@ -115,7 +117,7 @@
                     </div>
                     
                   
-                  <button class="btn btn-primary  btn-lg pull-right" type="button" onclick="GetPossibleRoute()">Next</button>
+                  <button class="btn btn-primary  btn-lg pull-right" type="button" onclick="GetFlights(['HNN','HUI','SGN','NYK'])">Next</button>
                 </div>
               </div>
             <div class="row setup-content" id="step-2">

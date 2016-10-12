@@ -30,7 +30,6 @@ namespace AirlineReservation.Models
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Seat> Seats { get; set; }
-        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<TakenSeat> TakenSeats { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Ticket_Flight> Ticket_Flight { get; set; }

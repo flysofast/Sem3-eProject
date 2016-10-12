@@ -77,30 +77,28 @@ namespace AirlineReservation.Controllers
 
                     var dataResult = ru.FindFlight(cityList);
 
-                    var result = new List<List<>>();
+                    //var result = new List<List<>>();
 
-                    foreach (var list in dataResult)
+                    //foreach (var list in dataResult)
+                    //{
+                    //    var flightList = list.Select(p => new
+                    //    {
+                    //        Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
+                    //        Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
+                    //        Duration = p.Duration + " hours",
+                    //        Price = p.CurrentPrice + " VND"
+                    //    }).ToList();
+
+                    //    result.Add(flightList);
+                    //}
+
+                    var result = dataResult.Select(q => q.Select(p => new
                     {
-                        var flightList = list.Select(p => new
-                        {
-                            Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
-                            Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
-                            Duration = p.Duration + " hours",
-                            Price = p.CurrentPrice + " VND"
-                        }).ToList();
-
-                        result.Add(flightList);
-                    }
-
-                    var a = new List<string>();
-                    a.Add("dasd");
-                    a.Add("dasd");
-                    var b = new List<string>();
-                    a.Add("d1asd");
-                    a.Add("dae23sd");
-
-                    result.Add(a);
-                    result.Add(b);
+                        Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
+                        Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
+                        Duration = p.Duration + " hours",
+                        Price = p.CurrentPrice + " VND"
+                    }));
 
                     return Json(result, JsonRequestBehavior.AllowGet);
 
@@ -131,20 +129,20 @@ namespace AirlineReservation.Controllers
 
         }
 
-        public class FlightJson
-        {
-            [Display(Name = "Departure")]
-            public string Departure { set; get; }
+        //public class FlightJson
+        //{
+        //    [Display(Name = "Departure")]
+        //    public string Departure { set; get; }
 
-            [Display(Name = "Arrival")]
-            public string Arrival { set; get; }
-            [Display(Name = "Duration")]
-            public string Duration { set; get; }
-            [Display(Name = "Price")]
-            public string Price { set; get; }
+        //    [Display(Name = "Arrival")]
+        //    public string Arrival { set; get; }
+        //    [Display(Name = "Duration")]
+        //    public string Duration { set; get; }
+        //    [Display(Name = "Price")]
+        //    public string Price { set; get; }
 
 
-        }
+        //}
 
 
     }
