@@ -62,6 +62,11 @@ function formMain(mode) {
 }
 
 function aboutUs() {
-    $("#aboutUsPage").slideDown("slow");
+    if ($("#aboutUsPage").is(":visible")) {
+        $("#aboutUsPage").hide("slow");
+    } else {
+        $("#aboutUsPage").slideDown("slow");        
+    }
+    
     
 }
