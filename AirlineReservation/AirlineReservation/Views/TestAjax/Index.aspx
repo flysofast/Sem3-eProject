@@ -13,7 +13,7 @@
 
     </script>
     <div class="container" style="width:100%">
-        <h2 style="background-color:red; font-weight: bolder;">TEST PAGE. SEE Global.asax.</h2>
+        <h2 style="background-color:red; font-weight: bolder;">THIS IS ONLY A TEST PAGE. GO TO <a href="../Home">HOMEPAGE</a></h2>
         <h3>It's Fast, Easy and Secure</h3>
         <div class="stepwizard">
             <div class="stepwizard-row setup-panel">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="col-xs-2 col-md-2 columnForm">
-                            <input type="button" class="btn btn-success" value="SEARCH" onclick="searchStep1()"/> 
+                            <input type="button" class="btn btn-success" value="SEARCH" onclick="GetPossibleRoute()"/> 
                         </div>
                         <div class="col-xs-4 col-md-6">
                             <div id="step1-result" style="clear:both">
@@ -518,7 +518,7 @@
             </div>
           </form>
      </div>
-    <script src="../../Scripts/AirReservation/TestAjax.js"></script>
+    <script src="../../Scripts/AirReservation/FlightSearch.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">

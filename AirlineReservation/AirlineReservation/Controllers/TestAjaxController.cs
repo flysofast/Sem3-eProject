@@ -77,26 +77,11 @@ namespace AirlineReservation.Controllers
 
                     var dataResult = ru.FindFlight(cityList);
 
-                    //var result = new List<List<>>();
-
-                    //foreach (var list in dataResult)
-                    //{
-                    //    var flightList = list.Select(p => new
-                    //    {
-                    //        Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
-                    //        Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
-                    //        Duration = p.Duration + " hours",
-                    //        Price = p.CurrentPrice + " VND"
-                    //    }).ToList();
-
-                    //    result.Add(flightList);
-                    //}
-
                     var result = dataResult.Select(q => q.Select(p => new
                     {
                         Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
                         Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
-                        Duration = p.Duration + " hours",
+                        Duration = TimeSpan.FromHours(p.Duration).ToString("h\\h\\ mm\\m\\ "),
                         Price = p.CurrentPrice + " VND"
                     }));
 

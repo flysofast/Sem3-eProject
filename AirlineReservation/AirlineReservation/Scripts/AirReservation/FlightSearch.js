@@ -13,10 +13,11 @@ function GetPossibleRoute() {
         type: 'POST',
         data: JSON.stringify(obj),
         error: function (data) {
-            console.log("Error: "+ data.responseText);
+            swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            console.log(result)
+            swal("See more in console!", result + '\nSee more details in console', "success");
+            console.log(result);
         }
     });
 }
@@ -31,10 +32,11 @@ function GetFlights(vertices) {
         type: 'POST',
         data: JSON.stringify(vertices),
         error: function (data) {
-            console.log("Error: " + data.responseText);
+            swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            console.log(result)
+            swal("See more in console!", result + '\nSee more details in console', "success");
+            console.log(result);
         }
     });
 }

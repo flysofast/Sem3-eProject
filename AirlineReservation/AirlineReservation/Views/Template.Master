@@ -9,7 +9,8 @@
     </asp:ContentPlaceHolder>
     <link href="../Content/AirlineReservation.css" rel="stylesheet" />
     <link href="../Bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../Bootstrap/fonts/glyphicons-halflings-regular.ttf" rel="stylesheet" type="text/css"/>
+    <link href="../Bootstrap/fonts/glyphicons-halflings-regular.ttf" rel="stylesheet" type="text/css" />
+    <link href="../Content/sweetalert.css" rel="stylesheet" />
     <script src="../../Scripts/jquery-2.0.0.min.js" type="text/javascript"></script>
     <script src="../Bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../Scripts/MultiFormStep.js" type="text/javascript"></script>
@@ -17,10 +18,9 @@
 </head>
 <body>
     <!-- About us-->
-    <div class="about-us" id="aboutUsPage" >
-        <div class="container" style="color:white" onclick="aboutUs()">
-            <span>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+    <div class="about-us" id="aboutUsPage">
+        <div class="container" style="color: white" onclick="aboutUs()">
+            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </span>
         </div>
     </div>
@@ -73,7 +73,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Colse">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <ul class="nav nav-tabs" style="margin-bottom:22px">
+                    <ul class="nav nav-tabs" style="margin-bottom: 22px">
                         <li class="active">
                             <a data-toggle="tab" onclick="formMain('login')">Already Registed</a>
                         </li>
@@ -92,13 +92,13 @@
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="example-text-input">
+                                        <input class="form-control" type="text" id="example-text-input">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="password" id="example-search-input">
+                                        <input class="form-control" type="password" id="example-search-input">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -119,13 +119,13 @@
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="Text1">
+                                        <input class="form-control" type="text" id="Text1">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="password" id="Password1">
+                                        <input class="form-control" type="password" id="Password1">
                                     </div>
                                 </div>
                             </div>
@@ -133,48 +133,48 @@
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xs-3 col-form-label">First Name</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="Text2">
+                                        <input class="form-control" type="text" id="Text2">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Last Name</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="Password2">
+                                        <input class="form-control" type="text" id="Password2">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Email</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="email" id="Text3">
+                                        <input class="form-control" type="email" id="Text3">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Phone Number</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="Text4">
+                                        <input class="form-control" type="text" id="Text4">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="Text5">
+                                        <input class="form-control" type="text" id="Text5">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Day Of Birth </label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="date" id="Text6">
+                                        <input class="form-control" type="date" id="Text6">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Credit card </label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="text" id="Date2">
+                                        <input class="form-control" type="text" id="Date2">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-xs-12">
-                                    <input class="btn btn-success" type="button" id="Text7" value="Submit">
+                                        <input class="btn btn-success" type="button" id="Text7" value="Submit">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -191,7 +191,7 @@
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Please provide us your email</label>
                                     <div class="col-xs-7">
-                                    <input class="form-control" type="email" id="Password3">
+                                        <input class="form-control" type="email" id="Password3">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -202,13 +202,14 @@
                             </div>
                         </div>
                     </div>
-                </div>   
+                </div>
                 <div class="modal-footer"></div>
             </div>
         </div>
-    </div> 
+    </div>
     <!-- End -->
-    
-    
+
+    <script src="../Scripts/sweetalert.min.js"></script>
+
 </body>
 </html>
