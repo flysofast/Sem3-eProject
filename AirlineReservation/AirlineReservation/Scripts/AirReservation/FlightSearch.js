@@ -7,7 +7,7 @@ function GetPossibleRoute() {
     }
 
     $.ajax({
-        url: 'TestAjax/GetPossibleRouteAPI',
+        url: 'Home/GetPossibleRouteAPI',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
@@ -26,7 +26,7 @@ function GetFlights(vertices) {
 
 
     $.ajax({
-        url: 'TestAjax/GetFlightsAPI',
+        url: 'Home/GetFlightsAPI',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
@@ -41,11 +41,13 @@ function GetFlights(vertices) {
     });
 }
 
-function GetNearestAvailable(cityID) {
-
+function SetNearestAvailable(dropdownControl) {
+    var cityID = {
+        cityID: dropdownControl.val()
+    }
 
     $.ajax({
-        url: 'TestAjax/GetNearestAvailableAPI',
+        url: 'Home/GetNearestAvailableAPI',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
@@ -54,34 +56,67 @@ function GetNearestAvailable(cityID) {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            swal("See more in console!", result + '\nSee more details in console', "success");
-            console.log(result);
+            var span = dropdownControl.siblings(".suggestion-text").first();
+
+            //The selected city is not under service
+            if (result.CityID != dropdownControl.val()) {
+                span.show('slow');
+                var a = span.find("a").first();
+                var detailsSpan = span.find(".alter-city-details").first();
+                detailsSpan.html("(" + result.CityName + " - " + result.Distance + "km)");
+                a.unbind("click").bind("click", function () {
+                    dropdownControl.val(result.CityID);
+                    span.hide('slow');
+                });
+            } else {
+                span.hide();
+            }
         }
     });
 }
 
-function GetCityListAPI(exclusion) {
+function GetCityList(dropdownControl, ex) {
+    var obj = {
+        exclusion: ex
+    }
     $.ajax({
-        url: 'TestAjax/GetNearestAvailableAPI',
+        url: 'Home/GetCityListAPI',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
-        data: JSON.stringify(exclusion),
+        data: JSON.stringify(obj),
         error: function (data) {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            swal("See more in console!", result + '\nSee more details in console', "success");
-            console.log(result);
+            dropdownControl.html('');
+            $.each(result, function (index, i) {
+                dropdownControl.append('<option  value=' + i.CityID + '>' + i.CityName + '</option>');
+            });
+
+            dropdownControl.trigger('change');
+
         }
     });
 }
 
+
 $(document).ready(function () {
     //$('#fromLocation').append('<option  value=' + item.ClassTypeID + '>' + item.ClassType + '</option>');
-    swal(GetCityListAPI(exclusion));
-    $('#fromLocation').on('change', function () {
-      
-    })
-})
+
+    var fromLocations = $('#fromLocation');
+    var toLocations = $('#toLocation');
+    GetCityList(fromLocations);
+
+    fromLocations.on('change', function () {
+        GetCityList(toLocations, fromLocations.val());
+        SetNearestAvailable($(this))
+
+    });
+
+    toLocations.on('change', function () {
+        SetNearestAvailable($(this))
+    });
+
+});
 
