@@ -52,6 +52,7 @@
                                     <select class="form-control input-xlarg" id="fromLocation">
                                        
                                     </select>
+                                    <span class="suggestion-text">This city is not under service.<br /><a>Click here </a> to choose the nearest available city instead <span class="alter-city-details"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -64,10 +65,9 @@
                                 <label class="control-label col-sm-2" for="To">To:</label>
                                 <div class="col-sm-10">
                                     <select class="form-control input-xlarg" id="toLocation">
-                                        <option value="0">Ha Noi</option>
-                                        <option value="1">Hue</option>
-                                        <option value="2">Ho Chi Minh</option>
+                                       
                                     </select>
+                                     <span class="suggestion-text">This city is not under service.<br /><a>Click here </a> to choose the nearest available city instead <span class="alter-city-details"></span></span>
                                 </div>
                             </div>
                         </div>
@@ -514,6 +514,7 @@
             </div>
           </form>
      </div>
+    <script src="../../Scripts/AirReservation/FlightSearch.js"></script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">
