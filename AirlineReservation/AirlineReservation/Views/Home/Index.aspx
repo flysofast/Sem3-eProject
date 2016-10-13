@@ -50,9 +50,7 @@
                                 <label class="control-label col-sm-2" for="From">From:</label>
                                 <div class="col-sm-10">
                                     <select class="form-control input-xlarg" id="fromLocation">
-                                        <option value="0">Ha Noi</option>
-                                        <option value="1">Hue</option>
-                                        <option value="2">Ho Chi Minh</option>
+                                       
                                     </select>
                                 </div>
                             </div>
