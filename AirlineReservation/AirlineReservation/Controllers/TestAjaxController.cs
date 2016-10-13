@@ -19,7 +19,7 @@ namespace AirlineReservation.Controllers
         }
 
         /// <summary>
-        /// Get shortes possible path for the route between 2 cities
+        /// Get shortest possible path for the route between 2 cities
         /// </summary>
         /// <param name="OriginalCityID"></param>
         /// <param name="DestinationCityID"></param>
@@ -58,7 +58,11 @@ namespace AirlineReservation.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Get available flight lists of a path between 2 cities
+        /// </summary>
+        /// <param name="vertices">the nodes in the path</param>
+        /// <returns>Flight lists</returns>
         public JsonResult GetFlightsAPI(List<string> vertices)
         {
             try
@@ -113,22 +117,5 @@ namespace AirlineReservation.Controllers
 
 
         }
-
-        //public class FlightJson
-        //{
-        //    [Display(Name = "Departure")]
-        //    public string Departure { set; get; }
-
-        //    [Display(Name = "Arrival")]
-        //    public string Arrival { set; get; }
-        //    [Display(Name = "Duration")]
-        //    public string Duration { set; get; }
-        //    [Display(Name = "Price")]
-        //    public string Price { set; get; }
-
-
-        //}
-
-
     }
 }
