@@ -32,14 +32,12 @@ namespace AirlineReservation.Controllers
                 var path = d.GetShortestPath();
                 if (path.Count > 0)
                 {
-                    var result = new List<CityJson>();
-                    for (int i = 0; i < path.Count; i++)
+                    var result = path.Select(p => new
                     {
-                        var item = new CityJson();
-                        item.CityID = path[i].CityID;
-                        item.CityName = path[i].CityName;
-                        result.Add(item);
-                    }
+                        p.CityID,
+                        p.CityName
+                    }).ToList();
+
                     return Json(result, JsonRequestBehavior.AllowGet);
 
                 }
@@ -58,7 +56,11 @@ namespace AirlineReservation.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Get flight lists of the route
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <returns>List of flight lists</returns>
         public JsonResult GetFlightsAPI(List<string> vertices)
         {
             try
@@ -103,32 +105,54 @@ namespace AirlineReservation.Controllers
             }
         }
 
-        public class CityJson
+        /// <summary>
+        /// Get a list of cities
+        /// </summary>
+        /// <param name="exclusion">except for this city</param>
+        /// <returns></returns>
+        public JsonResult GetCityListAPI(string exclusion = null)
         {
-            [Display(Name = "CityID")]
-            public string CityID { set; get; }
+            try
+            {
+                var result = db.Cities.Where(p => exclusion == null || !p.CityID.Equals(exclusion)).ToList();
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
 
-            [Display(Name = "CityName")]
-            public string CityName { set; get; }
-
-
+            }
         }
 
-        //public class FlightJson
-        //{
-        //    [Display(Name = "Departure")]
-        //    public string Departure { set; get; }
-
-        //    [Display(Name = "Arrival")]
-        //    public string Arrival { set; get; }
-        //    [Display(Name = "Duration")]
-        //    public string Duration { set; get; }
-        //    [Display(Name = "Price")]
-        //    public string Price { set; get; }
-
-
-        //}
-
+        /// <summary>
+        /// Check if a city is available for departure or arrival
+        /// </summary>
+        /// <param name="cityID"></param>
+        /// <returns>The nearest available city's ID or the same city's ID if it's available</returns>
+        public JsonResult GetNearestAvailableAPI(string cityID)
+        {
+            try
+            {
+                var city = db.Cities.Single(p => p.CityID.Equals(cityID));
+                if (city.InService)
+                {
+                    return Json(city.CityID, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    var nearestRoute = city.RoutesAsOriginal.OrderBy(p => p.Distance).First();
+                    return Json(nearestRoute.DestinationCityID, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
+            }
+        }
 
     }
 }
