@@ -16,6 +16,11 @@ namespace AirlineReservation.Controllers
             return View();
         }
 
+        public ActionResult AirplantSeat()
+        {
+            return View();
+        }
+
         //
         // GET: /Personal/Details/5
 

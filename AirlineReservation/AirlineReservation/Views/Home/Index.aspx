@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Template.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="../../Content/Airplant.css" rel="stylesheet" />
     <script src="../Scripts/modernizr.js"></script>
+    <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
 
     <script>
         $(window).load(function () {
@@ -260,6 +262,8 @@
                                                             Depart: 13:00<br />
                                                             Arrive: 13:30<br />
                                                             Duration: 00:30<br />
+                                                            Seat: 
+                                                            <input type="number" name="seat_flight_id"/> 
                                                         </p>
                                                       </div>
                                                     </div>
@@ -477,53 +481,127 @@
                     <div class="col-md-12">
                         <h3>Confirm Personal information</h3>
                         <div class="flight-result" style="padding: 25px; width: 80%">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-xs-3 col-form-label">First Name</label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="text" id="Text7">
+                            <div class="card card-block">
+                                <div class="card card-block" style="padding: 20px;">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        Customer Information
+                                        <div class="caption">
+                                        <h3>Thai Bao Nguyen</h3>
+                                        <p class="card-description">
+                                            <table class="table" style="text-align: left;">
+                                              <tr>
+                                                <td>First Name</td>
+                                                <td>Thai Bao</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Last Name</td>
+                                                <td>Nguyen</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Email</td>
+                                                <td>bao@gmail.com</td>
+                                              </tr>
+                                                <tr>
+                                                <td>Phone number</td>
+                                                <td>0123456789</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Gender</td>
+                                                <td>male</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Day of Birth</td>
+                                                <td>01/01/1992</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Credit Card</td>
+                                                <td>00233342343</td>
+                                              </tr>
+                                          </table>
+                                        </p>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="example-search-input" class="col-xs-3 col-form-label">Last Name</label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="text" id="Text8">
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        Ticket Detail
+                                        <div class="caption">
+                                        <h3>Detail</h3>
+                                        <p class="card-description">
+                                            <table class="table" style="text-align: left;">
+                                              <tr>
+                                                <td colspan="2">Departure Flight</td>
+                                              </tr>
+                                              <tr>
+                                                <td>From</td>
+                                                <td>Ha Noi</td>
+                                              </tr>
+                                              <tr>
+                                                <td>To</td>
+                                                <td>Ho Chi Minh</td>
+                                              </tr>
+                                                <tr>
+                                                <td>Departure date:</td>
+                                                <td>15/10/2016</td>
+                                              </tr>
+                                              
+                                              
+                                          </table>
+                                            <table class="table" style="text-align: left;">
+                                                <tr>
+                                                <td colspan="2">Return Flight</td>
+                                              </tr>
+                                              <tr>
+                                                <td>From</td>
+                                                <td>Ha Noi</td>
+                                              </tr>
+                                              <tr>
+                                                <td>To</td>
+                                                <td>Ho Chi Minh</td>
+                                              </tr>
+                                                <tr>
+                                                <td>Return date:</td>
+                                                <td>20/10/2016</td>
+                                              </tr>
+                                            </table>
+                                            
+                                        </p>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="example-search-input" class="col-xs-3 col-form-label">Email</label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="email" id="Email1">
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        Customer Information
+                                        <div class="caption">
+                                        <h3>Passenger and Cost</h3>
+                                        <p class="card-description">
+                                            <table class="table" style="text-align: left;">
+                                                <tr>
+                                                <td>Adult:</td>
+                                                <td>1</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Senior:</td>
+                                                <td>1</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Infant:</td>
+                                                <td>1</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Total:</td>
+                                                <td>100000</td>
+                                              </tr>
+                                            </table>
+                                        </p>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="example-search-input" class="col-xs-3 col-form-label">Phone Number</label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="text" id="Text9">
-                                        </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="text" id="Text10">
-                                        </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label for="example-search-input" class="col-xs-3 col-form-label">Day Of Birth </label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="date" id="Date1">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="example-search-input" class="col-xs-3 col-form-label">Credit card </label>
-                                        <div class="col-xs-7">
-                                            <input class="form-control" type="text" id="Text11">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-
+                            </div>
                         </div>
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
                     </div>
@@ -531,6 +609,7 @@
             </div>
         </form>
     </div>
+
     <script src="../../Scripts/AirReservation/FlightSearch.js"></script>
 </asp:Content>
 
