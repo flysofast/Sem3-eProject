@@ -10,11 +10,14 @@ namespace AirlineReservation.Controllers
 {
     public class HomeController : Controller
     {
-        AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+        private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+
         public ActionResult Index()
         {
             return View();
         }
+
+        #region Step 1
 
         /// <summary>
         /// Get shortes possible path for the route between 2 cities
@@ -37,23 +40,20 @@ namespace AirlineReservation.Controllers
                     }).ToList();
 
                     return Json(result, JsonRequestBehavior.AllowGet);
-
                 }
                 else
                 {
                     return Json(0, JsonRequestBehavior.AllowGet);
                 }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
-
             }
-
         }
+
         /// <summary>
         /// Get flight lists of the flight schedule
         /// </summary>
@@ -86,20 +86,17 @@ namespace AirlineReservation.Controllers
                     }));
 
                     return Json(result, JsonRequestBehavior.AllowGet);
-
                 }
                 else
                 {
                     return Json(0, JsonRequestBehavior.AllowGet);
                 }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
-
             }
         }
 
@@ -124,7 +121,6 @@ namespace AirlineReservation.Controllers
                 Console.WriteLine(ex.Message);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
-
             }
         }
 
@@ -167,5 +163,34 @@ namespace AirlineReservation.Controllers
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
             }
         }
+
+        #endregion Step 1
+
+        #region Step 2
+
+        /// <summary>
+        /// Get list of classes
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetClassListAPI()
+        {
+            try
+            {
+                var result = db.Seats.Select(p => new
+                {
+                    p.Class
+                }).Distinct().ToList();
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
+            }
+        }
+
+        #endregion Step 2
     }
 }
