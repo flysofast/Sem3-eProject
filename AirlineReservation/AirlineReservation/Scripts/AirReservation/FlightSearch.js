@@ -173,7 +173,8 @@ function GetClassList(dropdownControl) {
 
 function InitStep2() {
     //$('#fromLocation').append('<option  value=' + item.ClassTypeID + '>' + item.ClassType + '</option>');
-
+    document.getElementById("inputDepartureDate").valueAsDate = new Date();
+    document.getElementById("inputReturnDate").valueAsDate = new Date()
     GetClassList($('.class-list'));
 }
 

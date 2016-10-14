@@ -122,7 +122,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Departure:</label>
                         <div class="col-md-9">
-                            <input type="date" required="required" class="form-control" placeholder="Enter First Name" style="margin-left: 5px;" />
+                            <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -137,7 +137,7 @@
                     <div class="form-group" id="returnDateForm">
                         <label class="control-label col-md-3" for="To">Return:</label>
                         <div class="col-md-9">
-                            <input type="date" required="required" class="form-control" placeholder="Enter First Name" style="margin-left: 5px;" />
+                            <input id="inputReturnDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                <button id="btStep2Submit" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="submitStep2">Next</button>
             </div>
             <div class="row setup-content" id="step-3">
                 <div class="col-xs-12">
