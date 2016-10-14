@@ -19,23 +19,23 @@
             <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step">
                     <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-                    <p>Search Flight</p>
+                    <p>Search Route</p>
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">2</a>
-                    <p>Select Flight</p>
+                    <p>Ticket Requirement</p>
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">3</a>
-                    <p>Check Login/ Register</p>
+                    <p>Select flight</p>
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">4</a>
-                    <p>Information Confirm</p>
+                    <p>Check Login/ Register</p>
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">5</a>
-                    <p>Payment</p>
+                    <p>Summary</p>
                 </div>
             </div>
         </div>
@@ -240,7 +240,7 @@
                                             <div class="col-md-2 vcenter">VietName Airline</div>
                                             <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
                                             <div class="col-md-2 vcenter">17:00 (HCM)</div>
-                                            <div class="col-md-2 vcenter">02:00 (Direct)</div>
+                                            <div class="col-md-2 vcenter">02:00 (Transshipment)</div>
                                             <div class="col-md-2 vcenter">1.000.000</div>
                                             <div class="col-md-2">
                                                 <input type="radio" name="optDepartureFlight">
@@ -248,30 +248,36 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="collapse" id="collapseExample">
-                                            <div class="card card-block">
-                                                Chi tiet chuyen bay
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flight-result">
-                                    <div class="row" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                        <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
-                                            <div class="col-md-2 vcenter">17:00 (HCM)</div>
-                                            <div class="col-md-2 vcenter">02:00 (Direct)</div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
-                                                <input type="radio" name="optDepartureFlight">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="collapse" id="Div1">
-                                            <div class="card card-block">
-                                                Chi tiet chuyen bay
+                                        <div class="collapse" id="collapseExample" style="border-top:1px solid">
+                                            <div class="card card-block" style="padding: 20px;">
+                                                <div class="row">
+                                                  <div class="col-sm-6 col-md-4">
+                                                    <div class="thumbnail">
+                                                      From Ha Noi(HN) To Hue (HUE)
+                                                      <div class="caption">
+                                                        <h3>Detail</h3>
+                                                        <p class="card-description">
+                                                            Depart: 13:00<br />
+                                                            Arrive: 13:30<br />
+                                                            Duration: 00:30<br />
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-sm-6 col-md-4">
+                                                    <div class="thumbnail">
+                                                      From Hue(HUE) To Ho Chi Minh (HCM)
+                                                      <div class="caption">
+                                                        <h3>Detail</h3>
+                                                        <p class="card-description">
+                                                            Depart: 14:00<br />
+                                                            Arrive: 14:30<br />
+                                                            Duration: 00:30<br />
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                 </div>
                                             </div>
                                         </div>
                                     </div>
@@ -282,7 +288,7 @@
                             <!-- Return Flight-->
                             <div id="returnFlight" class="tab-pane fade">
                                 <div class="flight-result">
-                                    <div class="row" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <div class="row" data-toggle="collapse" data-target="#Div3" aria-expanded="false" aria-controls="Div3">
                                         <div class="col-md-12">
                                             <div class="col-md-2 vcenter">VietName Airline</div>
                                             <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
@@ -297,28 +303,36 @@
                                     <div class="row">
                                         <div class="collapse" id="Div3">
                                             <div class="card card-block">
-                                                Chi tiet chuyen bay
+                                                <div class="card card-block" style="padding: 20px;">
+                                                <div class="row">
+                                                  <div class="col-sm-6 col-md-4">
+                                                    <div class="thumbnail">
+                                                      From Ha Noi(HN) To Hue (HUE)
+                                                      <div class="caption">
+                                                        <h3>Detail</h3>
+                                                        <p class="card-description">
+                                                            Depart: 13:00<br />
+                                                            Arrive: 13:30<br />
+                                                            Duration: 00:30<br />
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="col-sm-6 col-md-4">
+                                                    <div class="thumbnail">
+                                                      From Hue(HUE) To Ho Chi Minh (HCM)
+                                                      <div class="caption">
+                                                        <h3>Detail</h3>
+                                                        <p class="card-description">
+                                                            Depart: 14:00<br />
+                                                            Arrive: 14:30<br />
+                                                            Duration: 00:30<br />
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="flight-result">
-                                    <div class="row" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                        <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
-                                            <div class="col-md-2 vcenter">17:00 (HCM)</div>
-                                            <div class="col-md-2 vcenter">02:00 (Direct)</div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
-                                                <input type="radio" name="optReturnFlight">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="collapse" id="Div4">
-                                            <div class="card card-block">
-                                                Chi tiet chuyen bay
                                             </div>
                                         </div>
                                     </div>
