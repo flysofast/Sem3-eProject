@@ -26,13 +26,13 @@ namespace AirlineReservation.Models
         }
     
         public DbSet<City> Cities { get; set; }
-        public DbSet<Class> Classes { get; set; }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Route> Routes { get; set; }
-        public DbSet<Seat> Seats { get; set; }
         public DbSet<TakenSeat> TakenSeats { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Ticket_Flight> Ticket_Flight { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
+        public DbSet<Seat> Seats { get; set; }
     }
 }

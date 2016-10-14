@@ -19,7 +19,7 @@ namespace AirlineReservation.Models
         public int TicketNo { get; set; }
     
         public virtual Flight Flight { get; set; }
-        public virtual Seat Seat { get; set; }
         public virtual Ticket Ticket { get; set; }
+        public virtual Seat Seat { get; set; }
     }
 }

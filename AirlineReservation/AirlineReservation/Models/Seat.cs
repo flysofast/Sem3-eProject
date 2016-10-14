@@ -19,10 +19,9 @@ namespace AirlineReservation.Models
             this.TakenSeats = new HashSet<TakenSeat>();
         }
     
-        public Nullable<int> ClassID { get; set; }
+        public string Class { get; set; }
         public string SeatID { get; set; }
     
-        public virtual Class Class { get; set; }
         public virtual ICollection<TakenSeat> TakenSeats { get; set; }
     }
 }
