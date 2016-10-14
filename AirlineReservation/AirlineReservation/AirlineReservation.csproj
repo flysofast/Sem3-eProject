@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\TestAjaxController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
@@ -244,6 +245,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Models.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\businessman.png" />
+    <Content Include="Images\job-search.png" />
+    <Content Include="Images\job-search_small.png" />
+    <Content Include="Images\notebook.png" />
+    <Content Include="Images\notebook_small.png" />
+    <Content Include="Images\ticket.png" />
+    <Content Include="Images\ticket_small.png" />
     <Content Include="Models\Models.edmx.diagram">
       <DependentUpon>Models.edmx</DependentUpon>
     </Content>
@@ -263,6 +271,7 @@
     </Content>
     <Content Include="Scripts\AirReservation\AirReservationHome.js" />
     <Content Include="Scripts\AirReservation\FlightSearch.js" />
+    <Content Include="Scripts\AirReservation\Personal.js" />
     <Content Include="Scripts\modernizr.js" />
     <Content Include="Scripts\MultiFormStep.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -276,6 +285,7 @@
     <Content Include="Scripts\modernizr-2.5.3.js" />
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Personal\Index.aspx" />
     <Content Include="Views\TestAjax\Index.aspx" />
     <Content Include="Views\Test\Index.aspx" />
     <Content Include="Web.config" />
