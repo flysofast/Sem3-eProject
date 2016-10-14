@@ -22,7 +22,7 @@ namespace AirlineReservation.Controllers
         /// <param name="OriginalCityID"></param>
         /// <param name="DestinationCityID"></param>
         /// <returns></returns>
-        public JsonResult GetPossibleRouteAPI(string OriginalCityID, string DestinationCityID)
+        public JsonResult GetPossibleFlightScheduleAPI(string OriginalCityID, string DestinationCityID)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace AirlineReservation.Controllers
 
         }
         /// <summary>
-        /// Get flight lists of the route
+        /// Get flight lists of the flight schedule
         /// </summary>
         /// <param name="vertices"></param>
         /// <returns>List of flight lists</returns>

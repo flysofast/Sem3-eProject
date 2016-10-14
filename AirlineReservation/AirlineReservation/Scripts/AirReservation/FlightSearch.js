@@ -1,13 +1,20 @@
 ﻿
-function GetPossibleRoute() {
+function GetPossibleFlightSchedule() {
+
+    var original = $('#fromLocation').val();
+    var destination = $('#toLocation').val();
+    if (original == null || destination == null) {
+        swal("Please select Original and Destination City", "Both of these information are required", "warning");
+        return;
+    }
 
     var obj = {
-        OriginalCityID: $('#fromLocation').val(),
-        DestinationCityID: $('#toLocation').val()
+        OriginalCityID: original,
+        DestinationCityID: destination
     }
 
     $.ajax({
-        url: 'Home/GetPossibleRouteAPI',
+        url: 'Home/GetPossibleFlightScheduleAPI',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
@@ -16,8 +23,20 @@ function GetPossibleRoute() {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            swal("See more in console!", result + '\nSee more details in console', "success");
-            console.log(result);
+            if (result == 0) {
+                swal("No route found between these cities", "", "warning");
+            }
+            else {
+
+                //swal("See more in console!", result + '\nSee more details in console', "success");
+                //console.log(result);
+                var routeDetails = result[0].CityID + " (" + result[0].CityName + ")";
+                for (var i = 1; i < result.length; i++) {
+                    routeDetails += " &rarr; " + result[i].CityID + " (" + result[i].CityName + ")";
+                }
+                $("#foundRouteDetails").html(routeDetails);
+                $("#step1-result").show("slow");
+            }
         }
     });
 }
@@ -64,8 +83,11 @@ function SetNearestAvailable(dropdownControl) {
                 var a = span.find("a").first();
                 var detailsSpan = span.find(".alter-city-details").first();
                 detailsSpan.html("(" + result.CityName + " - " + result.Distance + "km)");
+
+                //Bind handler for the "Click here" button
                 a.unbind("click").bind("click", function () {
                     dropdownControl.val(result.CityID);
+                    dropdownControl.trigger('change');
                     span.hide('slow');
                 });
             } else {
@@ -99,7 +121,6 @@ function GetCityList(dropdownControl, ex) {
         }
     });
 }
-
 
 $(document).ready(function () {
     //$('#fromLocation').append('<option  value=' + item.ClassTypeID + '>' + item.ClassType + '</option>');
