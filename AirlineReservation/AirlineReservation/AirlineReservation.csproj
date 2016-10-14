@@ -114,9 +114,6 @@
     <Compile Include="Models\City.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Class.cs">
-      <DependentUpon>Models.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Flight.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
@@ -139,6 +136,9 @@
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Seat.cs">
+      <DependentUpon>Models.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Models.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TakenSeat.cs">

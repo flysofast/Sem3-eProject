@@ -5,16 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-class Dijkstra
+internal class Dijkstra
 {
-
-    AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
-    List<City> cities;
-    double[,] mat; // Graph
-    int firstVer, lastVer; // Original vertex and destination vertex
-    int[] label;
-    double[] length;
-    int[] prev;
+    private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+    private List<City> cities;
+    private double[,] mat; // Graph
+    private int firstVer, lastVer; // Original vertex and destination vertex
+    private int[] label;
+    private double[] length;
+    private int[] prev;
 
     public Dijkstra(string originalCityID, string destinationCityID)
     {
@@ -25,7 +24,7 @@ class Dijkstra
         if (firstVer == -1 || lastVer == -1)
         {
             Console.WriteLine("Invalid city IDs");
-            throw new KeyNotFoundException("There's no city matches one or all of these IDs");
+            throw new KeyNotFoundException("There is no city matches one or all of these IDs");
         }
 
         // Initialize
@@ -41,8 +40,6 @@ class Dijkstra
             prev[i] = -1;
         }
         length[firstVer] = 0;
-
-
 
         Console.WriteLine("Input:-----------------------");
         // Read Graph matrix
@@ -83,16 +80,15 @@ class Dijkstra
             }
             Console.WriteLine();
         }
-
     }
 
     /// <summary>
     /// Use Dijkstra algorithm to find the shortest path
     /// </summary>
     /// <returns>true if found, false if not</returns>
-    bool FindShortestPath()
+    private bool FindShortestPath()
     {
-        // While the lastVer hasn't been marked 
+        // While the lastVer hasn't been marked
         while (label[lastVer] == 1)
         {
             double min = -1;
@@ -117,7 +113,6 @@ class Dijkstra
             // Mark the vertex
             length[vertex] = min;
             label[vertex] = 0;
-
 
             for (int i = 0; i < cities.Count; i++)
             {
@@ -185,5 +180,4 @@ class Dijkstra
 
         return result;
     }
-
 }

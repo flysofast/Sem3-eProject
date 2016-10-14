@@ -4,7 +4,7 @@
     $("#lblReturnClass").hide();
     $("#returnClass").hide();
     $("#step1-result").hide();
-    //Check ticket type, show/hide input return date 
+    //Check ticket type, show/hide input return date
     $("input[name=optFlight]:radio").change(function () {
         if ($('#optFlightReturn').is(':checked')) {
             $("#returnDateForm").show("slow");
@@ -21,20 +21,6 @@
     $("#forgotPasswordFormMain").hide();
 });
 
-function swapLocation() {
-    var from = $("#fromLocation").val();
-    var to = $("#toLocation").val();
-    if (from == "" || to == "") {
-        alert("Please select from and to location");
-        return false;
-    }
-    $("#fromLocation").val(to);
-    $("#toLocation").val(from);
-}
-
-function searchStep1() {
-    $("#step1-result").show("slow");
-}
 
 function formMain(mode) {
     switch (mode) {
@@ -65,8 +51,6 @@ function aboutUs() {
     if ($("#aboutUsPage").is(":visible")) {
         $("#aboutUsPage").hide("slow");
     } else {
-        $("#aboutUsPage").slideDown("slow");        
+        $("#aboutUsPage").slideDown("slow");
     }
-    
-    
 }

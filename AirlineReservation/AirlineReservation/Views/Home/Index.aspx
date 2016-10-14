@@ -12,7 +12,6 @@
                 });
             }, 1000); // set the time here
         });
-
     </script>
     <div class="container" style="width: 100%">
         <h2 style="font-weight: bolder;">BOOKING ONLINE.</h2>
@@ -80,8 +79,10 @@
                                 <div id="step1-result" style="clear: both">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="col-md-11"><span>Flight schedule</span><br />
-                                                <span class="suggestion-text">This the shortest path between the 2 cities at the moment</span></div>
+                                            <div class="col-md-11">
+                                                <span>Flight schedule</span><br />
+                                                <span class="suggestion-text">This the shortest path between the 2 cities at the moment</span>
+                                            </div>
                                             <%--<div class="col-md-3"></div>--%>
                                             <%--<div class="col-md-3">Select</div>--%>
                                         </div>
@@ -115,8 +116,7 @@
                         </div>
                     </div>
 
-
-                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                    <button id="btStep1Submit" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep1()">Next</button>
                 </div>
             </div>
             <div class="row setup-content" id="step-2">
@@ -124,7 +124,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Departure:</label>
                         <div class="col-md-9">
-                            <input type="date" required="required" class="form-control" placeholder="Enter First Name" style="margin-left: 5px;" />
+                            <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -139,7 +139,7 @@
                     <div class="form-group" id="returnDateForm">
                         <label class="control-label col-md-3" for="To">Return:</label>
                         <div class="col-md-9">
-                            <input type="date" required="required" class="form-control" placeholder="Enter First Name" style="margin-left: 5px;" />
+                            <input id="inputReturnDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                     </div>
                 </div>
@@ -147,10 +147,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">
-                            <select class="form-control">
-                                <option>Eco</option>
-                                <option>Bussiness</option>
-                                <option>VIP</option>
+                            <select class="form-control class-list">
                             </select>
                         </div>
                     </div>
@@ -160,10 +157,7 @@
                     <div class="form-group" id="returnClass">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">
-                            <select class="form-control">
-                                <option>Eco</option>
-                                <option>Bussiness</option>
-                                <option>VIP</option>
+                            <select class="form-control class-list">
                             </select>
                         </div>
                     </div>
@@ -172,41 +166,44 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="To">Adults:</label>
                         <div class="col-sm-9">
-                            <select class="form-control" style="width: 56px">
+                            <input id="adultsNo" type="number" class="form-control" value="1" style="width: 30%" />
+                            <%-- <select class="form-control" style="width: 56px">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
-                            </select>
+                            </select>--%>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="To">Children:</label>
                         <div class="col-sm-9">
-                            <select class="form-control" style="width: 56px">
+                            <input id="childrenNo" type="number" class="form-control" value="1" style="width: 30%" />
+                            <%--<select class="form-control" style="width: 56px">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
-                            </select>
+                            </select>--%>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="To">Infant:</label>
+                        <label class="control-label col-sm-3" for="To">Senior citizens:</label>
                         <div class="col-sm-9">
-                            <select class="form-control" style="width: 56px">
+                            <input id="elderNo" type="number" class="form-control" value="1" style="width: 30%" />
+                            <%-- <select class="form-control" style="width: 56px">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
-                            </select>
+                            </select>--%>
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                <button id="btStep2Submit" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="submitStep2">Next</button>
             </div>
             <div class="row setup-content" id="step-3">
                 <div class="col-xs-12">
@@ -242,7 +239,7 @@
                                             <div class="col-md-2 vcenter">VietName Airline</div>
                                             <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
                                             <div class="col-md-2 vcenter">17:00 (HCM)</div>
-                                            <div class="col-md-2 vcenter">02:00 (Transshipment)</div>
+                                            <div class="col-md-2 vcenter">02:00 (Transhipped)</div>
                                             <div class="col-md-2 vcenter">1.000.000</div>
                                             <div class="col-md-2">
                                                 <input type="radio" name="optDepartureFlight">
@@ -250,38 +247,36 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="collapse" id="collapseExample" style="border-top:1px solid">
+                                        <div class="collapse" id="collapseExample" style="border-top: 1px solid">
                                             <div class="card card-block" style="padding: 20px;">
                                                 <div class="row">
-                                                  <div class="col-sm-6 col-md-4">
-                                                    <div class="thumbnail">
-                                                      From Ha Noi(HN) To Hue (HUE)
+                                                    <div class="col-sm-6 col-md-4">
+                                                        <div class="thumbnail">
+                                                            From Ha Noi(HN) To Hue (HUE)
                                                       <div class="caption">
                                                         <h3>Detail</h3>
                                                         <p class="card-description">
                                                             Depart: 13:00<br />
                                                             Arrive: 13:30<br />
                                                             Duration: 00:30<br />
-                                                            Seat: 
-                                                            <input type="number" name="seat_flight_id"/> 
                                                         </p>
                                                       </div>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                  <div class="col-sm-6 col-md-4">
-                                                    <div class="thumbnail">
-                                                      From Hue(HUE) To Ho Chi Minh (HCM)
+                                                    <div class="col-sm-6 col-md-4">
+                                                        <div class="thumbnail">
+                                                            From Hue(HUE) To Ho Chi Minh (HCM)
                                                       <div class="caption">
-                                                        <h3>Detail</h3>
-                                                        <p class="card-description">
-                                                            Depart: 14:00<br />
-                                                            Arrive: 14:30<br />
-                                                            Duration: 00:30<br />
-                                                        </p>
+                                                          <h3>Detail</h3>
+                                                          <p class="card-description">
+                                                              Depart: 14:00<br />
+                                                              Arrive: 14:30<br />
+                                                              Duration: 00:30<br />
+                                                          </p>
                                                       </div>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                 </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -308,35 +303,35 @@
                                         <div class="collapse" id="Div3">
                                             <div class="card card-block">
                                                 <div class="card card-block" style="padding: 20px;">
-                                                <div class="row">
-                                                  <div class="col-sm-6 col-md-4">
-                                                    <div class="thumbnail">
-                                                      From Ha Noi(HN) To Hue (HUE)
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-md-4">
+                                                            <div class="thumbnail">
+                                                                From Ha Noi(HN) To Hue (HUE)
                                                       <div class="caption">
-                                                        <h3>Detail</h3>
-                                                        <p class="card-description">
-                                                            Depart: 13:00<br />
-                                                            Arrive: 13:30<br />
-                                                            Duration: 00:30<br />
-                                                        </p>
+                                                          <h3>Detail</h3>
+                                                          <p class="card-description">
+                                                              Depart: 13:00<br />
+                                                              Arrive: 13:30<br />
+                                                              Duration: 00:30<br />
+                                                          </p>
                                                       </div>
-                                                    </div>
-                                                  </div>
-                                                  <div class="col-sm-6 col-md-4">
-                                                    <div class="thumbnail">
-                                                      From Hue(HUE) To Ho Chi Minh (HCM)
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6 col-md-4">
+                                                            <div class="thumbnail">
+                                                                From Hue(HUE) To Ho Chi Minh (HCM)
                                                       <div class="caption">
-                                                        <h3>Detail</h3>
-                                                        <p class="card-description">
-                                                            Depart: 14:00<br />
-                                                            Arrive: 14:30<br />
-                                                            Duration: 00:30<br />
-                                                        </p>
+                                                          <h3>Detail</h3>
+                                                          <p class="card-description">
+                                                              Depart: 14:00<br />
+                                                              Arrive: 14:30<br />
+                                                              Duration: 00:30<br />
+                                                          </p>
                                                       </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                  </div>
-                                                 </div>
-                                            </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -399,7 +394,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- End Already Registed -->
@@ -467,7 +461,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- End Register -->

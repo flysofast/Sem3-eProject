@@ -12,16 +12,12 @@ namespace AirlineReservation.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Class
+    public partial class sysdiagram
     {
-        public Class()
-        {
-            this.Seats = new HashSet<Seat>();
-        }
-    
-        public int ClassID { get; set; }
-        public string ClassName { get; set; }
-    
-        public virtual ICollection<Seat> Seats { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

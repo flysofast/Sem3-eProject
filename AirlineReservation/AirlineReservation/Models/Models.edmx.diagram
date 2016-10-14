@@ -6,24 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="8ed8af8c8d764dbeaa7ad4987418e81a" Name="Diagram1">
         <EntityTypeShape EntityType="AirlineReservationSystemModel.City" Width="1.5" PointX="1.5" PointY="12.375" />
-        <EntityTypeShape EntityType="AirlineReservationSystemModel.Class" Width="1.5" PointX="0.75" PointY="16" />
         <EntityTypeShape EntityType="AirlineReservationSystemModel.Flight" Width="1.5" PointX="3" PointY="8.125" />
         <EntityTypeShape EntityType="AirlineReservationSystemModel.Route" Width="1.5" PointX="0.75" PointY="8.125" />
-        <EntityTypeShape EntityType="AirlineReservationSystemModel.Seat" Width="1.5" PointX="3" PointY="16" />
         <EntityTypeShape EntityType="AirlineReservationSystemModel.TakenSeat" Width="1.5" PointX="5.25" PointY="3.75" />
         <EntityTypeShape EntityType="AirlineReservationSystemModel.Ticket" Width="1.5" PointX="3" PointY="3" />
         <EntityTypeShape EntityType="AirlineReservationSystemModel.Ticket_Flight" Width="1.5" PointX="5.25" PointY="0.75" />
         <EntityTypeShape EntityType="AirlineReservationSystemModel.User" Width="1.5" PointX="0.75" PointY="3.375" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Route_City" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Route_City1" />
-        <AssociationConnector Association="AirlineReservationSystemModel.FK_Seat_Class" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Flight_Route" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_TakenSeat_Flight" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" />
-        <AssociationConnector Association="AirlineReservationSystemModel.FK_TakenSeat_Seat" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_TakenSeat_Ticket" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Ticket_Flight_Ticket" />
         <AssociationConnector Association="AirlineReservationSystemModel.FK_Ticket_User" />
+        <EntityTypeShape EntityType="AirlineReservationSystemModel.sysdiagram" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="AirlineReservationSystemModel.Seat" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="AirlineReservationSystemModel.FK_TakenSeat_Seat" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

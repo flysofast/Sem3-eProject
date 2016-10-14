@@ -20,10 +20,9 @@ namespace DemoDijkstra
             this.TakenSeats = new HashSet<TakenSeat>();
         }
     
-        public Nullable<int> ClassID { get; set; }
+        public string Class { get; set; }
         public string SeatID { get; set; }
     
-        public virtual Class Class { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TakenSeat> TakenSeats { get; set; }
     }

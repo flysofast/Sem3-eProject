@@ -12,7 +12,19 @@ namespace DemoDijkstra
 
         static void Main(string[] args)
         {
-            GenerateFlights();
+            //GenerateFlights();
+
+            GenerateSeats();
+          
+            Console.ReadKey();
+
+            //GenerateFlights();
+
+
+        }
+
+        static void ShowShortestPath()
+        {
             try
             {
                 Dijkstra d = new Dijkstra("HNN", "NYK");
@@ -23,9 +35,9 @@ namespace DemoDijkstra
                 RouteUtilities ru = new RouteUtilities();
 
                 //Find all possible flight for a route
-                var flightLists=ru.FindFlight(d.GetShortestPath());
+                var flightLists = ru.FindFlight(d.GetShortestPath());
 
-                foreach(var flights in flightLists)
+                foreach (var flights in flightLists)
                 {
                     if (flights != null)
                     {
@@ -42,11 +54,62 @@ namespace DemoDijkstra
             {
                 Console.WriteLine(ex.Message);
             }
-            Console.ReadKey();
+        }
 
-            //GenerateFlights();
+        static void GenerateSeats()
+        {
+            try
+            {
+                Console.WriteLine("STARTING TO GENERATE SEAT INFO");
+                for (int i = 1; i <= 10; i++)
+                {
+                    for (int j = 65; j <= 70; j++)
+                    {
+                        char character = (char)j;
+                        string letter = character.ToString();
+                        string seatID = i.ToString() + letter;
 
+                        Seat seat = new Seat();
+                        seat.SeatID = seatID;
+                        switch (i)
+                        {
+                            case 1:
+                            case 2:
+                                seat.Class = "First class";
+                                break;
+                            case 3:
+                            case 4:
+                                seat.Class = "Business class";
+                                break;
+                            case 5:
+                            case 6:
+                                seat.Class = "Club class";
+                                break;
+                            case 7:
+                            case 8:
+                                seat.Class = "Non-smoking class";
+                                break;
+                            case 9:
+                            case 10:
+                                seat.Class = "Smoking class";
+                                break;
+                            default:
+                                break;
+                        }
 
+                        db.Seats.Add(seat);
+                    }
+                }
+
+                db.SaveChanges();
+
+                Console.WriteLine("DONE");
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex.Message);
+            }
         }
 
         static void GenerateFlights()

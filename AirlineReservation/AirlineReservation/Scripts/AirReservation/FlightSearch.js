@@ -1,6 +1,6 @@
-﻿
+﻿//------------------------------------STEP 1------------------------------------------
+var _selectedRoute;//[{CityID,CityName},{...},...{...}]
 function GetPossibleFlightSchedule() {
-
     var original = $('#fromLocation').val();
     var destination = $('#toLocation').val();
     if (original == null || destination == null) {
@@ -21,13 +21,14 @@ function GetPossibleFlightSchedule() {
         data: JSON.stringify(obj),
         error: function (data) {
             swal("Error", data.responseText, "error");
+            $('#btStep1Submit').prop('disabled', true);
         },
         success: function (result) {
             if (result == 0) {
                 swal("No route found between these cities", "", "warning");
+                $('#btStep1Submit').prop('disabled', true);
             }
             else {
-
                 //swal("See more in console!", result + '\nSee more details in console', "success");
                 //console.log(result);
                 var routeDetails = result[0].CityID + " (" + result[0].CityName + ")";
@@ -36,33 +37,21 @@ function GetPossibleFlightSchedule() {
                 }
                 $("#foundRouteDetails").html(routeDetails);
                 $("#step1-result").show("slow");
+
+                _selectedRoute = result;
+                $('#btStep1Submit').prop('disabled', false);
             }
         }
     });
 }
 
-function GetFlights(vertices) {
-
-
-    $.ajax({
-        url: 'Home/GetFlightsAPI',
-        contentType: "application/json; charset=utf-8",
-        dataType: 'json',
-        type: 'POST',
-        data: JSON.stringify(vertices),
-        error: function (data) {
-            swal("Error", data.responseText, "error");
-        },
-        success: function (result) {
-            swal("See more in console!", result + '\nSee more details in console', "success");
-            console.log(result);
-        }
-    });
-}
-
 function SetNearestAvailable(dropdownControl) {
-    var cityID = {
+    var obj = {
         cityID: dropdownControl.val()
+    }
+
+    if (obj.cityID == null) {
+        return;
     }
 
     $.ajax({
@@ -70,7 +59,7 @@ function SetNearestAvailable(dropdownControl) {
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
-        data: JSON.stringify(cityID),
+        data: JSON.stringify(obj),
         error: function (data) {
             swal("Error", data.responseText, "error");
         },
@@ -117,13 +106,31 @@ function GetCityList(dropdownControl, ex) {
             });
 
             dropdownControl.trigger('change');
-
         }
     });
 }
 
+function swapLocation() {
+    var from = $("#fromLocation").val();
+    var to = $("#toLocation").val();
+    if (from == "" || to == "") {
+        alert("Please select from and to location");
+        return false;
+    }
+
+    var fromLocations = $('#fromLocation');
+    var toLocations = $('#toLocation');
+
+    fromLocations.val(to);
+    toLocations.val(from);
+
+    fromLocations.trigger("change");
+    toLocations.trigger("change");
+}
+
 $(document).ready(function () {
     //$('#fromLocation').append('<option  value=' + item.ClassTypeID + '>' + item.ClassType + '</option>');
+    $('#btStep1Submit').prop('disabled', true);
 
     var fromLocations = $('#fromLocation');
     var toLocations = $('#toLocation');
@@ -132,12 +139,59 @@ $(document).ready(function () {
     fromLocations.on('change', function () {
         GetCityList(toLocations, fromLocations.val());
         SetNearestAvailable($(this))
-
     });
 
     toLocations.on('change', function () {
         SetNearestAvailable($(this))
     });
-
 });
 
+function SubmitStep1() {
+    InitStep2();
+}
+//------------------------------------STEP 2------------------------------------------
+function GetClassList(dropdownControl) {
+    $.ajax({
+        url: 'Home/GetClassListAPI',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            dropdownControl.html('');
+            dropdownControl.append('<option value=Any>Any</option>');
+            $.each(result, function (index, i) {
+                dropdownControl.append('<option  value=' + i.Class + '>' + i.Class + '</option>');
+            });
+
+            dropdownControl.trigger('change');
+        }
+    });
+}
+
+function InitStep2() {
+    //$('#fromLocation').append('<option  value=' + item.ClassTypeID + '>' + item.ClassType + '</option>');
+    document.getElementById("inputDepartureDate").valueAsDate = new Date();
+    document.getElementById("inputReturnDate").valueAsDate = new Date()
+    GetClassList($('.class-list'));
+}
+
+//------------------------------------------STEP 3---------------------------
+function GetFlights(vertices) {
+    $.ajax({
+        url: 'Home/GetFlightsAPI',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(vertices),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            swal("See more in console!", result + '\nSee more details in console', "success");
+            console.log(result);
+        }
+    });
+}
