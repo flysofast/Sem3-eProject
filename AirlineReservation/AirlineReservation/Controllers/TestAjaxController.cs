@@ -11,7 +11,8 @@ namespace AirlineReservation.Controllers
 {
     public class TestAjaxController : Controller
     {
-        AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+        private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+
         public ActionResult Index()
         {
             return View();
@@ -38,71 +39,68 @@ namespace AirlineReservation.Controllers
                     }).ToList();
 
                     return Json(result, JsonRequestBehavior.AllowGet);
-
                 }
                 else
                 {
                     return Json(0, JsonRequestBehavior.AllowGet);
                 }
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
-
             }
-
         }
+
         /// <summary>
         /// Get flight lists of the route
         /// </summary>
         /// <param name="vertices"></param>
         /// <returns>List of flight lists</returns>
-        public JsonResult GetFlightsAPI(List<string> vertices)
-        {
-            try
-            {
-                if (vertices.Count > 0)
-                {
-                    var cityList = new List<City>();
+        //public JsonResult GetFlightsAPI(List<string> vertices)
+        //{
+        //    try
+        //    {
+        //        if (vertices.Count > 0)
+        //        {
+        //            var cityList = new List<City>();
 
-                    for (int i = 0; i < vertices.Count; i++)
-                    {
-                        var cityID = vertices[i];
-                        var city = db.Cities.Single(p => p.CityID.Equals(cityID));
-                        cityList.Add(city);
-                    }
-                    RouteUtilities ru = new RouteUtilities();
+        //            for (int i = 0; i < vertices.Count; i++)
+        //            {
+        //                var cityID = vertices[i];
+        //                var city = db.Cities.Single(p => p.CityID.Equals(cityID));
+        //                cityList.Add(city);
+        //            }
+        //            FlightScheduleUtilities ru = new FlightScheduleUtilities();
 
-                    var dataResult = ru.FindFlight(cityList);
+        //            var dataResult = ru.FindFlight(cityList);
 
-                    var result = dataResult.Select(q => q.Select(p => new
-                    {
-                        Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
-                        Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
-                        Duration = TimeSpan.FromHours(p.Duration).ToString("h\\h\\ mm\\m\\ "),
-                        Price = p.CurrentPrice + " VND"
-                    }));
+        //            var result = dataResult.Select(q => q.Select(p => new
+        //            {
+        //                Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
+        //                Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
+        //                Duration = TimeSpan.FromHours(p.Duration).ToString("h\\h\\ mm\\m\\ "),
+        //                Price = p.CurrentPrice + " VND"
+        //            }));
 
-                    return Json(result, JsonRequestBehavior.AllowGet);
+        //            return Json(result, JsonRequestBehavior.AllowGet);
 
-                }
-                else
-                {
-                    return Json(0, JsonRequestBehavior.AllowGet);
-                }
+        //        }
+        //        else
+        //        {
+        //            return Json(0, JsonRequestBehavior.AllowGet);
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        //        return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
 
-            }
-        }
+        //    }
+        //}
 
         /// <summary>
         /// Get a list of cities
@@ -121,7 +119,6 @@ namespace AirlineReservation.Controllers
                 Console.WriteLine(ex.Message);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
-
             }
         }
 
@@ -152,6 +149,5 @@ namespace AirlineReservation.Controllers
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
             }
         }
-
     }
 }

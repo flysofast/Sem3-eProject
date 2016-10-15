@@ -28,7 +28,7 @@
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-3" type="button" class="btn btn-default btn-circle" style="opacity: 1">3</a>
-                    <p>Select flight</p>
+                    <p>Select flights</p>
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-4" type="button" class="btn btn-default btn-circle" style="opacity: 1">4</a>
@@ -147,7 +147,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">
-                            <select class="form-control class-list">
+                            <select id="DepartureClass" class="form-control class-list">
                             </select>
                         </div>
                     </div>
@@ -157,7 +157,7 @@
                     <div class="form-group" id="returnClass">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">
-                            <select class="form-control class-list">
+                            <select id="ReturningClass" class="form-control class-list">
                             </select>
                         </div>
                     </div>
@@ -214,10 +214,10 @@
 
                         <ul class="nav nav-tabs" style="margin-bottom: 22px">
                             <li class="active">
-                                <a data-toggle="tab" href="#departureFlight">Departure Flight</a>
+                                <a data-toggle="tab" href="#departureFlight">Departure Flights</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#returnFlight">Return Flight(s)</a>
+                                <a data-toggle="tab" href="#returnFlight">Returning Flights</a>
                             </li>
                         </ul>
                         <div class="row">
