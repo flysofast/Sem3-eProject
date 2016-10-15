@@ -48,6 +48,9 @@
                         <a class="page-scroll" href="#services">Tickets</a>
                     </li>
                     <li>
+                        <a class="page-scroll" href="Personal">Personal</a>
+                    </li>
+                    <li>
                         <a class="page-scroll" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
                     </li>
                     <li>
