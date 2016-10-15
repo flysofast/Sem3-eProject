@@ -1,5 +1,6 @@
 ﻿//------------------------------------STEP 1------------------------------------------
-var _selectedRoute;//[{CityID,CityName},{...},...{...}]
+var _selectedRoute;//[{<CityID>,<CityName>},{...},...{...}]
+
 function GetPossibleFlightSchedule() {
     var original = $('#fromLocation').val();
     var destination = $('#toLocation').val();
@@ -150,6 +151,9 @@ function SubmitStep1() {
     InitStep2();
 }
 //------------------------------------STEP 2------------------------------------------
+var _passengersNumber;//{<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>}
+var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returning flight, otherwise one way flight
+
 function GetClassList(dropdownControl) {
     $.ajax({
         url: 'Home/GetClassListAPI',
@@ -177,6 +181,26 @@ function InitStep2() {
     document.getElementById("inputReturnDate").valueAsDate = new Date()
     GetClassList($('.class-list'));
 }
+
+function SubmitStep2() {
+    _passengersNumber = {
+        AdultsNumber: $("#adultsNo").val(),
+        ChildrenNumber: $("#childrenNo").val(),
+        SeniorCitizensNumber: $("#elderNo").val(),
+    }
+
+    var departureDate = new Date($('#inputDepartureDate').val());
+    if (document.getElementById("optFlightReturn").checked) {
+        var returningDate = new Date($('#inputReturnDate').val());
+        _dates = [departureDate, returningDate];
+
+    }
+    else {
+        _dates = [departureDate];
+    }
+
+}
+adultsNo
 
 //------------------------------------------STEP 3---------------------------
 function GetFlights(vertices) {

@@ -131,9 +131,9 @@
                         <label class="control-label col-sm-3" for="To">Type:</label>
                         <div class="col-sm-9">
                             <label class="radio-inline">
-                                <input type="radio" id="optFlightOneWay" name="optFlight" checked>One-way</label>
+                                <input type="radio" id="optFlightOneWay" name="optFlight" checked="checked" />One-way</label>
                             <label class="radio-inline">
-                                <input type="radio" id="optFlightReturn" name="optFlight">Return</label>
+                                <input type="radio" id="optFlightReturn" name="optFlight" />Return</label>
                         </div>
                     </div>
                     <div class="form-group" id="returnDateForm">
@@ -203,7 +203,7 @@
                         </div>
                     </div>
                 </div>
-                <button id="btStep2Submit" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="submitStep2">Next</button>
+                <button id="btStep2Submit" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep2()">Next</button>
             </div>
             <div class="row setup-content" id="step-3">
                 <div class="col-xs-12">
@@ -254,14 +254,15 @@
                                                         <div class="thumbnail">
                                                             From Ha Noi(HN) To Hue (HUE)
                                                       <div class="caption">
-                                                        <h3>Detail</h3>
-                                                        <p class="card-description">
-                                                            Depart: 13:00<br />
-                                                            Arrive: 13:30<br />
-                                                            Duration: 00:30<br />
-                                                            Seat: <span id="seatChoose"></span><br />
-                                                            <button onclick="selectSeatWithFlightID(1)">click</button>
-                                                        </p>
+                                                          <h3>Detail</h3>
+                                                          <p class="card-description">
+                                                              Depart: 13:00<br />
+                                                              Arrive: 13:30<br />
+                                                              Duration: 00:30<br />
+                                                              Seat: <span id="seatChoose"></span>
+                                                              <br />
+                                                              <button onclick="selectSeatWithFlightID(1)">click</button>
+                                                          </p>
                                                       </div>
                                                         </div>
                                                     </div>
@@ -478,124 +479,121 @@
                         <div class="flight-result" style="padding: 25px; width: 80%">
                             <div class="card card-block">
                                 <div class="card card-block" style="padding: 20px;">
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-4">
-                                    <div class="thumbnail">
-                                        Customer Information
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                Customer Information
                                         <div class="caption">
-                                        <h3>Thai Bao Nguyen</h3>
-                                        <p class="card-description">
-                                            <table class="table" style="text-align: left;">
-                                              <tr>
-                                                <td>First Name</td>
-                                                <td>Thai Bao</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Last Name</td>
-                                                <td>Nguyen</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Email</td>
-                                                <td>bao@gmail.com</td>
-                                              </tr>
-                                                <tr>
-                                                <td>Phone number</td>
-                                                <td>0123456789</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Gender</td>
-                                                <td>male</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Day of Birth</td>
-                                                <td>01/01/1992</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Credit Card</td>
-                                                <td>00233342343</td>
-                                              </tr>
-                                          </table>
-                                        </p>
+                                            <h3>Thai Bao Nguyen</h3>
+                                            <p class="card-description">
+                                                <table class="table" style="text-align: left;">
+                                                    <tr>
+                                                        <td>First Name</td>
+                                                        <td>Thai Bao</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Last Name</td>
+                                                        <td>Nguyen</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Email</td>
+                                                        <td>bao@gmail.com</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phone number</td>
+                                                        <td>0123456789</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Gender</td>
+                                                        <td>male</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Day of Birth</td>
+                                                        <td>01/01/1992</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Credit Card</td>
+                                                        <td>00233342343</td>
+                                                    </tr>
+                                                </table>
+                                            </p>
+                                        </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                Ticket Detail
+                                        <div class="caption">
+                                            <h3>Detail</h3>
+                                            <p class="card-description">
+                                                <table class="table" style="text-align: left;">
+                                                    <tr>
+                                                        <td colspan="2">Departure Flight</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>From</td>
+                                                        <td>Ha Noi</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>To</td>
+                                                        <td>Ho Chi Minh</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Departure date:</td>
+                                                        <td>15/10/2016</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="table" style="text-align: left;">
+                                                    <tr>
+                                                        <td colspan="2">Return Flight</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>From</td>
+                                                        <td>Ha Noi</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>To</td>
+                                                        <td>Ho Chi Minh</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Return date:</td>
+                                                        <td>20/10/2016</td>
+                                                    </tr>
+                                                </table>
+                                            </p>
+                                        </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                Customer Information
+                                        <div class="caption">
+                                            <h3>Passenger and Cost</h3>
+                                            <p class="card-description">
+                                                <table class="table" style="text-align: left;">
+                                                    <tr>
+                                                        <td>Adult:</td>
+                                                        <td>1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Senior:</td>
+                                                        <td>1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Infant:</td>
+                                                        <td>1</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total:</td>
+                                                        <td>100000</td>
+                                                    </tr>
+                                                </table>
+                                            </p>
+                                        </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                    <div class="thumbnail">
-                                        Ticket Detail
-                                        <div class="caption">
-                                        <h3>Detail</h3>
-                                        <p class="card-description">
-                                            <table class="table" style="text-align: left;">
-                                              <tr>
-                                                <td colspan="2">Departure Flight</td>
-                                              </tr>
-                                              <tr>
-                                                <td>From</td>
-                                                <td>Ha Noi</td>
-                                              </tr>
-                                              <tr>
-                                                <td>To</td>
-                                                <td>Ho Chi Minh</td>
-                                              </tr>
-                                                <tr>
-                                                <td>Departure date:</td>
-                                                <td>15/10/2016</td>
-                                              </tr>
-                                              
-                                              
-                                          </table>
-                                            <table class="table" style="text-align: left;">
-                                                <tr>
-                                                <td colspan="2">Return Flight</td>
-                                              </tr>
-                                              <tr>
-                                                <td>From</td>
-                                                <td>Ha Noi</td>
-                                              </tr>
-                                              <tr>
-                                                <td>To</td>
-                                                <td>Ho Chi Minh</td>
-                                              </tr>
-                                                <tr>
-                                                <td>Return date:</td>
-                                                <td>20/10/2016</td>
-                                              </tr>
-                                            </table>
-                                            
-                                        </p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                    <div class="thumbnail">
-                                        Customer Information
-                                        <div class="caption">
-                                        <h3>Passenger and Cost</h3>
-                                        <p class="card-description">
-                                            <table class="table" style="text-align: left;">
-                                                <tr>
-                                                <td>Adult:</td>
-                                                <td>1</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Senior:</td>
-                                                <td>1</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Infant:</td>
-                                                <td>1</td>
-                                              </tr>
-                                              <tr>
-                                                <td>Total:</td>
-                                                <td>100000</td>
-                                              </tr>
-                                            </table>
-                                        </p>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                            </div>
+                                </div>
                             </div>
                         </div>
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>

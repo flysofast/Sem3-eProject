@@ -24,7 +24,7 @@ internal class Dijkstra
         if (firstVer == -1 || lastVer == -1)
         {
             Console.WriteLine("Invalid city IDs");
-            throw new KeyNotFoundException("There is no city matches one or all of these IDs");
+            throw new KeyNotFoundException("One or both of these cities are not available right now");
         }
 
         // Initialize
