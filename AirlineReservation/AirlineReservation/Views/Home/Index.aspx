@@ -259,6 +259,8 @@
                                                             Depart: 13:00<br />
                                                             Arrive: 13:30<br />
                                                             Duration: 00:30<br />
+                                                            Seat: <span id="seatChoose"></span><br />
+                                                            <button onclick="selectSeatWithFlightID(1)">click</button>
                                                         </p>
                                                       </div>
                                                         </div>
