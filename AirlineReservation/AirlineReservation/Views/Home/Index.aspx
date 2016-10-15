@@ -20,27 +20,27 @@
             <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step">
                     <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-                    <p>Search Route</p>
+                    <p>Flight schedule</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">2</a>
-                    <p>Ticket Requirement</p>
+                    <a href="#step-2" type="button" class="btn btn-default btn-circle" style="opacity: 1">2</a>
+                    <p>Ticket information</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">3</a>
+                    <a href="#step-3" type="button" class="btn btn-default btn-circle" style="opacity: 1">3</a>
                     <p>Select flight</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">4</a>
+                    <a href="#step-4" type="button" class="btn btn-default btn-circle" style="opacity: 1">4</a>
                     <p>Check Login/ Register</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled style="opacity: 1">5</a>
+                    <a href="#step-5" type="button" class="btn btn-default btn-circle" style="opacity: 1">5</a>
                     <p>Summary</p>
                 </div>
             </div>
         </div>
-        <form role="form" action="" method="post" class="form-horizontal">
+        <form role="form" method="post" class="form-horizontal">
             <div class="row setup-content" id="step-1">
                 <div class="col-xs-12">
                     <div class="col-md-12">
@@ -209,8 +209,8 @@
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3>Select Flight</h3>
-                        <h4>Hanoi (HAN) → Ho Chi Minh City (SGN)</h4>
-                        <h4>Monday, October 3, 20161 Adult</h4>
+                        <h4><span id="routeTitle"></span></h4>
+                        <h4><span id="routeInfo"></span></h4>
 
                         <ul class="nav nav-tabs" style="margin-bottom: 22px">
                             <li class="active">
@@ -223,10 +223,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-2">Airline</div>
-                                <div class="col-md-2">Depart</div>
-                                <div class="col-md-2">Arrive</div>
+                                <div class="col-md-2">Departure</div>
+                                <div class="col-md-2">Arrival</div>
                                 <div class="col-md-2">Duration</div>
-                                <div class="col-md-2">Price per person</div>
+                                <div class="col-md-2">Cost per person</div>
                                 <div class="col-md-2">Select</div>
                             </div>
                         </div>

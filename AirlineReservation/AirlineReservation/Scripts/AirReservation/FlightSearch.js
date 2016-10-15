@@ -193,16 +193,22 @@ function SubmitStep2() {
     if (document.getElementById("optFlightReturn").checked) {
         var returningDate = new Date($('#inputReturnDate').val());
         _dates = [departureDate, returningDate];
-
     }
     else {
         _dates = [departureDate];
     }
 
+    InitStep3();
 }
-adultsNo
 
 //------------------------------------------STEP 3---------------------------
+function InitStep3() {
+    $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
+        + _selectedRoute[_selectedRoute.length - 1].CityID + " (" + _selectedRoute[_selectedRoute.length - 1].CityName + ")");
+
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    $("#routeInfo").html(_dates[0].toLocaleString([], options));
+}
 function GetFlights(vertices) {
     $.ajax({
         url: 'Home/GetFlightsAPI',
