@@ -240,7 +240,9 @@
                                             <div class="col-md-2 vcenter">From Hanoi</div>
                                             <div class="col-md-2 vcenter">To Hue</div>
                                             <div class="col-md-2 vcenter">Duration</div>
-                                            <div class="col-md-2 vcenter">Price</div>
+                                            <div class="col-md-2 vcenter">Seats</div>
+                                            <div class="col-md-1 vcenter">Price</div>
+                                            <div class="col-md-1 vcenter">Select</div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -250,8 +252,9 @@
                                             <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
                                             <div class="col-md-2 vcenter">17:00 (Hue)</div>
                                             <div class="col-md-2 vcenter">02:00 </div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="seatChoose"></span> </div>
+                                            <div class="col-md-1 vcenter">1.000.000</div>
+                                            <div class="col-md-1">
                                                 <input type="radio" name="optDepartureFlight">
                                             </div>
                                         </div>
@@ -265,7 +268,9 @@
                                             <div class="col-md-2 vcenter">From Hue</div>
                                             <div class="col-md-2 vcenter">To Ho Chi Minh</div>
                                             <div class="col-md-2 vcenter">Duration</div>
-                                            <div class="col-md-2 vcenter">Price</div>
+                                            <div class="col-md-2 vcenter">Seats</div>
+                                            <div class="col-md-1 vcenter">Price</div>
+                                            <div class="col-md-1 vcenter">Select</div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -275,8 +280,9 @@
                                             <div class="col-md-2 vcenter">17:30 (Hue)</div>
                                             <div class="col-md-2 vcenter">18:30 (Ho Chi Minh)</div>
                                             <div class="col-md-2 vcenter">01:00 </div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span1"></span> </div>
+                                            <div class="col-md-1 vcenter">1.000.000</div>
+                                            <div class="col-md-1">
                                                 <input type="radio" name="optDepartureFlight">
                                             </div>
                                         </div>
@@ -295,7 +301,9 @@
                                             <div class="col-md-2 vcenter">From Hanoi</div>
                                             <div class="col-md-2 vcenter">To Hue</div>
                                             <div class="col-md-2 vcenter">Duration</div>
-                                            <div class="col-md-2 vcenter">Price</div>
+                                            <div class="col-md-2 vcenter">Seats</div>
+                                            <div class="col-md-1 vcenter">Price</div>
+                                            <div class="col-md-1 vcenter">Select</div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -305,39 +313,16 @@
                                             <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
                                             <div class="col-md-2 vcenter">17:00 (Hue)</div>
                                             <div class="col-md-2 vcenter">02:00 </div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span2"></span> </div>
+                                            <div class="col-md-1 vcenter">1.000.000</div>
+                                            <div class="col-md-1">
                                                 <input type="radio" name="optDepartureFlight">
                                             </div>
                                         </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flight-result">
-                                    <div class="row" data-toggle="collapse" data-target="#Div3" aria-expanded="false" aria-controls="Div3">
-                                        <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">Route 2</div>
-                                            <div class="col-md-2 vcenter">From Hue</div>
-                                            <div class="col-md-2 vcenter">To Ho Chi Minh</div>
-                                            <div class="col-md-2 vcenter">Duration</div>
-                                            <div class="col-md-2 vcenter">Price</div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="collapse" id="Div3" style="border-top: 1px solid">
-                                            <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">17:30 (Hue)</div>
-                                            <div class="col-md-2 vcenter">18:30 (Ho Chi Minh)</div>
-                                            <div class="col-md-2 vcenter">01:00 </div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
-                                                <input type="radio" name="optDepartureFlight">
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                             <!-- End Return Flight -->
                         </div>
