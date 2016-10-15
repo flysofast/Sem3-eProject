@@ -1,5 +1,6 @@
 ﻿//------------------------------------STEP 1------------------------------------------
-var _selectedRoute;//[{CityID,CityName},{...},...{...}]
+var _selectedRoute;//[{<CityID>,<CityName>},{...},...{...}]
+
 function GetPossibleFlightSchedule() {
     var original = $('#fromLocation').val();
     var destination = $('#toLocation').val();
@@ -150,6 +151,9 @@ function SubmitStep1() {
     InitStep2();
 }
 //------------------------------------STEP 2------------------------------------------
+var _passengers;//{<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>}
+var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returning flight, otherwise one way flight
+
 function GetClassList(dropdownControl) {
     $.ajax({
         url: 'Home/GetClassListAPI',
@@ -178,7 +182,33 @@ function InitStep2() {
     GetClassList($('.class-list'));
 }
 
+function SubmitStep2() {
+    _passengers = {
+        AdultsNumber: $("#adultsNo").val(),
+        ChildrenNumber: $("#childrenNo").val(),
+        SeniorCitizensNumber: $("#elderNo").val(),
+    }
+
+    var departureDate = new Date($('#inputDepartureDate').val());
+    if (document.getElementById("optFlightReturn").checked) {
+        var returningDate = new Date($('#inputReturnDate').val());
+        _dates = [departureDate, returningDate];
+    }
+    else {
+        _dates = [departureDate];
+    }
+
+    InitStep3();
+}
+
 //------------------------------------------STEP 3---------------------------
+function InitStep3() {
+    $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
+        + _selectedRoute[_selectedRoute.length - 1].CityID + " (" + _selectedRoute[_selectedRoute.length - 1].CityName + ")");
+
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers.AdultsNumber + " Children: " + _passengers.ChildrenNumber + " Senior citizens: " + _passengers.SeniorCitizensNumber + "<h4>");
+}
 function GetFlights(vertices) {
     $.ajax({
         url: 'Home/GetFlightsAPI',
