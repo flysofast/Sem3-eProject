@@ -151,7 +151,7 @@ function SubmitStep1() {
     InitStep2();
 }
 //------------------------------------STEP 2------------------------------------------
-var _passengersNumber;//{<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>}
+var _passengers;//{<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>}
 var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returning flight, otherwise one way flight
 
 function GetClassList(dropdownControl) {
@@ -183,7 +183,7 @@ function InitStep2() {
 }
 
 function SubmitStep2() {
-    _passengersNumber = {
+    _passengers = {
         AdultsNumber: $("#adultsNo").val(),
         ChildrenNumber: $("#childrenNo").val(),
         SeniorCitizensNumber: $("#elderNo").val(),
@@ -207,7 +207,7 @@ function InitStep3() {
         + _selectedRoute[_selectedRoute.length - 1].CityID + " (" + _selectedRoute[_selectedRoute.length - 1].CityName + ")");
 
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-    $("#routeInfo").html(_dates[0].toLocaleString([], options));
+    $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers.AdultsNumber + " Children: " + _passengers.ChildrenNumber + " Senior citizens: " + _passengers.SeniorCitizensNumber + "<h4>");
 }
 function GetFlights(vertices) {
     $.ajax({

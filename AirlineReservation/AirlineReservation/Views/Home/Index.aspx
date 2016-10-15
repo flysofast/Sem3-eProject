@@ -44,7 +44,7 @@
             <div class="row setup-content" id="step-1">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3 style="font-weight: bold;">Form search</h3>
+                        <h3 style="font-weight: bold;">Flight scheduler</h3>
                         <div class="row" style="padding-top: 34px">
                             <div class="col-xs-6 col-md-4">
                                 <div class="form-group">
@@ -179,7 +179,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="To">Children:</label>
                         <div class="col-sm-9">
-                            <input id="childrenNo" type="number" class="form-control" value="1" style="width: 30%" />
+                            <input id="childrenNo" type="number" class="form-control" value="0" style="width: 30%" />
                             <%--<select class="form-control" style="width: 56px">
                                 <option>1</option>
                                 <option>2</option>
@@ -192,7 +192,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="To">Senior citizens:</label>
                         <div class="col-sm-9">
-                            <input id="elderNo" type="number" class="form-control" value="1" style="width: 30%" />
+                            <input id="elderNo" type="number" class="form-control" value="0" style="width: 30%" />
                             <%-- <select class="form-control" style="width: 56px">
                                 <option>1</option>
                                 <option>2</option>
@@ -217,7 +217,7 @@
                                 <a data-toggle="tab" href="#departureFlight">Departure Flight</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#returnFlight">Return Flight</a>
+                                <a data-toggle="tab" href="#returnFlight">Return Flight(s)</a>
                             </li>
                         </ul>
                         <div class="row">
