@@ -52,7 +52,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-control input-xlarg" id="fromLocation">
                                         </select>
-                                        <span class="suggestion-text">This city is not under service.<br />
+                                        <span class="suggestion-text" style="display:none">This city is not under service.<br />
                                             <a>Click here </a>to choose the nearest available city instead <span class="alter-city-details"></span></span>
                                     </div>
                                 </div>

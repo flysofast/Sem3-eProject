@@ -1,17 +1,18 @@
 ﻿using AirlineReservation.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal class FlightScheduleUtilities
+public class FlightScheduleUtilities
 {
     private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
 
-    private List<Flight> FindFlightsOfRoute(City originalCity, City destinationCity, int passengers, string className, DateTime date)
+    public List<Flight> FindFlightsOfRoute(string originalCityID, string destinationCityID, int passengers, string className, DateTime date)
     {
-        var route = db.Routes.FirstOrDefault(p => p.InService && p.OriginalCityID == originalCity.CityID && p.DestinationCityID == destinationCity.CityID);
+        var route = db.Routes.FirstOrDefault(p => p.InService && p.OriginalCityID == originalCityID && p.DestinationCityID == destinationCityID);
 
         if (route == null)
         {
@@ -24,7 +25,9 @@ internal class FlightScheduleUtilities
             flight.RouteID == route.RouteID &&
 
             //Check departure date
-            DateTime.Compare(flight.DepartureTime.Date, date) == 0 &&
+            //DateTime.Compare(flight.DepartureTime.Date, date) == 0 &&
+            //flight.DepartureTime == date &&
+            EntityFunctions.TruncateTime(flight.DepartureTime) == EntityFunctions.TruncateTime(date) &&
 
             //Check if there are enough available seats of the requested class
 
@@ -38,12 +41,12 @@ internal class FlightScheduleUtilities
         ).ToList();
     }
 
-    public List<List<Flight>> FindFlights(List<City> citySequence, int passengers, string className, DateTime date)
+    public List<List<Flight>> FindFlights(List<string> cityIDSequence, int passengers, string className, DateTime date)
     {
         List<List<Flight>> result = new List<List<Flight>>();
-        for (int i = 0; i < citySequence.Count - 1; i++)
+        for (int i = 0; i < cityIDSequence.Count - 1; i++)
         {
-            result.Add(FindFlightsOfRoute(citySequence[i], citySequence[i + 1], passengers, className, date));
+            result.Add(FindFlightsOfRoute(cityIDSequence[i], cityIDSequence[i + 1], passengers, className, date));
         }
 
         return result;
