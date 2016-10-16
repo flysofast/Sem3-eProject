@@ -220,7 +220,7 @@
                                 <a data-toggle="tab" href="#returnFlight">Returning Flights</a>
                             </li>
                         </ul>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-2">Airline</div>
                                 <div class="col-md-2">Departure</div>
@@ -229,58 +229,63 @@
                                 <div class="col-md-2">Cost per person</div>
                                 <div class="col-md-2">Select</div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="tab-content">
                             <!-- Departure Flight-->
                             <div id="departureFlight" class="tab-pane fade in active">
                                 <div class="flight-result">
                                     <div class="row" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                         <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
-                                            <div class="col-md-2 vcenter">17:00 (HCM)</div>
-                                            <div class="col-md-2 vcenter">02:00 (Transhipped)</div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
-                                                <input type="radio" name="optDepartureFlight">
-                                            </div>
+                                            <div class="col-md-2 vcenter">Route 1</div>
+                                            <div class="col-md-2 vcenter">From Hanoi</div>
+                                            <div class="col-md-2 vcenter">To Hue</div>
+                                            <div class="col-md-2 vcenter">Duration</div>
+                                            <div class="col-md-2 vcenter">Seats</div>
+                                            <div class="col-md-1 vcenter">Price</div>
+                                            <div class="col-md-1 vcenter">Select</div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="collapse" id="collapseExample" style="border-top: 1px solid">
-                                            <div class="card card-block" style="padding: 20px;">
-                                                <div class="row">
-                                                    <div class="col-sm-6 col-md-4">
-                                                        <div class="thumbnail">
-                                                            From Ha Noi(HN) To Hue (HUE)
-                                                      <div class="caption">
-                                                          <h3>Detail</h3>
-                                                          <p class="card-description">
-                                                              Depart: 13:00<br />
-                                                              Arrive: 13:30<br />
-                                                              Duration: 00:30<br />
-                                                              Seat: <span id="seatChoose"></span>
-                                                              <br />
-                                                              <button onclick="selectSeatWithFlightID(1)">click</button>
-                                                          </p>
-                                                      </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6 col-md-4">
-                                                        <div class="thumbnail">
-                                                            From Hue(HUE) To Ho Chi Minh (HCM)
-                                                      <div class="caption">
-                                                          <h3>Detail</h3>
-                                                          <p class="card-description">
-                                                              Depart: 14:00<br />
-                                                              Arrive: 14:30<br />
-                                                              Duration: 00:30<br />
-                                                          </p>
-                                                      </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-12">
+                                            <div class="col-md-2 vcenter">VietName Airline</div>
+                                            <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
+                                            <div class="col-md-2 vcenter">17:00 (Hue)</div>
+                                            <div class="col-md-2 vcenter">02:00 </div>
+                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="seatChoose"></span> </div>
+                                            <div class="col-md-1 vcenter">1.000.000</div>
+                                            <div class="col-md-1">
+                                                <input type="radio" name="optDepartureFlight">
                                             </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flight-result">
+                                    <div class="row" data-toggle="collapse" data-target="#Div1" aria-expanded="false" aria-controls="Div1">
+                                        <div class="col-md-12">
+                                            <div class="col-md-2 vcenter">Route 2</div>
+                                            <div class="col-md-2 vcenter">From Hue</div>
+                                            <div class="col-md-2 vcenter">To Ho Chi Minh</div>
+                                            <div class="col-md-2 vcenter">Duration</div>
+                                            <div class="col-md-2 vcenter">Seats</div>
+                                            <div class="col-md-1 vcenter">Price</div>
+                                            <div class="col-md-1 vcenter">Select</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="collapse" id="Div1" style="border-top: 1px solid">
+                                            <div class="col-md-12">
+                                            <div class="col-md-2 vcenter">VietName Airline</div>
+                                            <div class="col-md-2 vcenter">17:30 (Hue)</div>
+                                            <div class="col-md-2 vcenter">18:30 (Ho Chi Minh)</div>
+                                            <div class="col-md-2 vcenter">01:00 </div>
+                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span1"></span> </div>
+                                            <div class="col-md-1 vcenter">1.000.000</div>
+                                            <div class="col-md-1">
+                                                <input type="radio" name="optDepartureFlight">
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -290,55 +295,34 @@
                             <!-- Return Flight-->
                             <div id="returnFlight" class="tab-pane fade">
                                 <div class="flight-result">
-                                    <div class="row" data-toggle="collapse" data-target="#Div3" aria-expanded="false" aria-controls="Div3">
+                                    <div class="row" data-toggle="collapse" data-target="#Div2" aria-expanded="false" aria-controls="Div2">
                                         <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">15:00 (Hanoi)</div>
-                                            <div class="col-md-2 vcenter">17:00 (HCM)</div>
-                                            <div class="col-md-2 vcenter">02:00 (Direct)</div>
-                                            <div class="col-md-2 vcenter">1.000.000</div>
-                                            <div class="col-md-2">
-                                                <input type="radio" name="optReturnFlight">
-                                            </div>
+                                            <div class="col-md-2 vcenter">Route 1</div>
+                                            <div class="col-md-2 vcenter">From Hanoi</div>
+                                            <div class="col-md-2 vcenter">To Hue</div>
+                                            <div class="col-md-2 vcenter">Duration</div>
+                                            <div class="col-md-2 vcenter">Seats</div>
+                                            <div class="col-md-1 vcenter">Price</div>
+                                            <div class="col-md-1 vcenter">Select</div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="collapse" id="Div3">
-                                            <div class="card card-block">
-                                                <div class="card card-block" style="padding: 20px;">
-                                                    <div class="row">
-                                                        <div class="col-sm-6 col-md-4">
-                                                            <div class="thumbnail">
-                                                                From Ha Noi(HN) To Hue (HUE)
-                                                      <div class="caption">
-                                                          <h3>Detail</h3>
-                                                          <p class="card-description">
-                                                              Depart: 13:00<br />
-                                                              Arrive: 13:30<br />
-                                                              Duration: 00:30<br />
-                                                          </p>
-                                                      </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 col-md-4">
-                                                            <div class="thumbnail">
-                                                                From Hue(HUE) To Ho Chi Minh (HCM)
-                                                      <div class="caption">
-                                                          <h3>Detail</h3>
-                                                          <p class="card-description">
-                                                              Depart: 14:00<br />
-                                                              Arrive: 14:30<br />
-                                                              Duration: 00:30<br />
-                                                          </p>
-                                                      </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        <div class="collapse" id="Div2" style="border-top: 1px solid">
+                                            <div class="col-md-12">
+                                            <div class="col-md-2 vcenter">VietName Airline</div>
+                                            <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
+                                            <div class="col-md-2 vcenter">17:00 (Hue)</div>
+                                            <div class="col-md-2 vcenter">02:00 </div>
+                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span2"></span> </div>
+                                            <div class="col-md-1 vcenter">1.000.000</div>
+                                            <div class="col-md-1">
+                                                <input type="radio" name="optDepartureFlight">
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                             <!-- End Return Flight -->
                         </div>
