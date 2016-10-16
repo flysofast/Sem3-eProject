@@ -25,6 +25,7 @@ namespace AirlineReservation.Models
         public System.DateTime DepartureTime { get; set; }
         public int RouteID { get; set; }
         public double Duration { get; set; }
+        public double CancellationFee { get; set; }
     
         public virtual Route Route { get; set; }
         public virtual ICollection<TakenSeat> TakenSeats { get; set; }

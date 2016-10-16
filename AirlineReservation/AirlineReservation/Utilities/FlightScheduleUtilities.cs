@@ -16,7 +16,7 @@ public class FlightScheduleUtilities
 
         if (route == null)
         {
-            return null;
+            return new List<Flight>(); ;
         }
 
         return db.Flights.Where(flight =>

@@ -38,15 +38,16 @@ namespace AirlineReservation.Controllers
                         p.CityID,
                         p.CityName
                     }).ToList();
+                    var classes = new List<string>();
+                    classes.Add("First class");
+                    var dates = new List<DateTime>();
+                    dates.Add(new DateTime(2016, 10, 20));
+                    var passengers = new List<int>();
+                    passengers.Add(2);
+                    passengers.Add(0);
+                    passengers.Add(0);
 
-                    FlightScheduleUtilities fu = new FlightScheduleUtilities();
-                    var a = fu.FindFlightsOfRoute(path[0].CityID, path[1].CityID, 3, "First class", new DateTime(2016, 10, 20));
-                    var s = "";
-                    foreach (var item in a)
-                    {
-                        s += string.Format("NO: {0} ORI: {1} DES: {2} DEP: {3} AVAIL: {4}\n", item.FlightNo, item.Route.OriginalCityID, item.Route.DestinationCityID, item.DepartureTime.ToString("d/MM/yyyy H:mm"), db.Seats.Count() - item.TakenSeats.Count());
-                        Console.WriteLine(s);
-                    }
+                    //GetFlightsAPI(path.Select(p => p.CityID).ToList(), classes, dates, passengers, false);
 
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
@@ -161,22 +162,25 @@ namespace AirlineReservation.Controllers
         /// <summary>
         /// Gets flight lists of the flight schedule
         /// </summary>
-        /// <param name="route"></param>
+        /// <param name="routes"></param>
         /// <param name="classes"></param>
         /// <param name="dates"></param>
         /// <param name="passengers"></param>
         /// <param name="isReturning"></param>
         /// <returns>List of flight lists.
+        /// If the flight list for a route is not available, makes it an empty list
         /// If one-way flight, returns a list with 1 object (a list of departure flights), otherwise returns 2 lists (departure and returning flights)
-        /// If the route is not found, returns 0</returns>
-        public JsonResult GetFlightsAPI(List<string> route, List<string> classes, List<DateTime> dates, List<int> passengers, bool isReturning)
+        /// If the whole schedule cannot be found, returns 0</returns>
+        public JsonResult GetFlightsAPI(List<string> routes, List<string> classes, List<DateTime> dates, List<int> passengers, bool isReturning)
         {
             try
             {
-                if (route.Count > 0)
+                //If the routes schedule has less than 1 route, it's a false data. Return 0.
+                if (routes.Count > 1)
                 {
                     // Posible Schedules: [ Departure flight lists:[ Node 1 flight list: [AR001, AR002,...], Node 2 flight list: [AR034, AR374...], Returning flight lists: [ [....]   ]  ]   ]
-                    List<List<List<Flight>>> result = new List<List<List<Flight>>>();
+                    //List<List<List<Flight>>> result = new List<List<List<Flight>>>();
+                    var result = new List<object>();
 
                     //Number of requested seats
                     int numberOfRequestedSeats = 0;
@@ -189,53 +193,69 @@ namespace AirlineReservation.Controllers
                         numberOfRequestedSeats += item;
                     }
 
-                    #region Departure flight search
-
-                    //Departure date
-                    var requestedDate = dates[0].Date;
-
-                    // Node list
-                    //var cityList = new List<City>();
-
-                    //for (int i = 0; i < route.Count; i++)
-                    //{
-                    //    var cityID = route[i];
-                    //    var city = db.Cities.Single(p => p.CityID.Equals(cityID));
-                    //    cityList.Add(city);
-                    //}
-
-                    //db.TakenSeats.Where(tk => tk.FlightNo.Equals(p.FlightNo) && tk.Seat.Class.Equals(classes[0])).Select(tk => tk.Seat)
                     FlightScheduleUtilities ru = new FlightScheduleUtilities();
 
-                    var searchResult = ru.FindFlights(route, numberOfRequestedSeats, classes[0], dates[0]);
+                    #region Departure flight search
 
-                    var departureFlightLists = searchResult.Select(node =>
-
-                    //node.Where(flight =>
-
-                    //    //Check departure date
-                    //    DateTime.Compare(flight.DepartureTime.Date, requestedDate) == 0 &&
-
-                    //    //Check if there are enough available seats of the requested class
-
-                    //    //All the seats of the class
-                    //    db.Seats.Where(seat => seat.Class.Equals(classes[0]))
-                    //    //Except for those seats that have been taken of that flight
-                    //    .Except(db.TakenSeats.Where(takenSeat => takenSeat.FlightNo.Equals(flight.FlightNo) && takenSeat.Seat.Class.Equals(classes[0]))
-                    //        .Select(tk => tk.Seat))
-
-                    //    .Count() >= numberOfRequestedSeats
-
-                    //)
-                    node.Select(flight => new
+                    var searchResult = ru.FindFlights(routes, numberOfRequestedSeats, classes[0], dates[0].Date);
+                    var departureFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
                     {
+                        FlightNumber = flight.FlightNo,
                         Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
                         Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
                         Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
-                        Price = flight.CurrentPrice + " VND"
-                    }));
+                        Price = flight.CurrentPrice + " VND",
+                    })).ToList();
+
+                    result.Add(departureFlightLists);
+
+                    #region TEST
+
+                    //var s = "";
+                    //foreach (var list in departureFlightLists)
+                    //{
+                    //    if (list.Count() > 0)
+                    //    {
+                    //        foreach (var flight in list)
+                    //        {
+                    //            s += string.Format("{0} - DEP: {1} - Arr: {2} - Duration: {3} - Price: {4}\n", flight.FlightNumber, flight.Departure, flight.Arrival, flight.Duration, flight.Price);
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        s += "Not found\n";
+                    //    }
+
+                    //    s += "------------------------------------\n";
+                    //}
+
+                    #endregion TEST
 
                     #endregion Departure flight search
+
+                    #region Returning flight search
+
+                    //If returning flight
+                    if (isReturning)
+                    {
+                        var returningPath = new List<string>();
+                        returningPath.Add(routes.Last());
+                        returningPath.Add(routes.First());
+
+                        searchResult = ru.FindFlights(returningPath, numberOfRequestedSeats, classes[1], dates[1].Date);
+                        var returningFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                        {
+                            FlightNumber = flight.FlightNo,
+                            Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
+                            Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                            Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
+                            Price = flight.CurrentPrice + " VND",
+                        })).ToList();
+
+                        result.Add(returningFlightLists);
+                    }
+
+                    #endregion Returning flight search
 
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
