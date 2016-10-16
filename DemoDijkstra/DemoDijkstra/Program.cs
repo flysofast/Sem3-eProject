@@ -14,7 +14,8 @@ namespace DemoDijkstra
 
         private static void Main(string[] args)
         {
-            //GenerateFlights();
+            //GenerateFlights(20, 20);
+            //return;
 
             //GenerateSeats();
 
@@ -37,6 +38,7 @@ namespace DemoDijkstra
 
         private static List<Ticket> GenerateTickets(int number)
         {
+            Console.WriteLine("Started to generate " + number + " ticket(s)");
             var result = new List<Ticket>();
             var flights = db.Flights.ToList();
 
@@ -45,8 +47,9 @@ namespace DemoDijkstra
                 var flight = flights[random.Next(0, flights.Count)];
                 var ticket = CreateTicket(db.Users.ToList()[random.Next(0, db.Users.Count())].UserID, flight, false, random.Next(1, 10));
 
-                flights.Remove(flight);
-                result.Add(ticket);
+                //flights.Remove(flight);
+                if (ticket != null)
+                    result.Add(ticket);
             }
 
             return result;
@@ -89,7 +92,6 @@ namespace DemoDijkstra
                         db.TakenSeats.Add(takenSeat);
                     }
                     db.SaveChanges();
-
                     transaction.Complete();
                     return ticket;
                 }
@@ -225,10 +227,8 @@ namespace DemoDijkstra
             }
         }
 
-        private static void GenerateFlights()
+        private static void GenerateFlights(int numberOfDays, int numberOfFlightPerday)
         {
-            int numberOfFlightPerday = 20;
-            int numberOfDays = 20;
             int currentFlightID = 1;
             DateTime startingDate = DateTime.Now.Date;
             Random r = new Random();
