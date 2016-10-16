@@ -4,6 +4,7 @@
     <link href="../../Content/Airplant.css" rel="stylesheet" />
     <script src="../Scripts/modernizr.js"></script>
     <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
+    <script src="../../Scripts/AirReservation/Step3.js"></script>
 
     <script>
         $(window).load(function () {
@@ -220,16 +221,6 @@
                                 <a class="view-tab" data-toggle="tab" href="#returnFlight">Returning Flights</a>
                             </li>
                         </ul>
-                        <!-- <div class="row">
-                            <div class="col-md-12">
-                                <div class="col-md-2">Airline</div>
-                                <div class="col-md-2">Departure</div>
-                                <div class="col-md-2">Arrival</div>
-                                <div class="col-md-2">Duration</div>
-                                <div class="col-md-2">Cost per person</div>
-                                <div class="col-md-2">Select</div>
-                            </div>
-                        </div> -->
                         <div class="tab-content">
                             <!-- Departure Flight-->
                             <div id="departureFlight" class="tab-pane fade in active">
