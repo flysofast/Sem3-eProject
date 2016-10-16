@@ -224,7 +224,7 @@ function InitStep3() {
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 
     $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers[0] + " Children: "
-        + _passengers[1] + " Senior citizens: " + _passengers[2] + "<h4>");
+        + _passengers[1] + " Senior citizens: " + _passengers[2] + "</h4>");
 }
 
 //Get all possible flights for the schedule and other user's condition
