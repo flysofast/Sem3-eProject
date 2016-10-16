@@ -27,9 +27,9 @@ namespace AirlineReservation.Models
         public string CancellationNo { get; set; }
         public decimal Price { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public Nullable<int> NumberOfAdults { get; set; }
-        public Nullable<int> NumberOfChildren { get; set; }
-        public Nullable<int> NumberOfSeniorCitizens { get; set; }
+        public int NumberOfAdults { get; set; }
+        public int NumberOfChildren { get; set; }
+        public int NumberOfSeniorCitizens { get; set; }
         public int Status { get; set; }
     
         public virtual ICollection<TakenSeat> TakenSeats { get; set; }
