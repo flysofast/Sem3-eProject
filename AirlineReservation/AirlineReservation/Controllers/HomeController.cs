@@ -273,5 +273,83 @@ namespace AirlineReservation.Controllers
         }
 
         #endregion Step 3
+
+        #region Step 4
+
+        /// <summary>
+        /// Login, Register, Recovery
+        /// </summary>
+        public JsonResult isUserLogged()
+        {
+            var sSession = (string)Session["isLogged"] ?? "false";
+            return Json(sSession, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult LoginValidation(string UserID, string Password)
+        {
+            try
+            {
+                var result = db.Users.Where(p => p.UserID == UserID).Where(p => p.Password == Password).FirstOrDefault();
+                if (result != null)
+                {
+                    Session["isLogged"] = "true";
+                    return Json("1", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("0", JsonRequestBehavior.AllowGet);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
+            }
+        }
+
+        public JsonResult CreateNewUserValidation(string UserID, string Password, string FirstName, string LastName, string Email, bool Gender, string Phone,DateTime DOB, string CreditCard)
+        {
+            try
+            {
+                User data = new Models.User();
+                data.UserID = UserID;
+                data.Password = Password;
+                data.FirstName = FirstName;
+                data.LastName = LastName;
+                data.Email = Email;
+                data.Sex = Gender;
+                data.DateOfBirth = DOB;
+                data.PhoneNumber = Phone;
+                data.CreditcardNumber = CreditCard;
+                db.Users.Add(data);
+                
+                return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException e)
+            {
+                //Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+                var outputLines = new List<string>();
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    outputLines.Add(string.Format(
+                        "{0}: Entity of type \"{1}\" in state \"{2}\" has the following validation errors:",
+                        DateTime.Now, eve.Entry.Entity.GetType().Name, eve.Entry.State));
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        outputLines.Add(string.Format(
+                            "- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage));
+                    }
+                }
+
+                return Json(string.Join(",", outputLines.ToArray()), JsonRequestBehavior.AllowGet); ;
+            }
+        }
+
+        #endregion Step 4
     }
 }

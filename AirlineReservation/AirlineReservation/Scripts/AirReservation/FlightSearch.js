@@ -217,6 +217,9 @@ function SubmitStep2() {
 }
 
 //------------------------------------------STEP 3---------------------------
+var _selectedFlightNumber;//[{Departure:<DepartureFlight>,Return:<ReturnFlight>}]
+var _selectedSeat = [];//[{<DepartureFlight>,<Seat>},{<ReturnFlight>,<Seat>} ]
+
 function InitStep3() {
     $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
         + _selectedRoute[_selectedRoute.length - 1].CityID + " (" + _selectedRoute[_selectedRoute.length - 1].CityName + ")");
@@ -251,8 +254,207 @@ function GetFlights() {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            swal("See more in console!", result + '\nSee more details in console', "success");
-            console.log(result);
+            //swal("See more in console!", result + '\nSee more details in console', "success");
+            //Init flight to Departure section
+            $("#departureFlight").html("");
+            for (i = 0; i < result[0].length; i++) {
+                //console.log(result[0][i]);
+                var html = "";
+                html += '<div class="flight-result">';
+                html += '<div class="row" data-toggle="collapse" data-target="#collapse-departurer-' + i + '" aria-expanded="false" aria-controls="collapse-departurer-' + i + '">';
+                html += '<div class="col-md-12">';
+                html += '<div class="col-md-2 vcenter">Route '+i+'</div>';
+                html += '<div class="col-md-2 vcenter">From Hanoi</div>';
+                html += '<div class="col-md-2 vcenter">To Hue</div>';
+                html += '<div class="col-md-2 vcenter">Duration</div>';
+                html += '<div class="col-md-2 vcenter">Seats</div>';
+                html += '<div class="col-md-1 vcenter">Price</div>';
+                html += '<div class="col-md-1 vcenter">Select</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '<div class="row">';
+                html += '<div class="collapse" id="collapse-departurer-' + i + '" style="border-top: 1px solid">';
+                if (result[0][i] == "") {
+                    html += '<div class="col-md-12">There is no available flight for this route, Sorry!</div>';
+                }
+                for (j = 0; j < result[0][i].length; j++) {
+                    html += '<div class="col-md-12">';
+                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['FlightNumber'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['Departure'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['Arrival'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['Duration'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">';
+                    html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + result[0][i][j]['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + result[0][i][j]['FlightNumber'] + '"></span> </div>';
+                    html += '<div class="col-md-1 vcenter">' + result[0][i][j]['Price'] + '</div>';
+                    html += '<div class="col-md-1">';
+                    html += '<input type="radio" name="optDepartureFlight_' + i + '" value="' + result[0][i][j]['FlightNumber'] + '"/>';
+                    //html += '<input type="radio" name="optDepartureFlight" id="optDepartureFlight_' + i + '" value="' + result[0][i][j]['FlightNumber'] + '"/>';
+                    html += '</div>';
+                    html += '</div>';
+                    //console.log(result[0][i][j]);
+                }
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                $("#departureFlight").append(html);
+            }
+            //End Init flight to Departure section
+
+            //Init flight to Return section
+            $("#returnFlight").html("");
+            if (_isReturning) {
+                for (i = 0; i < result[1].length; i++) {
+                    var html = "";
+                    html += '<div class="flight-result">';
+                    html += '<div class="row" data-toggle="collapse" data-target="#collapse-return-' + i + '" aria-expanded="false" aria-controls="collapse-return-' + i + '">';
+                    html += '<div class="col-md-12">';
+                    html += '<div class="col-md-2 vcenter">Route ' + i + '</div>';
+                    html += '<div class="col-md-2 vcenter">From Hanoi</div>';
+                    html += '<div class="col-md-2 vcenter">To Hue</div>';
+                    html += '<div class="col-md-2 vcenter">Duration</div>';
+                    html += '<div class="col-md-2 vcenter">Seats</div>';
+                    html += '<div class="col-md-1 vcenter">Price</div>';
+                    html += '<div class="col-md-1 vcenter">Select</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="row">';
+                    html += '<div class="collapse" id="collapse-return-' + i + '" style="border-top: 1px solid">';
+                    if (result[1][i] == "") {
+                        html += '<div class="col-md-12">There is no available flight for this route, Sorry!</div>';
+                    }
+                    for (j = 0; j < result[1][i].length; j++) {
+                        html += '<div class="col-md-12">';
+                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['FlightNumber'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['Departure'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['Arrival'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['Duration'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">';
+                        html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + result[1][i][j]['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + result[1][i][j]['FlightNumber'] + '"></span> </div>';
+                        html += '<div class="col-md-1 vcenter">' + result[1][i][j]['Price'] + '</div>';
+                        html += '<div class="col-md-1">';
+                        html += '<input type="radio" name="optReturnFlight_' + i + '" value="' + result[1][i][j]['FlightNumber'] + '"/>';
+                        html += '</div>';
+                        html += '</div>';
+                    }
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    $("#returnFlight").append(html);
+                }
+            }
+            //End Init flight to Return section
+        }
+    });
+}
+
+function SubmitStep3() {
+    _selectedFlightNumber = [];
+    _selectedSeat = [];
+    //Set seat and flight number
+    $('input:radio').each(function () {
+
+        var $this = $(this),
+            optRadio = $this.attr('name'),
+            value = $this.attr('value');
+
+        if ($(this).prop('checked')) {
+            if (optRadio.indexOf("Departure") !== -1) {
+                _selectedFlightNumber.push({ 'Departure': value });
+                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html() });
+            }
+            if (optRadio.indexOf("Return") !== -1) {
+                _selectedFlightNumber.push({ 'Return': value });
+                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html() });
+            }            
+            //urls.push('<div class="' + id + '">' + url + '</div>');
+        }
+
+    });
+
+    initStep4();
+}
+
+//------------------------------------------STEP 4---------------------------
+function initStep4() {
+    $.ajax({
+        url: 'Home/isUserLogged',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "true") {
+                $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>');
+            }
+            //console.log(result);
+        }
+    });
+}
+
+function loginValidation(form) {
+    if (form == "main") {
+        var obj = {
+            'UserID': $("#main-login-username").val(),
+            'Password': $("#main-login-password").val()
+        };
+    } else {
+        var obj = {
+            'UserID': $("#step4-login-username").val(),
+            'Password': $("#step4-login-password").val()
+        };
+    }
+    $.ajax({
+        url: 'Home/LoginValidation',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function () {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>');
+                $("#nav-menu-login").hide();
+                $("#nav-menu-personal").show();
+            } else {
+                sweetAlert("Error", "Your account number and password combination are not correct, Please try again!", "error");
+            }
+        }
+    });
+
+}
+
+function createUserInfo() {
+    
+    var obj = {
+        'UserID': $("#step4-register-username").val(),
+        'Password': $("#step4-register-password").val(),
+        'FirstName': $("#step4-register-firstname").val(),
+        'LastName': $("#step4-register-lastname").val(),
+        'Email': $("#step4-register-email").val(),
+        'Gender': $("#step4-register-gender").val(),
+        'Phone': $("#step4-register-phonenumber").val(),
+        'DOB': $("#step4-register-dob").val(),
+        'CreditCard': $("#step4-register-creditcard").val(),
+    };
+    console.log(obj);
+    $.ajax({
+        url: 'Home/CreateNewUserValidation',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                swal("Congratulation!", "Your new account was created!, Please using your user id and password to login", "success");
+                $('#loginFormToggle').click();
+            }
         }
     });
 }

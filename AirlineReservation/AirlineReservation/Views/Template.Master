@@ -47,12 +47,17 @@
                     <li>
                         <a class="page-scroll" href="#services">Tickets</a>
                     </li>
+                    <%
+                        if(Session["isLogged"]=="true"){
+                    %>
                     <li>
-                        <a class="page-scroll" href="Personal">Personal</a>
+                        <a class="page-scroll" id="nav-menu-personal" href="Personal">Personal</a>
                     </li>
+                    <%}else{ %>
                     <li>
-                        <a class="page-scroll" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
+                        <a class="page-scroll" id="nav-menu-login" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
                     </li>
+                    <%} %>
                     <li>
                         <a class="page-scroll" href="#contact" onclick="aboutUs()">About us</a>
                     </li>
@@ -95,18 +100,18 @@
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="example-text-input">
+                                        <input class="form-control" type="text" id="main-login-username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="password" id="example-search-input">
+                                        <input class="form-control" type="password" id="main-login-password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-xs-4">
-                                        <button type="submit" class="btn btn-primary">Login</button>
+                                        <a href="#" class="btn btn-primary" onclick="loginValidation('main')">Login</a>
                                     </div>
                                     <div class="col-xs-6">
                                         <a href="#" onclick="formMain('register')">Don't have account yet, Please click here to register</a>

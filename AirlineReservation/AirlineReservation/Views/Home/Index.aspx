@@ -320,7 +320,7 @@
                             </div>
                             <!-- End Return Flight -->
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep3()">Next</button>
                     </div>
                 </div>
             </div>
@@ -330,7 +330,7 @@
                         <h3>Login/Register</h3>
                         <ul class="nav nav-tabs" style="margin-bottom: 22px">
                             <li class="active">
-                                <a class="view-tab" data-toggle="tab" href="#alreadyRegisted">Already Registed</a>
+                                <a class="view-tab" data-toggle="tab" href="#alreadyRegisted" id="loginFormToggle">Already Registed</a>
                             </li>
                             <li>
                                 <a class="view-tab" data-toggle="tab" href="#register" id="registerFormToggle">Register</a>
@@ -345,18 +345,18 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="example-text-input"/>
+                                                    <input class="form-control" type="text" id="step4-login-username"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="password" id="example-search-input"/>
+                                                    <input class="form-control" type="password" id="step4-login-password"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-xs-12">
-                                                    <button type="submit" class="btn btn-primary">Login</button>
+                                                    <a href="#" class="btn btn-primary" onclick="loginValidation('step4')">Login</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -387,13 +387,13 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text1" />
+                                                    <input class="form-control" type="text" id="step4-register-username" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="password" id="Password1" />
+                                                    <input class="form-control" type="password" id="step4-register-password" />
                                                 </div>
                                             </div>
                                         </div>
@@ -401,45 +401,53 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">First Name</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text2" />
+                                                    <input class="form-control" type="text" id="step4-register-firstname" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Last Name</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Password2" />
+                                                    <input class="form-control" type="text" id="step4-register-lastname" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Email</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="email" id="Text3" />
+                                                    <input class="form-control" type="email" id="step4-register-email" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Phone Number</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text4" />
+                                                    <input class="form-control" type="text" id="step4-register-phonenumber" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text5" />
+                                                    <select id="step4-register-gender">
+                                                        <option value="true">Male</option>
+                                                        <option value="false">Female</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Day Of Birth </label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="date" id="Text6" />
+                                                    <input class="form-control" type="date" id="step4-register-dob" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Credit card </label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Date2" />
+                                                    <input class="form-control" type="text" id="step4-register-creditcard" />
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <a href="#" class="btn btn-primary btn-lg" onclick="createUserInfo()">Create new</a>
                                         </div>
                                     </div>
                                 </div>

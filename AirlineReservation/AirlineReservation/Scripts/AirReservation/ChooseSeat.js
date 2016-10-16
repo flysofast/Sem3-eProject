@@ -1,5 +1,5 @@
 ﻿function selectSeatWithFlightID(flightID) {
-    PopupCenter('Personal/AirplantSeat', 'xtf', '900', '500');
+    PopupCenter('Personal/AirplantSeat?flightID='+flightID, 'xtf', '900', '500');
 }
 
 function PopupCenter(url, title, w, h) {
@@ -20,6 +20,6 @@ function PopupCenter(url, title, w, h) {
     }
 }
 
-function setValueFromChildPage(value) {
-    $("#seatChoose").html(value);
+function setValueFromChildPage(flightid,value) {
+    $("#seat_" +flightid).html(value);
 }

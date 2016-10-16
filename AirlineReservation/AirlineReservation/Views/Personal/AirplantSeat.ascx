@@ -519,8 +519,20 @@ ol {
             var checkedValues = $('input:checkbox:checked').map(function () {
                 return this.value;
             }).get();
-            window.opener.setValueFromChildPage(checkedValues.join(","));
+            window.opener.setValueFromChildPage(getGetVariable("flightID"),checkedValues.join(","));
             window.close();
+        }
+
+        function getGetVariable(variable) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == variable) {
+                    return pair[1];
+                }
+            }
+            //alert('Query Variable ' + variable + ' not found');
         }
     </script>
 </body>
