@@ -32,7 +32,7 @@ public class FlightScheduleUtilities
             //Check if there are enough available seats of the requested class
 
             //All the seats of the class
-            db.Seats.Where(seat => seat.Class.Equals(className))
+            db.Seats.Where(seat => className.Equals("Any") || seat.Class.Equals(className))
             //Except for those seats that have been taken of that flight
             .Except(db.TakenSeats.Where(takenSeat => takenSeat.FlightNo.Equals(flight.FlightNo) && takenSeat.Seat.Class.Equals(className))
                 .Select(tk => tk.Seat))

@@ -232,7 +232,7 @@ function GetFlights() {
     var routes = [];
 
     for (var i = 0; i < _selectedRoute.length; i++) {
-        route.push(_selectedRoute[i].CityID);
+        routes.push(_selectedRoute[i].CityID);
     }
     var obj = {
         routes: routes,
