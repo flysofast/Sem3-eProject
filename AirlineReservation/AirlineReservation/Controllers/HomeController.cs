@@ -38,52 +38,16 @@ namespace AirlineReservation.Controllers
                         p.CityID,
                         p.CityName
                     }).ToList();
+                    var classes = new List<string>();
+                    classes.Add("First class");
+                    var dates = new List<DateTime>();
+                    dates.Add(new DateTime(2016, 10, 20));
+                    var passengers = new List<int>();
+                    passengers.Add(2);
+                    passengers.Add(0);
+                    passengers.Add(0);
 
-                    return Json(result, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(0, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
-            }
-        }
-
-        /// <summary>
-        /// Get flight lists of the flight schedule
-        /// </summary>
-        /// <param name="vertices"></param>
-        /// <returns>List of flight lists</returns>
-        public JsonResult GetFlightsAPI(List<string> vertices)
-        {
-            try
-            {
-                if (vertices.Count > 0)
-                {
-                    var cityList = new List<City>();
-
-                    for (int i = 0; i < vertices.Count; i++)
-                    {
-                        var cityID = vertices[i];
-                        var city = db.Cities.Single(p => p.CityID.Equals(cityID));
-                        cityList.Add(city);
-                    }
-                    RouteUtilities ru = new RouteUtilities();
-
-                    var dataResult = ru.FindFlight(cityList);
-
-                    var result = dataResult.Select(q => q.Select(p => new
-                    {
-                        Departure = p.DepartureTime.ToShortTimeString() + " (" + p.Route.OriginalCity.CityName + ")",
-                        Arrival = (p.DepartureTime.Add(TimeSpan.FromHours(p.Duration))).ToShortTimeString() + " (" + p.Route.DestinationCity.CityName + ")",
-                        Duration = TimeSpan.FromHours(p.Duration).ToString("h\\h\\ mm\\m\\ "),
-                        Price = p.CurrentPrice + " VND"
-                    }));
+                    //GetFlightsAPI(path.Select(p => p.CityID).ToList(), classes, dates, passengers, false);
 
                     return Json(result, JsonRequestBehavior.AllowGet);
                 }
@@ -192,5 +156,122 @@ namespace AirlineReservation.Controllers
         }
 
         #endregion Step 2
+
+        #region Step 3
+
+        /// <summary>
+        /// Gets flight lists of the flight schedule
+        /// </summary>
+        /// <param name="routes"></param>
+        /// <param name="classes"></param>
+        /// <param name="dates"></param>
+        /// <param name="passengers"></param>
+        /// <param name="isReturning"></param>
+        /// <returns>List of flight lists.
+        /// If the flight list for a route is not available, makes it an empty list
+        /// If one-way flight, returns a list with 1 object (a list of departure flights), otherwise returns 2 lists (departure and returning flights)
+        /// If the whole schedule cannot be found, returns 0</returns>
+        public JsonResult GetFlightsAPI(List<string> routes, List<string> classes, List<DateTime> dates, List<int> passengers, bool isReturning)
+        {
+            try
+            {
+                //If the routes schedule has less than 1 route, it's a false data. Return 0.
+                if (routes.Count > 1)
+                {
+                    // Posible Schedules: [ Departure flight lists:[ Node 1 flight list: [AR001, AR002,...], Node 2 flight list: [AR034, AR374...], Returning flight lists: [ [....]   ]  ]   ]
+                    //List<List<List<Flight>>> result = new List<List<List<Flight>>>();
+                    var result = new List<object>();
+
+                    //Number of requested seats
+                    int numberOfRequestedSeats = 0;
+
+                    //Number of seats on the planes
+                    int numberOfSeats = db.Seats.Count(p => true);
+
+                    foreach (var item in passengers)
+                    {
+                        numberOfRequestedSeats += item;
+                    }
+
+                    FlightScheduleUtilities ru = new FlightScheduleUtilities();
+
+                    #region Departure flight search
+
+                    var searchResult = ru.FindFlights(routes, numberOfRequestedSeats, classes[0], dates[0].Date);
+                    var departureFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                    {
+                        FlightNumber = flight.FlightNo,
+                        Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
+                        Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                        Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
+                        Price = flight.CurrentPrice + " VND",
+                    })).ToList();
+
+                    result.Add(departureFlightLists);
+
+                    #region TEST
+
+                    //var s = "";
+                    //foreach (var list in departureFlightLists)
+                    //{
+                    //    if (list.Count() > 0)
+                    //    {
+                    //        foreach (var flight in list)
+                    //        {
+                    //            s += string.Format("{0} - DEP: {1} - Arr: {2} - Duration: {3} - Price: {4}\n", flight.FlightNumber, flight.Departure, flight.Arrival, flight.Duration, flight.Price);
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        s += "Not found\n";
+                    //    }
+
+                    //    s += "------------------------------------\n";
+                    //}
+
+                    #endregion TEST
+
+                    #endregion Departure flight search
+
+                    #region Returning flight search
+
+                    //If returning flight
+                    if (isReturning)
+                    {
+                        var returningPath = new List<string>();
+                        returningPath.Add(routes.Last());
+                        returningPath.Add(routes.First());
+
+                        searchResult = ru.FindFlights(returningPath, numberOfRequestedSeats, classes[1], dates[1].Date);
+                        var returningFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                        {
+                            FlightNumber = flight.FlightNo,
+                            Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
+                            Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                            Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
+                            Price = flight.CurrentPrice + " VND",
+                        })).ToList();
+
+                        result.Add(returningFlightLists);
+                    }
+
+                    #endregion Returning flight search
+
+                    return Json(result, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(0, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
+            }
+        }
+
+        #endregion Step 3
     }
 }

@@ -155,7 +155,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Dijkstra.cs" />
-    <Compile Include="Utilities\RouteUtilities.cs" />
+    <Compile Include="Utilities\FlightScheduleUtilities.cs" />
     <Compile Include="Views\Template.Master.cs">
       <DependentUpon>Template.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

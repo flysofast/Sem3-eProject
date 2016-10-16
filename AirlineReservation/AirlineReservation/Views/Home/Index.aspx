@@ -29,7 +29,7 @@
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-3" type="button" class="btn btn-default btn-circle" style="opacity: 1">3</a>
-                    <p>Select flight</p>
+                    <p>Select flights</p>
                 </div>
                 <div class="stepwizard-step">
                     <a href="#step-4" type="button" class="btn btn-default btn-circle" style="opacity: 1">4</a>
@@ -53,7 +53,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-control input-xlarg" id="fromLocation">
                                         </select>
-                                        <span class="suggestion-text">This city is not under service.<br />
+                                        <span class="suggestion-text" style="display: none">This city is not under service.<br />
                                             <a>Click here </a>to choose the nearest available city instead <span class="alter-city-details"></span></span>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">
-                            <select class="form-control class-list">
+                            <select id="DepartureClass" class="form-control class-list">
                             </select>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                     <div class="form-group" id="returnClass">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">
-                            <select class="form-control class-list">
+                            <select id="ReturningClass" class="form-control class-list">
                             </select>
                         </div>
                     </div>
@@ -215,10 +215,10 @@
 
                         <ul class="nav nav-tabs" style="margin-bottom: 22px">
                             <li class="active">
-                                <a data-toggle="tab" href="#departureFlight">Departure Flight</a>
+                                <a class="view-tab" data-toggle="tab" href="#departureFlight">Departure Flights</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#returnFlight">Return Flight(s)</a>
+                                <a class="view-tab" data-toggle="tab" href="#returnFlight">Returning Flights</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -239,16 +239,17 @@
                                     <div class="row">
                                         <div class="collapse" id="collapseExample" style="border-top: 1px solid">
                                             <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
-                                            <div class="col-md-2 vcenter">17:00 (Hue)</div>
-                                            <div class="col-md-2 vcenter">02:00 </div>
-                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="seatChoose"></span> </div>
-                                            <div class="col-md-1 vcenter">1.000.000</div>
-                                            <div class="col-md-1">
-                                                <input type="radio" name="optDepartureFlight">
+                                                <div class="col-md-2 vcenter">VietName Airline</div>
+                                                <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
+                                                <div class="col-md-2 vcenter">17:00 (Hue)</div>
+                                                <div class="col-md-2 vcenter">02:00 </div>
+                                                <div class="col-md-2 vcenter">
+                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="seatChoose"></span> </div>
+                                                <div class="col-md-1 vcenter">1.000.000</div>
+                                                <div class="col-md-1">
+                                                    <input type="radio" name="optDepartureFlight"/>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -267,16 +268,17 @@
                                     <div class="row">
                                         <div class="collapse" id="Div1" style="border-top: 1px solid">
                                             <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">17:30 (Hue)</div>
-                                            <div class="col-md-2 vcenter">18:30 (Ho Chi Minh)</div>
-                                            <div class="col-md-2 vcenter">01:00 </div>
-                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span1"></span> </div>
-                                            <div class="col-md-1 vcenter">1.000.000</div>
-                                            <div class="col-md-1">
-                                                <input type="radio" name="optDepartureFlight">
+                                                <div class="col-md-2 vcenter">VietName Airline</div>
+                                                <div class="col-md-2 vcenter">17:30 (Hue)</div>
+                                                <div class="col-md-2 vcenter">18:30 (Ho Chi Minh)</div>
+                                                <div class="col-md-2 vcenter">01:00 </div>
+                                                <div class="col-md-2 vcenter">
+                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span1"></span> </div>
+                                                <div class="col-md-1 vcenter">1.000.000</div>
+                                                <div class="col-md-1">
+                                                    <input type="radio" name="optDepartureFlight"/>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -300,20 +302,21 @@
                                     <div class="row">
                                         <div class="collapse" id="Div2" style="border-top: 1px solid">
                                             <div class="col-md-12">
-                                            <div class="col-md-2 vcenter">VietName Airline</div>
-                                            <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
-                                            <div class="col-md-2 vcenter">17:00 (Hue)</div>
-                                            <div class="col-md-2 vcenter">02:00 </div>
-                                            <div class="col-md-2 vcenter"><button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span2"></span> </div>
-                                            <div class="col-md-1 vcenter">1.000.000</div>
-                                            <div class="col-md-1">
-                                                <input type="radio" name="optDepartureFlight">
+                                                <div class="col-md-2 vcenter">VietName Airline</div>
+                                                <div class="col-md-2 vcenter">15:00 (Ha Noi)</div>
+                                                <div class="col-md-2 vcenter">17:00 (Hue)</div>
+                                                <div class="col-md-2 vcenter">02:00 </div>
+                                                <div class="col-md-2 vcenter">
+                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span2"></span> </div>
+                                                <div class="col-md-1 vcenter">1.000.000</div>
+                                                <div class="col-md-1">
+                                                    <input type="radio" name="optDepartureFlight"/>
+                                                </div>
                                             </div>
-                                        </div>
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <!-- End Return Flight -->
                         </div>
@@ -327,10 +330,10 @@
                         <h3>Login/Register</h3>
                         <ul class="nav nav-tabs" style="margin-bottom: 22px">
                             <li class="active">
-                                <a data-toggle="tab" href="#alreadyRegisted">Already Registed</a>
+                                <a class="view-tab" data-toggle="tab" href="#alreadyRegisted">Already Registed</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#register" id="registerFormToggle">Register</a>
+                                <a class="view-tab" data-toggle="tab" href="#register" id="registerFormToggle">Register</a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -342,13 +345,13 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="example-text-input">
+                                                    <input class="form-control" type="text" id="example-text-input"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="password" id="example-search-input">
+                                                    <input class="form-control" type="password" id="example-search-input"/>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -384,13 +387,13 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text1">
+                                                    <input class="form-control" type="text" id="Text1" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="password" id="Password1">
+                                                    <input class="form-control" type="password" id="Password1" />
                                                 </div>
                                             </div>
                                         </div>
@@ -398,43 +401,43 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">First Name</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text2">
+                                                    <input class="form-control" type="text" id="Text2" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Last Name</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Password2">
+                                                    <input class="form-control" type="text" id="Password2" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Email</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="email" id="Text3">
+                                                    <input class="form-control" type="email" id="Text3" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Phone Number</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text4">
+                                                    <input class="form-control" type="text" id="Text4" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Text5">
+                                                    <input class="form-control" type="text" id="Text5" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Day Of Birth </label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="date" id="Text6">
+                                                    <input class="form-control" type="date" id="Text6" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Credit card </label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="Date2">
+                                                    <input class="form-control" type="text" id="Date2" />
                                                 </div>
                                             </div>
                                         </div>
@@ -497,7 +500,7 @@
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="thumbnail">
-                                                Ticket Detail
+                                                Ticket Details
                                         <div class="caption">
                                             <h3>Detail</h3>
                                             <p class="card-description">
@@ -541,7 +544,7 @@
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="thumbnail">
-                                                Customer Information
+                                                Passengers Information
                                         <div class="caption">
                                             <h3>Passenger and Cost</h3>
                                             <p class="card-description">

@@ -223,3 +223,8 @@ a{
 .float-button:hover {
     box-shadow:0 2px 5px 0 rgba(30,144,255,.16),0 2px 10px 0 rgba(30,144,255,.12);
 }
+
+.view-tab{
+    background-color:#ccc;
+    color:#555;
+}

@@ -21,6 +21,7 @@
           <Property Name="CurrentPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="DepartureTime" Type="datetime" Nullable="false" />
           <Property Name="RouteID" Type="int" Nullable="false" />
+          <Property Name="CancellationFee" Type="float" Nullable="false" />
           <Property Name="Duration" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Route">
@@ -327,6 +328,7 @@
           <NavigationProperty Name="Route" Relationship="AirlineReservationSystemModel.FK_Flight_Route" FromRole="Flight" ToRole="Route" />
           <NavigationProperty Name="TakenSeats" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Flight" FromRole="Flight" ToRole="TakenSeat" />
           <NavigationProperty Name="Ticket_Flight" Relationship="AirlineReservationSystemModel.FK_Ticket_Flight_Flight" FromRole="Flight" ToRole="Ticket_Flight" />
+          <Property Name="CancellationFee" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -543,6 +545,7 @@
           <EntitySetMapping Name="Flights">
             <EntityTypeMapping TypeName="AirlineReservationSystemModel.Flight">
               <MappingFragment StoreEntitySet="Flight">
+                <ScalarProperty Name="CancellationFee" ColumnName="CancellationFee" />
                 <ScalarProperty Name="Duration" ColumnName="Duration" />
                 <ScalarProperty Name="RouteID" ColumnName="RouteID" />
                 <ScalarProperty Name="DepartureTime" ColumnName="DepartureTime" />

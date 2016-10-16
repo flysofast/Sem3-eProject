@@ -1,6 +1,7 @@
 ﻿//------------------------------------STEP 1------------------------------------------
 var _selectedRoute;//[{<CityID>,<CityName>},{...},...{...}]
 
+//Get the shortest possible schedule for a route
 function GetPossibleFlightSchedule() {
     var original = $('#fromLocation').val();
     var destination = $('#toLocation').val();
@@ -46,6 +47,7 @@ function GetPossibleFlightSchedule() {
     });
 }
 
+//Get the nearest under service city of a city and suggest user to use that if the selected user is not available
 function SetNearestAvailable(dropdownControl) {
     var obj = {
         cityID: dropdownControl.val()
@@ -87,6 +89,7 @@ function SetNearestAvailable(dropdownControl) {
     });
 }
 
+//Get the list of cities
 function GetCityList(dropdownControl, ex) {
     var obj = {
         exclusion: ex
@@ -111,6 +114,7 @@ function GetCityList(dropdownControl, ex) {
     });
 }
 
+//Swap the original and destination
 function swapLocation() {
     var from = $("#fromLocation").val();
     var to = $("#toLocation").val();
@@ -147,13 +151,17 @@ $(document).ready(function () {
     });
 });
 
+//Submit the data in step 1
 function SubmitStep1() {
     InitStep2();
 }
 //------------------------------------STEP 2------------------------------------------
-var _passengers;//{<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>}
+var _passengers;//[<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>]
 var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returning flight, otherwise one way flight
+var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
+var _isReturning = false;
 
+//Get the list of classes
 function GetClassList(dropdownControl) {
     $.ajax({
         url: 'Home/GetClassListAPI',
@@ -165,9 +173,9 @@ function GetClassList(dropdownControl) {
         },
         success: function (result) {
             dropdownControl.html('');
-            dropdownControl.append('<option value=Any>Any</option>');
+            dropdownControl.append('<option value=\"Any\">Any</option>');
             $.each(result, function (index, i) {
-                dropdownControl.append('<option  value=' + i.Class + '>' + i.Class + '</option>');
+                dropdownControl.append('<option  value=\"' + i.Class + '\">' + i.Class + '</option>');
             });
 
             dropdownControl.trigger('change');
@@ -175,30 +183,37 @@ function GetClassList(dropdownControl) {
     });
 }
 
+//Initialize the step 2
 function InitStep2() {
-    //$('#fromLocation').append('<option  value=' + item.ClassTypeID + '>' + item.ClassType + '</option>');
     document.getElementById("inputDepartureDate").valueAsDate = new Date();
     document.getElementById("inputReturnDate").valueAsDate = new Date()
+
+    //Retrieve class list
     GetClassList($('.class-list'));
 }
 
+//Submit the collected data in step 2
 function SubmitStep2() {
-    _passengers = {
-        AdultsNumber: $("#adultsNo").val(),
-        ChildrenNumber: $("#childrenNo").val(),
-        SeniorCitizensNumber: $("#elderNo").val(),
-    }
+    _passengers = [$("#adultsNo").val(), $("#childrenNo").val(), $("#elderNo").val()];
 
     var departureDate = new Date($('#inputDepartureDate').val());
-    if (document.getElementById("optFlightReturn").checked) {
+    var departureClass = $("#DepartureClass").val();
+
+    //If it's returning flight
+    _isReturning = document.getElementById("optFlightReturn").checked;
+    if (_isReturning) {
         var returningDate = new Date($('#inputReturnDate').val());
+        var returningClass = $("#ReturningClass").val();
         _dates = [departureDate, returningDate];
+        _classes = [departureClass, returningClass];
     }
     else {
         _dates = [departureDate];
+        _classes = [departureClass];
     }
 
     InitStep3();
+    GetFlights();
 }
 
 //------------------------------------------STEP 3---------------------------
@@ -207,15 +222,31 @@ function InitStep3() {
         + _selectedRoute[_selectedRoute.length - 1].CityID + " (" + _selectedRoute[_selectedRoute.length - 1].CityName + ")");
 
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-    $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers.AdultsNumber + " Children: " + _passengers.ChildrenNumber + " Senior citizens: " + _passengers.SeniorCitizensNumber + "<h4>");
+
+    $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers[0] + " Children: "
+        + _passengers[1] + " Senior citizens: " + _passengers[2] + "<h4>");
 }
-function GetFlights(vertices) {
+
+//Get all possible flights for the schedule and other user's condition
+function GetFlights() {
+    var routes = [];
+
+    for (var i = 0; i < _selectedRoute.length; i++) {
+        routes.push(_selectedRoute[i].CityID);
+    }
+    var obj = {
+        routes: routes,
+        classes: _classes,
+        dates: _dates,
+        passengers: _passengers,
+        isReturning: _isReturning
+    }
     $.ajax({
         url: 'Home/GetFlightsAPI',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
-        data: JSON.stringify(vertices),
+        data: JSON.stringify(obj),
         error: function (data) {
             swal("Error", data.responseText, "error");
         },

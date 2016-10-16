@@ -1,29 +1,109 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace DemoDijkstra
 {
-    class Program
+    internal class Program
     {
-        static AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+        private static AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            //GenerateFlights();
+            //GenerateFlights(20, 20);
+            //return;
 
-            GenerateSeats();
-          
+            //GenerateSeats();
+
+            var tickets = GenerateTickets(200);
+            var s = "";
+            foreach (var item in tickets)
+            {
+                s += string.Format("TicketID: {0} FLight: {1} Pas: {2} USer: {3} Price:{4}\n", item.TicketNo, item.Ticket_Flight.First().FlightNo, item.NumberOfAdults, item.UserID, item.Price);
+            }
+
+            Console.WriteLine(tickets.Count + " ticket(s) has been created.");
+            Console.WriteLine("DONE");
+            Console.WriteLine(s);
             Console.ReadKey();
 
             //GenerateFlights();
-
-
         }
 
-        static void ShowShortestPath()
+        private static Random random = new Random();
+
+        private static List<Ticket> GenerateTickets(int number)
+        {
+            Console.WriteLine("Started to generate " + number + " ticket(s)");
+            var result = new List<Ticket>();
+            var flights = db.Flights.ToList();
+
+            for (int i = 0; i < number; i++)
+            {
+                var flight = flights[random.Next(0, flights.Count)];
+                var ticket = CreateTicket(db.Users.ToList()[random.Next(0, db.Users.Count())].UserID, flight, false, random.Next(1, 10));
+
+                //flights.Remove(flight);
+                if (ticket != null)
+                    result.Add(ticket);
+            }
+
+            return result;
+        }
+
+        private static Ticket CreateTicket(string userID, Flight flight, bool isReturning, int passenger)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                try
+                {
+                    var ticket = new Ticket();
+                    ticket.UserID = userID;
+                    ticket.Status = 1;
+                    ticket.Price = flight.CurrentPrice;
+                    ticket.CreatedDate = DateTime.Now;
+                    ticket.NumberOfAdults = passenger;
+                    ticket.NumberOfChildren = 0;
+                    ticket.NumberOfSeniorCitizens = 0;
+                    db.Tickets.Add(ticket);
+                    db.SaveChanges();
+
+                    var ticketDetails = new Ticket_Flight();
+                    ticketDetails.TicketNo = ticket.TicketNo;
+                    ticketDetails.FlightNo = flight.FlightNo;
+                    ticketDetails.SequenceNo = 1;
+                    ticketDetails.IsReturning = false;
+                    db.Ticket_Flight.Add(ticketDetails);
+                    db.SaveChanges();
+
+                    var availableSeat = db.Seats.Where(p => p.TakenSeats.Count(q => q.FlightNo.Equals(flight.FlightNo)) == 0).Select(p => p.SeatID).ToList();
+                    for (int i = 0; i < passenger; i++)
+                    {
+                        var takenSeat = new TakenSeat();
+                        takenSeat.FlightNo = flight.FlightNo;
+                        var randomSeat = availableSeat[random.Next(0, availableSeat.Count)];
+                        takenSeat.TicketNo = ticket.TicketNo;
+                        takenSeat.SeatID = randomSeat;
+                        availableSeat.Remove(randomSeat);
+                        db.TakenSeats.Add(takenSeat);
+                    }
+                    db.SaveChanges();
+                    transaction.Complete();
+                    return ticket;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Dispose();
+                    return null;
+                }
+            }
+        }
+
+        private static void ShowShortestPath()
         {
             try
             {
@@ -56,7 +136,38 @@ namespace DemoDijkstra
             }
         }
 
-        static void GenerateSeats()
+        static public List<Flight> FindFlightsOfRoute(string originalCityID, string destinationCityID, int passengers, string className, DateTime date)
+        {
+            var route = db.Routes.FirstOrDefault(p => p.InService && p.OriginalCityID == originalCityID && p.DestinationCityID == destinationCityID);
+
+            if (route == null)
+            {
+                return null;
+            }
+
+            return db.Flights.Where(flight =>
+
+                //Flights of the route
+                flight.RouteID == route.RouteID &&
+
+                //Check departure date
+                //DateTime.Compare(flight.DepartureTime.Date, date) == 0 &&
+                //flight.DepartureTime == date &&
+                EntityFunctions.TruncateTime(flight.DepartureTime) == EntityFunctions.TruncateTime(date) &&
+
+                //Check if there are enough available seats of the requested class
+
+                //All the seats of the class
+                db.Seats.Where(seat => seat.Class.Equals(className))
+                //Except for those seats that have been taken of that flight
+                .Except(db.TakenSeats.Where(takenSeat => takenSeat.FlightNo.Equals(flight.FlightNo) && takenSeat.Seat.Class.Equals(className))
+                    .Select(tk => tk.Seat))
+
+                .Count() >= passengers
+            ).ToList();
+        }
+
+        private static void GenerateSeats()
         {
             try
             {
@@ -77,22 +188,27 @@ namespace DemoDijkstra
                             case 2:
                                 seat.Class = "First class";
                                 break;
+
                             case 3:
                             case 4:
                                 seat.Class = "Business class";
                                 break;
+
                             case 5:
                             case 6:
                                 seat.Class = "Club class";
                                 break;
+
                             case 7:
                             case 8:
                                 seat.Class = "Non-smoking class";
                                 break;
+
                             case 9:
                             case 10:
                                 seat.Class = "Smoking class";
                                 break;
+
                             default:
                                 break;
                         }
@@ -107,15 +223,12 @@ namespace DemoDijkstra
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.Message);
             }
         }
 
-        static void GenerateFlights()
+        private static void GenerateFlights(int numberOfDays, int numberOfFlightPerday)
         {
-            int numberOfFlightPerday = 20;
-            int numberOfDays = 20;
             int currentFlightID = 1;
             DateTime startingDate = DateTime.Now.Date;
             Random r = new Random();
@@ -146,7 +259,6 @@ namespace DemoDijkstra
                         Console.WriteLine("Cannot create new route number: " + flight.FlightNo);
                     }
                 }
-
             }
 
             Console.WriteLine("DONE");
