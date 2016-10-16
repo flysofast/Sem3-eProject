@@ -4,6 +4,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace DemoDijkstra
 {
@@ -17,17 +18,87 @@ namespace DemoDijkstra
 
             //GenerateSeats();
 
-            var list = FindFlightsOfRoute("HNN", "HUI", 11, "First class", new DateTime(2016, 10, 20));
-            foreach (var item in list)
+            var tickets = GenerateTickets(200);
+            var s = "";
+            foreach (var item in tickets)
             {
-                var s = string.Format("NO: {0} ORI: {1} DES: {2} DEP: {3} AVAIL: {4}\n", item.FlightNo, item.Route.OriginalCityID, item.Route.DestinationCityID, item.DepartureTime.ToString("d/MM/yyyy H:mm"), db.Seats.Count() - item.TakenSeats.Count());
-                Console.WriteLine(s);
+                s += string.Format("TicketID: {0} FLight: {1} Pas: {2} USer: {3} Price:{4}\n", item.TicketNo, item.Ticket_Flight.First().FlightNo, item.NumberOfAdults, item.UserID, item.Price);
             }
 
+            Console.WriteLine(tickets.Count + " ticket(s) has been created.");
             Console.WriteLine("DONE");
+            Console.WriteLine(s);
             Console.ReadKey();
 
             //GenerateFlights();
+        }
+
+        private static Random random = new Random();
+
+        private static List<Ticket> GenerateTickets(int number)
+        {
+            var result = new List<Ticket>();
+            var flights = db.Flights.ToList();
+
+            for (int i = 0; i < number; i++)
+            {
+                var flight = flights[random.Next(0, flights.Count)];
+                var ticket = CreateTicket(db.Users.ToList()[random.Next(0, db.Users.Count())].UserID, flight, false, random.Next(1, 10));
+
+                flights.Remove(flight);
+                result.Add(ticket);
+            }
+
+            return result;
+        }
+
+        private static Ticket CreateTicket(string userID, Flight flight, bool isReturning, int passenger)
+        {
+            using (var transaction = new TransactionScope())
+            {
+                try
+                {
+                    var ticket = new Ticket();
+                    ticket.UserID = userID;
+                    ticket.Status = 1;
+                    ticket.Price = flight.CurrentPrice;
+                    ticket.CreatedDate = DateTime.Now;
+                    ticket.NumberOfAdults = passenger;
+                    ticket.NumberOfChildren = 0;
+                    ticket.NumberOfSeniorCitizens = 0;
+                    db.Tickets.Add(ticket);
+                    db.SaveChanges();
+
+                    var ticketDetails = new Ticket_Flight();
+                    ticketDetails.TicketNo = ticket.TicketNo;
+                    ticketDetails.FlightNo = flight.FlightNo;
+                    ticketDetails.SequenceNo = 1;
+                    ticketDetails.IsReturning = false;
+                    db.Ticket_Flight.Add(ticketDetails);
+                    db.SaveChanges();
+
+                    var availableSeat = db.Seats.Where(p => p.TakenSeats.Count(q => q.FlightNo.Equals(flight.FlightNo)) == 0).Select(p => p.SeatID).ToList();
+                    for (int i = 0; i < passenger; i++)
+                    {
+                        var takenSeat = new TakenSeat();
+                        takenSeat.FlightNo = flight.FlightNo;
+                        var randomSeat = availableSeat[random.Next(0, availableSeat.Count)];
+                        takenSeat.TicketNo = ticket.TicketNo;
+                        takenSeat.SeatID = randomSeat;
+                        availableSeat.Remove(randomSeat);
+                        db.TakenSeats.Add(takenSeat);
+                    }
+                    db.SaveChanges();
+
+                    transaction.Complete();
+                    return ticket;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Dispose();
+                    return null;
+                }
+            }
         }
 
         private static void ShowShortestPath()
