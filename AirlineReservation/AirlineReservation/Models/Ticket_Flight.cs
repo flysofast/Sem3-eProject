@@ -17,7 +17,7 @@ namespace AirlineReservation.Models
         public int TicketNo { get; set; }
         public string FlightNo { get; set; }
         public int SequenceNo { get; set; }
-        public bool IsReturn { get; set; }
+        public bool IsReturning { get; set; }
     
         public virtual Flight Flight { get; set; }
         public virtual Ticket Ticket { get; set; }
