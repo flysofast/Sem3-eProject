@@ -4,7 +4,6 @@
     <link href="../../Content/Airplant.css" rel="stylesheet" />
     <script src="../Scripts/modernizr.js"></script>
     <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
-    <script src="../../Scripts/AirReservation/Step3.js"></script>
 
     <script>
         $(window).load(function () {
@@ -244,10 +243,11 @@
                                                 <div class="col-md-2 vcenter">17:00 (Hue)</div>
                                                 <div class="col-md-2 vcenter">02:00 </div>
                                                 <div class="col-md-2 vcenter">
-                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="seatChoose"></span> </div>
+                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="seatChoose"></span>
+                                                </div>
                                                 <div class="col-md-1 vcenter">1.000.000</div>
                                                 <div class="col-md-1">
-                                                    <input type="radio" name="optDepartureFlight"/>
+                                                    <input type="radio" name="optDepartureFlight" />
                                                 </div>
                                             </div>
                                         </div>
@@ -273,10 +273,11 @@
                                                 <div class="col-md-2 vcenter">18:30 (Ho Chi Minh)</div>
                                                 <div class="col-md-2 vcenter">01:00 </div>
                                                 <div class="col-md-2 vcenter">
-                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span1"></span> </div>
+                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span1"></span>
+                                                </div>
                                                 <div class="col-md-1 vcenter">1.000.000</div>
                                                 <div class="col-md-1">
-                                                    <input type="radio" name="optDepartureFlight"/>
+                                                    <input type="radio" name="optDepartureFlight" />
                                                 </div>
                                             </div>
                                         </div>
@@ -307,20 +308,20 @@
                                                 <div class="col-md-2 vcenter">17:00 (Hue)</div>
                                                 <div class="col-md-2 vcenter">02:00 </div>
                                                 <div class="col-md-2 vcenter">
-                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span2"></span> </div>
+                                                    <button onclick="selectSeatWithFlightID(1)">Choose Seat</button><span id="Span2"></span>
+                                                </div>
                                                 <div class="col-md-1 vcenter">1.000.000</div>
                                                 <div class="col-md-1">
-                                                    <input type="radio" name="optDepartureFlight"/>
+                                                    <input type="radio" name="optDepartureFlight" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <!-- End Return Flight -->
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep3()">Next</button>
+                        <button id="btStep3Submit" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep3()">Next</button>
                     </div>
                 </div>
             </div>
@@ -345,13 +346,13 @@
                                             <div class="form-group row">
                                                 <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="text" id="step4-login-username"/>
+                                                    <input class="form-control" type="text" id="step4-login-username" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                                 <div class="col-xs-7">
-                                                    <input class="form-control" type="password" id="step4-login-password"/>
+                                                    <input class="form-control" type="password" id="step4-login-password" />
                                                 </div>
                                             </div>
                                             <div class="form-group row">

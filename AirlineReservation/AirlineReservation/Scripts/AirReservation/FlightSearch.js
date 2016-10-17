@@ -218,7 +218,7 @@ function SubmitStep2() {
 
 //------------------------------------------STEP 3---------------------------
 var _selectedFlightNumber;//[{Departure:<DepartureFlight>,Return:<ReturnFlight>}]
-var _selectedSeat = [];//[{<DepartureFlight>,<Seat>},{<ReturnFlight>,<Seat>} ]
+var _selectedFlights = [];//[{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>},{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>} ]
 
 function InitStep3() {
     $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
@@ -228,6 +228,16 @@ function InitStep3() {
 
     $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers[0] + " Children: "
         + _passengers[1] + " Senior citizens: " + _passengers[2] + "</h4>");
+
+    $('#btStep3Submit').prop('disabled', true);
+
+    //Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
+    $(".flight-select").on('change', function () {
+        alert("DASD");
+        if ($(".flight-select:checked").length == _selectedRoute.length - 1) {
+            $('#btStep3Submit').prop('disabled', false);
+        }
+    });
 }
 
 //Get all possible flights for the schedule and other user's condition
@@ -289,7 +299,7 @@ function GetFlights() {
                     html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
                     html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                     html += '<div class="col-md-1">';
-                    html += '<input type="radio" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                    html += '<input class="flight-select" type="radio" returning="0" sequence="' + i + '" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                     //html += '<input type="radio" name="optDepartureFlight" id="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                     html += '</div>';
                     html += '</div>';
@@ -336,7 +346,7 @@ function GetFlights() {
                         html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
                         html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                         html += '<div class="col-md-1">';
-                        html += '<input type="radio" name="optReturnFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                        html += '<input class="flight-select" type="radio" returning="1" sequence="' + i + '" name="optReturnFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                         html += '</div>';
                         html += '</div>';
                     }
@@ -352,25 +362,26 @@ function GetFlights() {
 }
 
 function SubmitStep3() {
-    _selectedSeat = [];
+    _selectedFlights = [];
     //Set seat and flight number
-    $('input:radio').each(function () {
+    $('.flight-select').each(function () {
         var $this = $(this),
             optRadio = $this.attr('name'),
             value = $this.attr('value');
 
         if ($(this).prop('checked')) {
+            var seqNo = parseInt($this.attr("sequence"));
+            var returning = $this.attr("returning") == "1";
             if (optRadio.indexOf("Departure") !== -1) {
-                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': value });
+                _selectedFlights.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': returning, 'SequenceNumber': seqNo });
             }
             if (optRadio.indexOf("Return") !== -1) {
-                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': value });
+                _selectedFlights.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': returning, 'SequenceNumber': seqNo });
             }
             //urls.push('<div class="' + id + '">' + url + '</div>');
         }
     });
-    console.log(_selectedFlightNumber);
-    console.log(_selectedSeat);
+    console.log(_selectedFlights);
     initStep4();
 }
 
