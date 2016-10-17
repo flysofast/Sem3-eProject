@@ -370,7 +370,8 @@ function SubmitStep3() {
         }
 
     });
-
+    console.log(_selectedFlightNumber);
+    console.log(_selectedSeat);
     initStep4();
 }
 
