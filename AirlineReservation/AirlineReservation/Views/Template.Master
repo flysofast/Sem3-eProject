@@ -20,8 +20,63 @@
     <!-- About us-->
     <div class="about-us" id="aboutUsPage">
         <div class="container" style="color: white" onclick="aboutUs()">
-            <span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </span>
+            <img style="max-width: 50%;margin:30px auto;" src="https://www.topcv.vn/company_logos/aptech-computer-education-center-57982df91f555.jpg" alt="Alternate Text" class="img-responsive"/>
+            <div class="row">
+                
+                <div class="col-md-3"></div>
+                <div class="col-md-6" style="text-align:center;">
+                    <h2>Airlines Reservation</h2>
+                    <h3>This is the sem 3 project of Team Unknown</h3>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="thumbnail">
+                     About Page
+                    <div class="caption">
+                        <h3> About Page</h3>
+                        <p class="card-description">
+Gone are the days when people used to spend all their lives in the same city and tour was a word for rich people only. Now, with the technological advancements, cheaper flight, and ever increasing awareness towards other states and countries, the world has become a smaller place. So to reduce stress on desk-reservation systems, reservation online is the best ways.
+The project is to design an airline reservation system that will take care of all the reservation related issues and will give the result in quick time.
+The Airline Reservation System (ARS) is a software application to assist an airline with transactions related to making ticket reservations, which includes blocking, reserving, canceling and rescheduling tickets.
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="thumbnail">
+                     About Team
+                    <div class="caption">
+                        <h3> About Team</h3>
+                        <p class="card-description">
+                            <table class="table" style="text-align: left;">
+                                <tr>
+                                    <td>Team Name:</td>
+                                    <td>Unknown</td>
+                                </tr>
+                                <tr>
+                                    <td>Member 1:</td>
+                                    <td>Le Hai Nam</td>
+                                </tr>
+                                <tr>
+                                    <td>Student Code:</td>
+                                    <td>Student806286</td>
+                                </tr>
+                                <tr>
+                                    <td>Member 2:</td>
+                                    <td>Nguyen Thai Bao</td>
+                                </tr>
+                                <tr>
+                                    <td>Student Code:</td>
+                                    <td>Student806261</td>
+                                </tr>
+                            </table>
+                        </p>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- End-->

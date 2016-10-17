@@ -425,7 +425,7 @@
                                             <div class="form-group row">
                                                 <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
                                                 <div class="col-xs-7">
-                                                    <select id="step4-register-gender">
+                                                    <select id="step4-register-gender" class="form-control">
                                                         <option value="true">Male</option>
                                                         <option value="false">Female</option>
                                                     </select>
