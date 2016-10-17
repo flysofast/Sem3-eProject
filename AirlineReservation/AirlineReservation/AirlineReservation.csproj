@@ -107,7 +107,6 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
-    <Compile Include="Controllers\TestAjaxController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -290,7 +289,6 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Personal\AirplantSeat.ascx" />
     <Content Include="Views\Personal\Index.aspx" />
-    <Content Include="Views\TestAjax\Index.aspx" />
     <Content Include="Views\Test\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

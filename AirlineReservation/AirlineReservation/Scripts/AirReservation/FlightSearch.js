@@ -263,7 +263,7 @@ function GetFlights() {
                 html += '<div class="flight-result">';
                 html += '<div class="row" data-toggle="collapse" data-target="#collapse-departurer-' + i + '" aria-expanded="false" aria-controls="collapse-departurer-' + i + '">';
                 html += '<div class="col-md-12">';
-                html += '<div class="col-md-2 vcenter">Route '+i+'</div>';
+                html += '<div class="col-md-2 vcenter">Route ' + i + '</div>';
                 html += '<div class="col-md-2 vcenter">From Hanoi</div>';
                 html += '<div class="col-md-2 vcenter">To Hue</div>';
                 html += '<div class="col-md-2 vcenter">Duration</div>';
@@ -278,20 +278,21 @@ function GetFlights() {
                     html += '<div class="col-md-12">There is no available flight for this route, Sorry!</div>';
                 }
                 for (j = 0; j < result[0][i].length; j++) {
+                    var item = result[0][i][j];
                     html += '<div class="col-md-12">';
-                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['FlightNumber'] + '</div>';
-                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['Departure'] + '</div>';
-                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['Arrival'] + '</div>';
-                    html += '<div class="col-md-2 vcenter">' + result[0][i][j]['Duration'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + item['FlightNumber'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + item['Arrival'] + '</div>';
+                    html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
                     html += '<div class="col-md-2 vcenter">';
-                    html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + result[0][i][j]['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + result[0][i][j]['FlightNumber'] + '"></span> </div>';
-                    html += '<div class="col-md-1 vcenter">' + result[0][i][j]['Price'] + '</div>';
+                    html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
+                    html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                     html += '<div class="col-md-1">';
-                    html += '<input type="radio" name="optDepartureFlight_' + i + '" value="' + result[0][i][j]['FlightNumber'] + '"/>';
-                    //html += '<input type="radio" name="optDepartureFlight" id="optDepartureFlight_' + i + '" value="' + result[0][i][j]['FlightNumber'] + '"/>';
+                    html += '<input type="radio" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                    //html += '<input type="radio" name="optDepartureFlight" id="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                     html += '</div>';
                     html += '</div>';
-                    //console.log(result[0][i][j]);
+                    //console.log(item);
                 }
                 html += '</div>';
                 html += '</div>';
@@ -323,16 +324,17 @@ function GetFlights() {
                         html += '<div class="col-md-12">There is no available flight for this route, Sorry!</div>';
                     }
                     for (j = 0; j < result[1][i].length; j++) {
+                        var item = result[1][i][j];
                         html += '<div class="col-md-12">';
-                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['FlightNumber'] + '</div>';
-                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['Departure'] + '</div>';
-                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['Arrival'] + '</div>';
-                        html += '<div class="col-md-2 vcenter">' + result[1][i][j]['Duration'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + item['FlightNumber'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + item['Arrival'] + '</div>';
+                        html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
                         html += '<div class="col-md-2 vcenter">';
-                        html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + result[1][i][j]['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + result[1][i][j]['FlightNumber'] + '"></span> </div>';
-                        html += '<div class="col-md-1 vcenter">' + result[1][i][j]['Price'] + '</div>';
+                        html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
+                        html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                         html += '<div class="col-md-1">';
-                        html += '<input type="radio" name="optReturnFlight_' + i + '" value="' + result[1][i][j]['FlightNumber'] + '"/>';
+                        html += '<input type="radio" name="optReturnFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                         html += '</div>';
                         html += '</div>';
                     }
@@ -348,27 +350,22 @@ function GetFlights() {
 }
 
 function SubmitStep3() {
-    _selectedFlightNumber = [];
     _selectedSeat = [];
     //Set seat and flight number
     $('input:radio').each(function () {
-
         var $this = $(this),
             optRadio = $this.attr('name'),
             value = $this.attr('value');
 
         if ($(this).prop('checked')) {
             if (optRadio.indexOf("Departure") !== -1) {
-                _selectedFlightNumber.push({ 'Departure': value });
-                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html() });
+                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': value });
             }
             if (optRadio.indexOf("Return") !== -1) {
-                _selectedFlightNumber.push({ 'Return': value });
-                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html() });
-            }            
+                _selectedSeat.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': value });
+            }
             //urls.push('<div class="' + id + '">' + url + '</div>');
         }
-
     });
     console.log(_selectedFlightNumber);
     console.log(_selectedSeat);
@@ -425,11 +422,9 @@ function loginValidation(form) {
             }
         }
     });
-
 }
 
 function createUserInfo() {
-    
     var obj = {
         'UserID': $("#step4-register-username").val(),
         'Password': $("#step4-register-password").val(),
