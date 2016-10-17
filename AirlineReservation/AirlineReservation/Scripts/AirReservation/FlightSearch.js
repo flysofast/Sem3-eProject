@@ -257,15 +257,16 @@ function GetFlights() {
             //swal("See more in console!", result + '\nSee more details in console', "success");
             //Init flight to Departure section
             $("#departureFlight").html("");
-            for (i = 0; i < result[0].length; i++) {
-                //console.log(result[0][i]);
+            var departureFlightLists = result[0];
+            for (i = 0; i < departureFlightLists.length; i++) {
+                //console.log(departureFlightLists[i]);
                 var html = "";
                 html += '<div class="flight-result">';
                 html += '<div class="row" data-toggle="collapse" data-target="#collapse-departurer-' + i + '" aria-expanded="false" aria-controls="collapse-departurer-' + i + '">';
                 html += '<div class="col-md-12">';
-                html += '<div class="col-md-2 vcenter">Route ' + i + '</div>';
-                html += '<div class="col-md-2 vcenter">From Hanoi</div>';
-                html += '<div class="col-md-2 vcenter">To Hue</div>';
+                html += '<div class="col-md-2 vcenter">Route ' + (i + 1) + '</div>';
+                html += '<div class="col-md-2 vcenter">From ' + _selectedRoute[i].CityName + '</div>';
+                html += '<div class="col-md-2 vcenter">To ' + _selectedRoute[i + 1].CityName + '</div>';
                 html += '<div class="col-md-2 vcenter">Duration</div>';
                 html += '<div class="col-md-2 vcenter">Seats</div>';
                 html += '<div class="col-md-1 vcenter">Price</div>';
@@ -274,11 +275,11 @@ function GetFlights() {
                 html += '</div>';
                 html += '<div class="row">';
                 html += '<div class="collapse" id="collapse-departurer-' + i + '" style="border-top: 1px solid">';
-                if (result[0][i] == "") {
+                if (departureFlightLists[i] == "") {
                     html += '<div class="col-md-12">There is no available flight for this route, Sorry!</div>';
                 }
-                for (j = 0; j < result[0][i].length; j++) {
-                    var item = result[0][i][j];
+                for (j = 0; j < departureFlightLists[i].length; j++) {
+                    var item = departureFlightLists[i][j];
                     html += '<div class="col-md-12">';
                     html += '<div class="col-md-2 vcenter">' + item['FlightNumber'] + '</div>';
                     html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
@@ -304,14 +305,15 @@ function GetFlights() {
             //Init flight to Return section
             $("#returnFlight").html("");
             if (_isReturning) {
-                for (i = 0; i < result[1].length; i++) {
+                var returningFlightLists = result[1];
+                for (i = 0; i < returningFlightLists.length; i++) {
                     var html = "";
                     html += '<div class="flight-result">';
                     html += '<div class="row" data-toggle="collapse" data-target="#collapse-return-' + i + '" aria-expanded="false" aria-controls="collapse-return-' + i + '">';
                     html += '<div class="col-md-12">';
-                    html += '<div class="col-md-2 vcenter">Route ' + i + '</div>';
-                    html += '<div class="col-md-2 vcenter">From Hanoi</div>';
-                    html += '<div class="col-md-2 vcenter">To Hue</div>';
+                    html += '<div class="col-md-2 vcenter">Route ' + (i + 1) + '</div>';
+                    html += '<div class="col-md-2 vcenter">From ' + _selectedRoute[_selectedRoute.length - 1].CityName + '</div>';
+                    html += '<div class="col-md-2 vcenter">To ' + _selectedRoute[0].CityName + '</div>';
                     html += '<div class="col-md-2 vcenter">Duration</div>';
                     html += '<div class="col-md-2 vcenter">Seats</div>';
                     html += '<div class="col-md-1 vcenter">Price</div>';
@@ -320,11 +322,11 @@ function GetFlights() {
                     html += '</div>';
                     html += '<div class="row">';
                     html += '<div class="collapse" id="collapse-return-' + i + '" style="border-top: 1px solid">';
-                    if (result[1][i] == "") {
+                    if (returningFlightLists[i] == "") {
                         html += '<div class="col-md-12">There is no available flight for this route, Sorry!</div>';
                     }
-                    for (j = 0; j < result[1][i].length; j++) {
-                        var item = result[1][i][j];
+                    for (j = 0; j < returningFlightLists[i].length; j++) {
+                        var item = returningFlightLists[i][j];
                         html += '<div class="col-md-12">';
                         html += '<div class="col-md-2 vcenter">' + item['FlightNumber'] + '</div>';
                         html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
