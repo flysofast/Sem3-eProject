@@ -5,6 +5,9 @@
     <script src="../Scripts/modernizr.js"></script>
     <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
 
+    <link href="../../Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="../../Scripts/bootstrap-datepicker.min.js"></script>
+
     <script>
         $(window).load(function () {
             setTimeout(function () {
@@ -124,8 +127,17 @@
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Departure:</label>
                         <div class="col-md-9">
-                            <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
+                            <!-- bck <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" /> -->
+                            <!-- Test new date picker-->
+                            <div class="input-group date">
+                                <input id="inputDepartureDate" type="text" class="form-control" value="12-02-2012" style="margin-left: 5px;" />
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                            <!-- End -->
                         </div>
+                        
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="To">Type:</label>
@@ -448,7 +460,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <a href="#" class="btn btn-primary btn-lg" onclick="createUserInfo()">Create new</a>
+                                            <a href="#" class="btn btn-primary btn-lg" onclick="createUserInfo('step4')">Create new</a>
                                         </div>
                                     </div>
                                 </div>

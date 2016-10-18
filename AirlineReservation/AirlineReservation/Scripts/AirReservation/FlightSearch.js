@@ -161,6 +161,11 @@ var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returni
 var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
 var _isReturning = false;
 
+
+//Init datetime picker
+$('#inputDepartureDate').datepicker({
+    'multidate': true,
+});
 //Get the list of classes
 function GetClassList(dropdownControl) {
     $.ajax({
@@ -190,6 +195,7 @@ function InitStep2() {
 
     //Retrieve class list
     GetClassList($('.class-list'));
+
 }
 
 //Submit the collected data in step 2
@@ -401,6 +407,47 @@ function initStep4() {
 }
 
 function loginValidation(form) {
+    var flag = true;
+    var error_msg = "";
+    if (form == "main") {
+        if ($("#main-login-username").val() == "") {
+            $("#main-login-username").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your username \n";
+        } else {
+            $("#main-login-username").removeClass("form-validation-error");
+        }
+
+        if ($("#main-login-password").val() == "") {
+            $("#main-login-password").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your password \n";
+        } else {
+            $("#main-login-password").removeClass("form-validation-error");
+        }
+    } else {
+        if ($("#step4-login-username").val() == "") {
+            $("#step4-login-username").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your username \n";
+        } else {
+            $("#step4-login-username").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-login-password").val() == "") {
+            $("#step4-login-password").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your password \n";
+        } else {
+            $("#step4-login-password").removeClass("form-validation-error");
+        }
+    }
+
+    if (!flag) {
+        sweetAlert("Oops...", error_msg, "error");
+        return false;
+    }
+
     if (form == "main") {
         var obj = {
             'UserID': $("#main-login-username").val(),
@@ -433,19 +480,192 @@ function loginValidation(form) {
     });
 }
 
-function createUserInfo() {
-    var obj = {
-        'UserID': $("#step4-register-username").val(),
-        'Password': $("#step4-register-password").val(),
-        'FirstName': $("#step4-register-firstname").val(),
-        'LastName': $("#step4-register-lastname").val(),
-        'Email': $("#step4-register-email").val(),
-        'Gender': $("#step4-register-gender").val(),
-        'Phone': $("#step4-register-phonenumber").val(),
-        'DOB': $("#step4-register-dob").val(),
-        'CreditCard': $("#step4-register-creditcard").val(),
-    };
-    console.log(obj);
+function createUserInfo(form) {
+    var flag = true;
+    var error_msg = "";
+    if (form == "main") {
+        //#Validation for register on main form
+        if ($("#main-register-username").val() == "") {
+            $("#main-register-username").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your username \n";
+        } else {
+            $("#main-register-username").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-password").val() == "") {
+            $("#main-register-password").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your password \n";
+        } else {
+            $("#main-register-password").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-firstname").val() == "") {
+            $("#main-register-firstname").addClass("form-validation-error");
+            error_msg += "Please enter your firstname \n";
+            flag = false;
+        } else {
+            $("#main-register-firstname").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-lastname").val() == "") {
+            $("#main-register-lastname").addClass("form-validation-error");
+            error_msg += "Please enter your lastname \n";
+            flag = false;
+        } else {
+            $("#main-register-lastname").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-email").val() == "") {
+            $("#main-register-email").addClass("form-validation-error");
+            error_msg += "Please enter your email \n";
+            flag = false;
+        } else {
+            $("#main-register-email").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-gender").val() == "") {
+            $("#main-register-gender").addClass("form-validation-error");
+            error_msg += "Please select your gender \n";
+            flag = false;
+        } else {
+            $("#main-register-gender").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-phonenumber").val() == "") {
+            $("#main-register-phonenumber").addClass("form-validation-error");
+            error_msg += "Please enter your phonenumber \n";
+            flag = false;
+        } else {
+            $("#main-register-phonenumber").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-creditcard").val() == "") {
+            $("#main-register-creditcard").addClass("form-validation-error");
+            error_msg += "Please enter your creditcard \n";
+            flag = false;
+        } else {
+            $("#main-register-creditcard").removeClass("form-validation-error");
+        }
+
+        if ($("#main-register-dob").val() == "") {
+            $("#main-register-dob").addClass("form-validation-error");
+            error_msg += "Please select your date of birth \n";
+            flag = false;
+        } else {
+            $("#main-register-dob").removeClass("form-validation-error");
+        }
+        //#end
+    } else {
+        //#Validation for register on step form (4)
+        if ($("#step4-register-username").val() == "") {
+            $("#step4-register-username").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your username \n";
+        } else {
+            $("#step4-register-username").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-password").val() == "") {
+            $("#step4-register-password").addClass("form-validation-error");
+            flag = false;
+            error_msg += "Please enter your password \n";
+        } else {
+            $("#step4-register-password").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-firstname").val() == "") {
+            $("#step4-register-firstname").addClass("form-validation-error");
+            error_msg += "Please enter your firstname \n";
+            flag = false;
+        } else {
+            $("#step4-register-firstname").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-lastname").val() == "") {
+            $("#step4-register-lastname").addClass("form-validation-error");
+            error_msg += "Please enter your lastname \n";
+            flag = false;
+        } else {
+            $("#step4-register-lastname").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-email").val() == "") {
+            $("#step4-register-email").addClass("form-validation-error");
+            error_msg += "Please enter your email \n";
+            flag = false;
+        } else {
+            $("#step4-register-email").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-gender").val() == "") {
+            $("#step4-register-gender").addClass("form-validation-error");
+            error_msg += "Please select your gender \n";
+            flag = false;
+        } else {
+            $("#step4-register-gender").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-phonenumber").val() == "") {
+            $("#step4-register-phonenumber").addClass("form-validation-error");
+            error_msg += "Please enter your phonenumber \n";
+            flag = false;
+        } else {
+            $("#step4-register-phonenumber").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-creditcard").val() == "") {
+            $("#step4-register-creditcard").addClass("form-validation-error");
+            error_msg += "Please enter your creditcard \n";
+            flag = false;
+        } else {
+            $("#step4-register-creditcard").removeClass("form-validation-error");
+        }
+
+        if ($("#step4-register-dob").val() == "") {
+            $("#step4-register-dob").addClass("form-validation-error");
+            error_msg += "Please select your date of birth \n";
+            flag = false;
+        } else {
+            $("#step4-register-dob").removeClass("form-validation-error");
+        }
+        //#region
+    }
+
+    
+
+    if (!flag) {
+        sweetAlert("Oops...", error_msg, "error");
+        return false;
+    }
+
+    if (form == "main") {
+        var obj = {
+            'UserID': $("#main-register-username").val(),
+            'Password': $("#main-register-password").val(),
+            'FirstName': $("#main-register-firstname").val(),
+            'LastName': $("#main-register-lastname").val(),
+            'Email': $("#main-register-email").val(),
+            'Gender': $("#main-register-gender").val(),
+            'Phone': $("#main-register-phonenumber").val(),
+            'DOB': $("#main-register-dob").val(),
+            'CreditCard': $("#main-register-creditcard").val(),
+        };
+    } else {
+        var obj = {
+            'UserID': $("#step4-register-username").val(),
+            'Password': $("#step4-register-password").val(),
+            'FirstName': $("#step4-register-firstname").val(),
+            'LastName': $("#step4-register-lastname").val(),
+            'Email': $("#step4-register-email").val(),
+            'Gender': $("#step4-register-gender").val(),
+            'Phone': $("#step4-register-phonenumber").val(),
+            'DOB': $("#step4-register-dob").val(),
+            'CreditCard': $("#step4-register-creditcard").val(),
+        };
+    }
+    
     $.ajax({
         url: 'Home/CreateNewUserValidation',
         contentType: "application/json; charset=utf-8",

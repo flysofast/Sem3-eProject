@@ -182,13 +182,13 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="Text1">
+                                        <input class="form-control" type="text" id="main-register-username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="password" id="Password1">
+                                        <input class="form-control" type="password" id="main-register-password">
                                     </div>
                                 </div>
                             </div>
@@ -196,48 +196,48 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                                 <div class="form-group row">
                                     <label for="example-text-input" class="col-xs-3 col-form-label">First Name</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="Text2">
+                                        <input class="form-control" type="text" id="main-register-firstname">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Last Name</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="Password2">
+                                        <input class="form-control" type="text" id="main-register-lastname">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Email</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="email" id="Text3">
+                                        <input class="form-control" type="email" id="main-register-email">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Phone Number</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="Text4">
+                                        <input class="form-control" type="text" id="main-register-phonenumber">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="Text5">
+                                        <input class="form-control" type="text" id="main-register-gender">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Day Of Birth </label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="date" id="Text6">
+                                        <input class="form-control" type="date" id="main-register-dob">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="example-search-input" class="col-xs-3 col-form-label">Credit card </label>
                                     <div class="col-xs-7">
-                                        <input class="form-control" type="text" id="Date2">
+                                        <input class="form-control" type="text" id="main-register-creditcard">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-xs-12">
-                                        <input class="btn btn-success" type="button" id="Text7" value="Submit">
+                                        <a href="#" class="btn btn-primary btn-lg" onclick="createUserInfo('main')">Create new</a>
                                     </div>
                                 </div>
                                 <div class="form-group row">

@@ -228,3 +228,8 @@ a{
     background-color:#ccc;
     color:#555;
 }
+
+.form-validation-error {
+    border-color: #EF5350 !important;
+    box-shadow: 0 0 4px #EF5350 !important;
+}

@@ -13,8 +13,10 @@
         if (!$item.hasClass('disabled')) {
             navListItems.removeClass('btn-primary').addClass('btn-default');
             $item.addClass('btn-primary');
+
             allWells.hide('slide', function () {
                 // Animation complete.
+                $(".datepicker").hide();
             });
             $target.show('slide', function () {
                 // Animation complete.
@@ -29,7 +31,6 @@
             nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
             curInputs = curStep.find("input[type='text'],input[type='url']"),
             isValid = true;
-
         $(".form-group").removeClass("has-error");
         for (var i = 0; i < curInputs.length; i++) {
             if (!curInputs[i].validity.valid) {
