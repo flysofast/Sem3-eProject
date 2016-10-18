@@ -230,14 +230,13 @@ function InitStep3() {
         + _passengers[1] + " Senior citizens: " + _passengers[2] + "</h4>");
 
     $('#btStep3Submit').prop('disabled', true);
+}
 
-    //Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
-    $(".flight-select").on('change', function () {
-        alert("DASD");
-        if ($(".flight-select:checked").length == _selectedRoute.length - 1) {
-            $('#btStep3Submit').prop('disabled', false);
-        }
-    });
+//Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
+function CheckSelectedFlights() {
+    if ($(".flight-select:checked").length == _selectedRoute.length - 1) {
+        $('#btStep3Submit').prop('disabled', false);
+    }
 }
 
 //Get all possible flights for the schedule and other user's condition
@@ -299,7 +298,7 @@ function GetFlights() {
                     html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
                     html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                     html += '<div class="col-md-1">';
-                    html += '<input class="flight-select" type="radio" returning="0" sequence="' + i + '" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                    html += '<input class="flight-select" onclick="CheckSelectedFlights()" type="radio" returning="0" sequence="' + i + '" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                     //html += '<input type="radio" name="optDepartureFlight" id="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                     html += '</div>';
                     html += '</div>';
@@ -346,7 +345,7 @@ function GetFlights() {
                         html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
                         html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                         html += '<div class="col-md-1">';
-                        html += '<input class="flight-select" type="radio" returning="1" sequence="' + i + '" name="optReturnFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                        html += '<input class="flight-select" onclick="CheckSelectedFlights()" type="radio" returning="1" sequence="' + i + '" name="optReturnFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                         html += '</div>';
                         html += '</div>';
                     }
