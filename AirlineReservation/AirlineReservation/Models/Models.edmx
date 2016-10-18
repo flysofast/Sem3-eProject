@@ -99,6 +99,7 @@
           <Property Name="Sex" Type="bit" Nullable="false" />
           <Property Name="CreditcardNumber" Type="varchar" MaxLength="20" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Flight_Route">
           <End Role="Route" Type="Self.Route" Multiplicity="1" />
@@ -400,6 +401,7 @@
           <Property Name="CreditcardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Tickets" Relationship="AirlineReservationSystemModel.FK_Ticket_User" FromRole="User" ToRole="Ticket" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Route_City">
           <End Type="AirlineReservationSystemModel.City" Role="City" Multiplicity="1" />
@@ -604,6 +606,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="AirlineReservationSystemModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="CreditcardNumber" ColumnName="CreditcardNumber" />
                 <ScalarProperty Name="Sex" ColumnName="Sex" />

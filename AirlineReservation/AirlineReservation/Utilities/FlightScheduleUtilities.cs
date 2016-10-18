@@ -71,7 +71,7 @@ public class FlightScheduleUtilities
         return result;
     }
 
-    private Ticket CreateTicket(string userID, string[] classes, Flight[] flights, bool[] isReturning, int[] sequenceNumber, int[] passengers, decimal totalPrice)
+    public Ticket CreateTicket(string userID, List<BookedFlightInfo> flights, int[] passengers, decimal totalPrice, int request)
     {
         using (var transaction = new TransactionScope())
         {
@@ -79,7 +79,7 @@ public class FlightScheduleUtilities
             {
                 var ticket = new Ticket();
                 ticket.UserID = userID;
-                ticket.Status = 1;
+                ticket.Status = request;
                 ticket.Price = totalPrice;
                 ticket.CreatedDate = DateTime.Now;
                 ticket.NumberOfAdults = passengers[0];
@@ -88,32 +88,23 @@ public class FlightScheduleUtilities
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
 
-                for (int i = 0; i < flights.Length; i++)
+                for (int i = 0; i < flights.Count; i++)
                 {
+                    var flight = flights[i];
                     var ticketDetails = new Ticket_Flight();
                     ticketDetails.TicketNo = ticket.TicketNo;
-                    ticketDetails.FlightNo = flights[i].FlightNo;
-                    ticketDetails.SequenceNo = sequenceNumber[i];
-                    ticketDetails.IsReturning = isReturning[i];
+                    ticketDetails.FlightNo = flight.FlightNumber;
+                    ticketDetails.SequenceNo = flight.SequenceNumber;
+                    ticketDetails.IsReturning = flight.IsReturning;
                     db.Ticket_Flight.Add(ticketDetails);
                     db.SaveChanges();
 
                     //Assign available seats for the passengers, prefer to put them next to each other
-                    string seatClass;
-                    if (isReturning[i])
-                    {
-                        seatClass = classes[0];
-                    }
-                    else
-                    {
-                        seatClass = classes[1];
-                    }
-
                     int totalPassengers = passengers[0] + passengers[1] + passengers[2];
 
                     //List of vacant seats of the class
-                    var availableSeats = db.Seats.Where(p => p.Class.Equals(seatClass) &&
-                    p.TakenSeats.Count(q => q.FlightNo.Equals(flights[i].FlightNo)) == 0).Select(p => p.SeatID).ToList();
+                    var availableSeats = db.Seats.Where(p => p.Class.Equals(flight.Class) &&
+                    p.TakenSeats.Count(q => q.FlightNo.Equals(flight.FlightNumber)) == 0).Select(p => p.SeatID).ToList();
 
                     //Double check the database
                     if (availableSeats.Count < totalPassengers)
@@ -124,7 +115,7 @@ public class FlightScheduleUtilities
                     for (int j = 0; j < totalPassengers; j++)
                     {
                         var takenSeat = new TakenSeat();
-                        takenSeat.FlightNo = flights[i].FlightNo;
+                        takenSeat.FlightNo = flight.FlightNumber;
 
                         //Always pick the first available seat to gain more chance of boarding together
                         var selectedSeat = availableSeats[0];
@@ -146,15 +137,9 @@ public class FlightScheduleUtilities
             catch (Exception ex)
             {
                 transaction.Dispose();
-                return null;
+                throw new Exception();
+                //return null;
             }
         }
-    }
-
-    public class TicketStatus
-    {
-        public int Blocked = 0;
-        public int Confirmed = 1;
-        public int Cancelled = 2;
     }
 }

@@ -218,7 +218,7 @@ function SubmitStep2() {
 
 //------------------------------------------STEP 3---------------------------
 var _selectedFlightNumber;//[{Departure:<DepartureFlight>,Return:<ReturnFlight>}]
-var _selectedFlights = [];//[{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>},{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>} ]
+var _selectedFlights;//[{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>},{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>} ]
 
 function InitStep3() {
     $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
@@ -229,6 +229,7 @@ function InitStep3() {
     $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers[0] + " Children: "
         + _passengers[1] + " Senior citizens: " + _passengers[2] + "</h4>");
 
+    //Disable user to move to next step
     $('#btStep3Submit').prop('disabled', true);
 }
 
@@ -263,12 +264,10 @@ function GetFlights() {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            //swal("See more in console!", result + '\nSee more details in console', "success");
             //Init flight to Departure section
             $("#departureFlight").html("");
             var departureFlightLists = result[0];
             for (i = 0; i < departureFlightLists.length; i++) {
-                //console.log(departureFlightLists[i]);
                 var html = "";
                 html += '<div class="flight-result">';
                 html += '<div class="row" data-toggle="collapse" data-target="#collapse-departurer-' + i + '" aria-expanded="false" aria-controls="collapse-departurer-' + i + '">';
@@ -299,10 +298,8 @@ function GetFlights() {
                     html += '<div class="col-md-1 vcenter">' + item['Price'] + '</div>';
                     html += '<div class="col-md-1">';
                     html += '<input class="flight-select" onclick="CheckSelectedFlights()" type="radio" returning="0" sequence="' + i + '" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
-                    //html += '<input type="radio" name="optDepartureFlight" id="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
                     html += '</div>';
                     html += '</div>';
-                    //console.log(item);
                 }
                 html += '</div>';
                 html += '</div>';
@@ -384,7 +381,7 @@ function SubmitStep3() {
     initStep4();
 }
 
-//------------------------------------------STEP 4---------------------------
+//------------------------------------------STEP 4------------------------------
 function initStep4() {
     $.ajax({
         url: 'Home/isUserLogged',
@@ -463,6 +460,28 @@ function createUserInfo() {
                 swal("Congratulation!", "Your new account was created!, Please using your user id and password to login", "success");
                 $('#loginFormToggle').click();
             }
+        }
+    });
+}
+
+//-----------------------STEP 5---------------------------------------------
+function BlockTicket() {
+    var obj = {
+        SelectedFlights: _selectedFlights,
+        Classes: _classes,
+        Passengers: _passengers
+    }
+    $.ajax({
+        url: 'Home/BlockTicketAPI',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            swal("CHECK CONSOLE", result, "success");
         }
     });
 }

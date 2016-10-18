@@ -559,15 +559,15 @@
                                             <p class="card-description">
                                                 <table class="table" style="text-align: left;">
                                                     <tr>
-                                                        <td>Adult:</td>
+                                                        <td>Adults:</td>
                                                         <td>1</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Senior:</td>
+                                                        <td>Children:</td>
                                                         <td>1</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Infant:</td>
+                                                        <td>Senior citizens:</td>
                                                         <td>1</td>
                                                     </tr>
                                                     <tr>
@@ -583,7 +583,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                        <button style="width: 200px" class="btn btn-success nextBtn btn-lg pull-right" type="button">Buy</button>
+                        <div style="width: 20px; height: 1px" class="pull-right"></div>
+                        <button style="width: 200px" class="btn btn-danger nextBtn btn-lg pull-right" onclick="BlockTicket()" type="button">Block (Free)</button>
                     </div>
                 </div>
             </div>

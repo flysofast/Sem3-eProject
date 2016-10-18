@@ -28,6 +28,7 @@ namespace AirlineReservation.Models
         public bool Sex { get; set; }
         public string CreditcardNumber { get; set; }
         public System.DateTime DateOfBirth { get; set; }
+        public bool IsAdmin { get; set; }
     
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

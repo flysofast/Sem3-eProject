@@ -281,7 +281,7 @@ namespace AirlineReservation.Controllers
         /// </summary>
         public JsonResult isUserLogged()
         {
-            var sSession = (string)Session["isLogged"] ?? "false";
+            var sSession = (string)Session[Constants.SessionIsLoggedInKey] ?? "false";
             return Json(sSession, JsonRequestBehavior.AllowGet);
         }
 
@@ -292,14 +292,16 @@ namespace AirlineReservation.Controllers
                 var result = db.Users.Where(p => p.UserID == UserID).Where(p => p.Password == Password).FirstOrDefault();
                 if (result != null)
                 {
-                    Session["isLogged"] = "true";
+                    Session[Constants.SessionIsLoggedInKey] = "true";
+                    //The logged in user ID
+                    //REMEMBER: set this value to null when the user logged out.
+                    Session[Constants.SessionUserIDKey] = UserID;
                     return Json("1", JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     return Json("0", JsonRequestBehavior.AllowGet);
                 }
-                
             }
             catch (Exception ex)
             {
@@ -309,7 +311,7 @@ namespace AirlineReservation.Controllers
             }
         }
 
-        public JsonResult CreateNewUserValidation(string UserID, string Password, string FirstName, string LastName, string Email, bool Gender, string Phone,DateTime DOB, string CreditCard)
+        public JsonResult CreateNewUserValidation(string UserID, string Password, string FirstName, string LastName, string Email, bool Gender, string Phone, DateTime DOB, string CreditCard)
         {
             try
             {
@@ -324,7 +326,7 @@ namespace AirlineReservation.Controllers
                 data.PhoneNumber = Phone;
                 data.CreditcardNumber = CreditCard;
                 db.Users.Add(data);
-                
+
                 return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException e)
@@ -351,5 +353,50 @@ namespace AirlineReservation.Controllers
         }
 
         #endregion Step 4
+
+        #region Step 5
+
+        public JsonResult BlockTicketAPI(List<BookedFlightInfo> SelectedFlights, string[] Classes, int[] Passengers)
+        {
+            try
+            {
+                var UserID = Session[Constants.SessionUserIDKey];
+                if (UserID == null)
+                {
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Json("You have to sign in first", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    decimal total = 0;
+                    //Additional class info for the booked flights before sending to the Reservation utilities
+                    foreach (var item in SelectedFlights)
+                    {
+                        if (item.IsReturning)
+                        {
+                            item.Class = Classes[1];
+                        }
+                        else
+                        {
+                            item.Class = Classes[0];
+                        }
+                        total += db.Flights.SingleOrDefault(p => p.FlightNo.Equals(item.FlightNumber)).CurrentPrice;
+                    }
+
+                    var fsu = new FlightScheduleUtilities();
+                    fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
+
+                    return Json(1, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion Step 5
     }
 }
