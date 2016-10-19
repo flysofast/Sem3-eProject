@@ -162,7 +162,6 @@ var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returni
 var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
 var _isReturning = false;
 
-
 //Init datetime picker
 $('#inputDepartureDate').datepicker({
     'multidate': true,
@@ -206,10 +205,9 @@ function GetClassList(dropdownControl) {
 //Initialize the step 2
 function InitStep2() {
     //document.getElementById("inputDepartureDate").valueAsDate = new Date();
-    document.getElementById("inputReturnDate").valueAsDate = new Date()    
+    document.getElementById("inputReturnDate").valueAsDate = new Date()
     //Retrieve class list
     GetClassList($('.class-list'));
-
 }
 
 //Submit the collected data in step 2
@@ -257,36 +255,42 @@ function InitStep3() {
 
     //Disable user to move to next step
     $('#btStep3Submit').prop('disabled', true);
+
+    CheckSelectedFlights();
 }
 
-//Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
+//Called when a flight radio button is checked
 function CheckSelectedFlights(flight_number) {
     //Calculate total price
-    total_departure_flight_price = parseFloat($("#step3-total-departure-price").html());
-    total_return_flight_price = parseFloat($("#step3-total-return-price").html());
-    //console.log(total_flight_price);
-    $("input:radio[class=flight-select]:checked").each(function () {
-        if($(this).attr("returning") == "0"){
-            total_departure_flight_price += parseFloat($("#step-3-flight-price-id-" + $(this).val()).val().replace(/[^\d.-]/g, ''));
-        }
+    var selectedFlights = $(".flight-select:checked");
 
-        if ($(this).attr("returning") == "1") {
-            total_return_flight_price += parseFloat($("#step-3-flight-price-id-" + $(this).val()).val().replace(/[^\d.-]/g, ''));
+    var totalPassengers = parseInt(_passengers[0]) + parseInt(_passengers[1]) + parseInt(_passengers[2]);
+    var departureTotal = 0, returningTotal = 0;
+
+    selectedFlights.each(function () {
+        var price = parseFloat($(this).attr("price"));
+        var returning = $(this).attr("returning") == "1";
+
+        if (returning) {
+            returningTotal += price;
+        } else {
+            departureTotal += price;
         }
-        //console.log($("#step-3-flight-price-id-" + $(this).val()).val().replace(/[^\d.-]/g, ''));
     });
+    departureTotal *= totalPassengers;
+    returningTotal *= totalPassengers;
 
-    total_departure_flight_price = total_departure_flight_price * (parseInt(_passengers[0]) + parseInt(_passengers[1]) + parseInt(_passengers[2]));
-    total_return_flight_price = total_return_flight_price * (parseInt(_passengers[0]) + parseInt(_passengers[1]) + parseInt(_passengers[2]));
-    _total_ticket_price = total_departure_flight_price + total_return_flight_price;
+    $("#step3-total-departure-price").html(currencyFormat(departureTotal));
+    $("#step3-total-return-price").html(currencyFormat(returningTotal));
 
-    $("#step3-total-departure-price").html(total_departure_flight_price);
-    $("#step3-total-return-price").html(total_return_flight_price);
-    //End
-
-    if ($(".flight-select:checked").length == _selectedRoute.length - 1) {
+    //Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
+    if (selectedFlights.length == _selectedRoute.length - 1) {
         $('#btStep3Submit').prop('disabled', false);
     }
+}
+
+function currencyFormat(number) {
+    return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND";
 }
 
 //Get all possible flights for the schedule and other user's condition
@@ -344,9 +348,9 @@ function GetFlights() {
                     html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
                     html += '<div class="col-md-2 vcenter">';
                     html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
-                    html += '<div class="col-md-1 vcenter">' + item['Price'] + '<input type="hidden" id="step-3-flight-price-id-' + item['FlightNumber'] + '" value="' + item['Price'] + '"></div>';
+                    html += '<div class="col-md-1 vcenter">' + currencyFormat(item['Price']) + '</div>';
                     html += '<div class="col-md-1">';
-                    html += '<input class="flight-select" name="flight-checked-step3-'+i+'" onclick="CheckSelectedFlights(\'' + item['FlightNumber'] + '\')" type="radio" returning="0" sequence="' + i + '" name="optDepartureFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                    html += '<input  name="optDepartureFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="0" sequence="' + i + '" value="' + item['FlightNumber'] + '"/>';
                     html += '</div>';
                     html += '</div>';
                 }
@@ -389,9 +393,9 @@ function GetFlights() {
                         html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
                         html += '<div class="col-md-2 vcenter">';
                         html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
-                        html += '<div class="col-md-1 vcenter">' + item['Price'] + '<input type="hidden" id="step-3-flight-price-id-' + item['FlightNumber'] + '" value="' + item['Price'] + '"></div>';
+                        html += '<div class="col-md-1 vcenter">' + currencyFormat(item['Price']) + '</div>';
                         html += '<div class="col-md-1">';
-                        html += '<input class="flight-select" name="flight-checked-step3" onclick="CheckSelectedFlights(\'' + item['FlightNumber'] + '\')" type="radio" returning="1" sequence="' + i + '" name="optReturnFlight_' + i + '" value="' + item['FlightNumber'] + '"/>';
+                        html += '<input  name="optReturningFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="1" sequence="' + i + ' value="' + item['FlightNumber'] + '"/>';
                         html += '</div>';
                         html += '</div>';
                     }
@@ -677,8 +681,6 @@ function createUserInfo(form) {
         //#region
     }
 
-    
-
     if (!flag) {
         sweetAlert("Oops...", error_msg, "error");
         return false;
@@ -709,7 +711,7 @@ function createUserInfo(form) {
             'CreditCard': $("#step4-register-creditcard").val(),
         };
     }
-    
+
     $.ajax({
         url: 'Home/CreateNewUserValidation',
         contentType: "application/json; charset=utf-8",
@@ -730,7 +732,6 @@ function createUserInfo(form) {
 
 function SubmitStep4() {
     $("#btn-step-5").removeClass("disabled");
-    
 }
 
 //-----------------------STEP 5---------------------------------------------

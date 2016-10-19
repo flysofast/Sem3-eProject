@@ -204,7 +204,7 @@ namespace AirlineReservation.Controllers
                         Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
                         Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
                         Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
-                        Price = flight.CurrentPrice + " VND",
+                        Price = flight.CurrentPrice,
                     })).ToList();
 
                     result.Add(departureFlightLists);
@@ -249,7 +249,7 @@ namespace AirlineReservation.Controllers
                             Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
                             Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
                             Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
-                            Price = flight.CurrentPrice + " VND",
+                            Price = flight.CurrentPrice,
                         })).ToList();
 
                         result.Add(returningFlightLists);
