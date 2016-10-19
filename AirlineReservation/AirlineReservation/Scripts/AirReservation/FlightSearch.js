@@ -434,7 +434,7 @@ function initStep4() {
         },
         success: function (result) {
             if (result == "true") {
-                $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>');
+                $("#login-register-form-step4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div>');
             }
             //console.log(result);
         }
@@ -719,6 +719,9 @@ function createUserInfo(form) {
 
 function SubmitStep4() {
     $("#btn-step-5").removeClass("disabled");
+    //Fixed bug cannot move to next step by automatic
+    //$("#step-4").hide('slide');
+    //$("#step-5").show('slide');
 }
 
 //-----------------------STEP 5---------------------------------------------
