@@ -356,7 +356,7 @@ namespace AirlineReservation.Controllers
 
         #region Step 5
 
-        public JsonResult BlockTicketAPI(List<BookedFlightInfo> SelectedFlights, string[] Classes, int[] Passengers)
+        public JsonResult BookTicketAPI(List<BookedFlightInfo> SelectedFlights, string[] Classes, int[] Passengers, int RequestType)
         {
             try
             {
@@ -384,9 +384,19 @@ namespace AirlineReservation.Controllers
                     }
 
                     var fsu = new FlightScheduleUtilities();
-                    fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
 
-                    return Json(1, JsonRequestBehavior.AllowGet);
+                    if (RequestType == TicketStatus.Confirmed)
+                    {
+                        var result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Confirmed);
+
+                        return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        var result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
+
+                        return Json(result.BlockNo.ToString(), JsonRequestBehavior.AllowGet);
+                    }
                 }
             }
             catch (Exception ex)
