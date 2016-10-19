@@ -153,6 +153,7 @@ $(document).ready(function () {
 
 //Submit the data in step 1
 function SubmitStep1() {
+    $("#btn-step-2").removeClass("disabled");
     InitStep2();
 }
 //------------------------------------STEP 2------------------------------------------
@@ -166,6 +167,20 @@ var _isReturning = false;
 $('#inputDepartureDate').datepicker({
     'multidate': true,
 });
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() + 1; //January is 0!
+
+var yyyy = today.getFullYear();
+if (dd < 10) {
+    dd = '0' + dd
+}
+if (mm < 10) {
+    mm = '0' + mm
+}
+var today = dd + '/' + mm + '/' + yyyy;
+$('#inputDepartureDate').val(today);
 //Get the list of classes
 function GetClassList(dropdownControl) {
     $.ajax({
@@ -190,9 +205,8 @@ function GetClassList(dropdownControl) {
 
 //Initialize the step 2
 function InitStep2() {
-    document.getElementById("inputDepartureDate").valueAsDate = new Date();
-    document.getElementById("inputReturnDate").valueAsDate = new Date()
-
+    //document.getElementById("inputDepartureDate").valueAsDate = new Date();
+    document.getElementById("inputReturnDate").valueAsDate = new Date()    
     //Retrieve class list
     GetClassList($('.class-list'));
 
@@ -218,6 +232,7 @@ function SubmitStep2() {
         _classes = [departureClass];
     }
 
+    $("#btn-step-3").removeClass("disabled");
     InitStep3();
     GetFlights();
 }
@@ -384,6 +399,7 @@ function SubmitStep3() {
         }
     });
     console.log(_selectedFlights);
+    $("#btn-step-4").removeClass("disabled");
     initStep4();
 }
 
@@ -682,6 +698,11 @@ function createUserInfo(form) {
             }
         }
     });
+}
+
+function SubmitStep4() {
+    $("#btn-step-5").removeClass("disabled");
+    
 }
 
 //-----------------------STEP 5---------------------------------------------

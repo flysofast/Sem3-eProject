@@ -26,19 +26,19 @@
                     <p>Flight schedule</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-2" type="button" class="btn btn-default btn-circle" style="opacity: 1">2</a>
+                    <a href="#step-2" type="button" class="btn btn-default btn-circle  disabled" style="opacity: 1" id="btn-step-2">2</a>
                     <p>Ticket information</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-3" type="button" class="btn btn-default btn-circle" style="opacity: 1">3</a>
+                    <a href="#step-3" type="button" class="btn btn-default btn-circle disabled" style="opacity: 1" id="btn-step-3">3</a>
                     <p>Select flights</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-4" type="button" class="btn btn-default btn-circle" style="opacity: 1">4</a>
+                    <a href="#step-4" type="button" class="btn btn-default btn-circle disabled" style="opacity: 1" id="btn-step-4">4</a>
                     <p>Check Login/ Register</p>
                 </div>
                 <div class="stepwizard-step">
-                    <a href="#step-5" type="button" class="btn btn-default btn-circle" style="opacity: 1">5</a>
+                    <a href="#step-5" type="button" class="btn btn-default btn-circle disabled" style="opacity: 1" id="btn-step-5">5</a>
                     <p>Summary</p>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                             <!-- bck <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" /> -->
                             <!-- Test new date picker-->
                             <div class="input-group date">
-                                <input id="inputDepartureDate" type="text" class="form-control" value="12-02-2012" style="margin-left: 5px;" />
+                                <input id="inputDepartureDate" type="text" class="form-control" style="margin-left: 5px;" />
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-th"></span>
                                 </div>
@@ -466,7 +466,7 @@
                                 </div>
                             </div>
                             <!-- End Register -->
-                            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>
+                            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep4()">Next</button>
                         </div>
                     </div>
                 </div>

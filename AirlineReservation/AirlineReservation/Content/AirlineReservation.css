@@ -233,3 +233,8 @@ a{
     border-color: #EF5350 !important;
     box-shadow: 0 0 4px #EF5350 !important;
 }
+
+a.disabled {
+   pointer-events: none;
+   cursor: default;
+}
