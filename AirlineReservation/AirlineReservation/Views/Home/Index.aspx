@@ -129,11 +129,10 @@
                         <div class="col-md-9">
                             <!-- bck <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" /> -->
                             <!-- Test new date picker-->
-                            <div class="input-group date">
-                                <input id="inputDepartureDate" type="text" class="form-control" style="margin-left: 5px;" />
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-th"></span>
-                                </div>
+                            <div  class="input-group input-daterange">
+                                <input id="inputDepartureDateFrom" type="text" class="form-control" />
+                                <span class="input-group-addon">to</span>
+                                <input id="inputDepartureDateTo" type="text" class="form-control"/>
                             </div>
                             <!-- End -->
                         </div>
@@ -149,9 +148,16 @@
                     </div>
                     <div class="form-group" id="returnDateForm">
                         <label class="control-label col-md-3" for="To">Return:</label>
-                        <div class="col-md-9">
+                        <!-- <div class="col-md-9">
                             <input id="inputReturnDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
+                        </div> -->
+                        <!-- Test new date picker-->
+                        <div  class="input-group input-daterange">
+                            <input id="inputReturnDateFrom" type="text" class="form-control" />
+                            <span class="input-group-addon">to</span>
+                            <input id="inputReturnDateTo" type="text" class="form-control"/>
                         </div>
+                        <!-- End -->
                     </div>
                 </div>
                 <div class="col-md-4 columnForm">

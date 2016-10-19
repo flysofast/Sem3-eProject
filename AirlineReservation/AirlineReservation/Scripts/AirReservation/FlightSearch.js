@@ -163,9 +163,10 @@ var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
 var _isReturning = false;
 
 //Init datetime picker
-$('#inputDepartureDate').datepicker({
-    'multidate': true,
-});
+$('#inputDepartureDateFrom').datepicker();
+$('#inputDepartureDateTo').datepicker();
+$('#inputReturnDateFrom').datepicker();
+$('#inputReturnDateTo').datepicker();
 
 var today = new Date();
 var dd = today.getDate();
@@ -179,7 +180,12 @@ if (mm < 10) {
     mm = '0' + mm
 }
 var today = mm + '/' + dd + '/' + yyyy;
-$('#inputDepartureDate').val(today);
+
+$('#inputDepartureDateFrom').val(today);
+$('#inputDepartureDateTo').val(today);
+$('#inputReturnDateFrom').val(today);
+$('#inputReturnDateTo').val(today);
+
 //Get the list of classes
 function GetClassList(dropdownControl) {
     $.ajax({
