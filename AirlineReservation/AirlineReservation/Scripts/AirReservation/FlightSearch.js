@@ -162,29 +162,6 @@ var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returni
 var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
 var _isReturning = false;
 
-//Init datetime picker
-$('#inputDepartureDateFrom').datepicker();
-$('#inputDepartureDateTo').datepicker();
-$('#inputReturnDateFrom').datepicker();
-$('#inputReturnDateTo').datepicker();
-
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth() + 1; //January is 0!
-
-var yyyy = today.getFullYear();
-if (dd < 10) {
-    dd = '0' + dd
-}
-if (mm < 10) {
-    mm = '0' + mm
-}
-var today = mm + '/' + dd + '/' + yyyy;
-
-$('#inputDepartureDateFrom').val(today);
-$('#inputDepartureDateTo').val(today);
-$('#inputReturnDateFrom').val(today);
-$('#inputReturnDateTo').val(today);
 
 //Get the list of classes
 function GetClassList(dropdownControl) {
@@ -210,8 +187,10 @@ function GetClassList(dropdownControl) {
 
 //Initialize the step 2
 function InitStep2() {
-    //document.getElementById("inputDepartureDate").valueAsDate = new Date();
-    document.getElementById("inputReturnDate").valueAsDate = new Date()
+    document.getElementById("inputDepartureDateFrom").valueAsDate = new Date();
+    document.getElementById("inputDepartureDateTo").valueAsDate = new Date();
+    document.getElementById("inputReturnDateFrom").valueAsDate = new Date();
+    document.getElementById("inputReturnDateTo").valueAsDate = new Date();
     //Retrieve class list
     GetClassList($('.class-list'));
 }

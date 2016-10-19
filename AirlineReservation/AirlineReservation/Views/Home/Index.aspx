@@ -123,22 +123,19 @@
                 </div>
             </div>
             <div class="row setup-content" id="step-2">
-                <div class="col-md-4 columnForm">
+                <div class="col-md-5 columnForm">
                     <div class="form-group">
-                        <label class="control-label col-md-3" for="To">Departure:</label>
-                        <div class="col-md-9">
-                            <!-- bck <input id="inputDepartureDate" type="date" required="required" class="form-control" style="margin-left: 5px;" /> -->
-                            <!-- Test new date picker-->
-                            <div  class="input-group input-daterange">
-                                <input id="inputDepartureDateFrom" type="text" class="form-control" />
-                                <span class="input-group-addon">to</span>
-                                <input id="inputDepartureDateTo" type="text" class="form-control"/>
-                            </div>
-                            <!-- End -->
+                        <label class="control-label col-md-2" for="To">Departure:</label>
+                        <div class="col-md-4">
+                            <input id="inputDepartureDateFrom" type="date" required="required" class="form-control" style="margin-left: 5px;" />                            
+                        </div>
+                        <label class="control-label col-md-1" for="To">To:</label>
+                        <div class="col-md-4">
+                            <input id="inputDepartureDateTo" type="date" required="required" class="form-control" style="margin-left: 5px;" />                             
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="To">Type:</label>
+                        <label class="control-label col-sm-2" for="To">Type:</label>
                         <div class="col-sm-9">
                             <label class="radio-inline">
                                 <input type="radio" id="optFlightOneWay" name="optFlight" checked="checked" />One-way</label>
@@ -147,20 +144,20 @@
                         </div>
                     </div>
                     <div class="form-group" id="returnDateForm">
-                        <label class="control-label col-md-3" for="To">Return:</label>
+                        <label class="control-label col-md-2" for="To">Return:</label>
+                        <div class="col-md-4">
+                            <input id="inputReturnDateFrom" type="date" required="required" class="form-control" style="margin-left: 5px;" />                            
+                        </div>
+                        <label class="control-label col-md-1" for="To">To:</label>
+                        <div class="col-md-4">
+                            <input id="inputReturnDateTo" type="date" required="required" class="form-control" style="margin-left: 5px;" />                             
+                        </div>
                         <!-- <div class="col-md-9">
                             <input id="inputReturnDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div> -->
-                        <!-- Test new date picker-->
-                        <div  class="input-group input-daterange">
-                            <input id="inputReturnDateFrom" type="text" class="form-control" />
-                            <span class="input-group-addon">to</span>
-                            <input id="inputReturnDateTo" type="text" class="form-control"/>
-                        </div>
-                        <!-- End -->
                     </div>
                 </div>
-                <div class="col-md-4 columnForm">
+                <div class="col-md-3 columnForm">
                     <div class="form-group">
                         <label class="control-label col-md-3" for="To">Class:</label>
                         <div class="col-md-9">

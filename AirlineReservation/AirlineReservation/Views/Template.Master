@@ -18,7 +18,7 @@
 </head>
 <body>
     <!-- About us-->
-    <div class="about-us" id="aboutUsPage">
+    <div class="about-us" id="aboutUsPage" style="display:none">
         <div class="container" style="color: white" onclick="aboutUs()">
             <img style="max-width: 50%;margin:30px auto;" src="https://www.topcv.vn/company_logos/aptech-computer-education-center-57982df91f555.jpg" alt="Alternate Text" class="img-responsive"/>
             <div class="row">
