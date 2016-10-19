@@ -137,7 +137,6 @@
                             </div>
                             <!-- End -->
                         </div>
-                        
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="To">Type:</label>
@@ -228,35 +227,34 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="thumbnail">
-                                                Passengers Information
+                                    Passengers Information
                                         <div class="caption">
                                             <h3>Passenger and Cost</h3>
                                             <p class="card-description">
                                                 <table class="table" style="text-align: left;">
                                                     <tr>
-                                                        <td>Adults:</td>
-                                                        <td id="step3-adult-number"></td>
+
+                                                        <td>Adults: <span id="step3-adult-number"></span></td>
+                                                        <td>Children: <span id="step3-children-number"></span></td>
+                                                        <td>Senior citizens: <span id="step3-senior-number"></span></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>Departure total:</td>
+                                                        <td colspan="2" id="step3-total-departure-price">0</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Children:</td>
-                                                        <td id="step3-children-number"></td>
+                                                        <td>Returning total:</td>
+                                                        <td colspan="2" id="step3-total-return-price">0</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Senior citizens:</td>
-                                                        <td id="step3-senior-number"></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Total Departure:</td>
-                                                        <td id="step3-total-departure-price">0</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Total Return:</td>
-                                                         <td id="step3-total-return-price">0</td>
+                                                        <td><b>Grand total:</b></td>
+                                                        <td colspan="2" id="step3-grand-total-price"></td>
                                                     </tr>
                                                 </table>
                                             </p>
                                         </div>
-                                            </div>
+                                </div>
                             </div>
                         </div>
 

@@ -245,8 +245,7 @@ function InitStep3() {
 
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
 
-    $("#routeInfo").html(_dates[0].toLocaleString([], options) + "<h4> Adults: " + _passengers[0] + " Children: "
-        + _passengers[1] + " Senior citizens: " + _passengers[2] + "</h4>");
+    $("#routeInfo").html(_dates[0].toLocaleString([], options));
 
     //Init total region
     $("#step3-adult-number").html(_passengers[0]);
@@ -277,11 +276,14 @@ function CheckSelectedFlights(flight_number) {
             departureTotal += price;
         }
     });
+
+    //Multiply by total passengers
     departureTotal *= totalPassengers;
     returningTotal *= totalPassengers;
 
     $("#step3-total-departure-price").html(currencyFormat(departureTotal));
     $("#step3-total-return-price").html(currencyFormat(returningTotal));
+    $("#step3-grand-total-price").html("<b>" + currencyFormat(departureTotal + returningTotal) + "</b>");
 
     //Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
     if (selectedFlights.length == _selectedRoute.length - 1) {
