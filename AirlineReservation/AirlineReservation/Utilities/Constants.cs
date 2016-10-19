@@ -6,25 +6,26 @@ using System.Web;
 
 public class Constants
 {
-    public static string SessionUserIDKey = "UserID";
-    public static string SessionIsLoggedInKey = "isLogged";
+    public const string SessionUserIDKey = "UserID";
+    public const string SessionIsLoggedInKey = "isLogged";
 }
 
 public class TicketStatus
 {
-    public static int Blocked = 0;
-    public static int Confirmed = 1;
-    public static int Cancelled = 2;
+    public const int Undefined = 0;
+    public const int Confirmed = 1;
+    public const int Cancelled = 2;
+    public const int Blocked = 3;
 }
 
 public class ClassNames
 {
-    public static string Any = "Any";
-    public static string FirstClass = "First class";
-    public static string BusinessClass = "Business class";
-    public static string ClubClass = "Club class";
-    public static string NonSmokingClass = "Non-smoking class";
-    public static string SmokingClass = "Smoking class";
+    public const string Any = "Any";
+    public const string FirstClass = "First class";
+    public const string BusinessClass = "Business class";
+    public const string ClubClass = "Club class";
+    public const string NonSmokingClass = "Non-smoking class";
+    public const string SmokingClass = "Smoking class";
 }
 
 public class BookedFlightInfo

@@ -71,7 +71,7 @@ public class FlightScheduleUtilities
         return result;
     }
 
-    public Ticket CreateTicket(string userID, List<BookedFlightInfo> flights, int[] passengers, decimal totalPrice, int request)
+    public Ticket CreateTicket(string userID, List<BookedFlightInfo> flights, int[] passengers, decimal totalPrice, int requestType)
     {
         using (var transaction = new TransactionScope())
         {
@@ -79,7 +79,7 @@ public class FlightScheduleUtilities
             {
                 var ticket = new Ticket();
                 ticket.UserID = userID;
-                ticket.Status = request;
+                ticket.Status = 0;
                 ticket.Price = totalPrice;
                 ticket.CreatedDate = DateTime.Now;
                 ticket.NumberOfAdults = passengers[0];
@@ -91,6 +91,24 @@ public class FlightScheduleUtilities
                 for (int i = 0; i < flights.Count; i++)
                 {
                     var flight = flights[i];
+
+                    //Check if the departure date is a date in the past
+                    var theFlight = db.Flights.Single(p => p.FlightNo.Equals(flight.FlightNumber));
+                    if (theFlight.DepartureTime < DateTime.Now)
+                    {
+                        throw new ArgumentException("The departure date is not valid");
+                    }
+
+                    if (requestType == TicketStatus.Blocked)
+                    {
+                        //Check if the date is valid for blocking
+                        var dateDiff = theFlight.DepartureTime.Subtract(DateTime.Now).TotalDays;
+                        if (dateDiff < 14 || dateDiff > 365)
+                        {
+                            throw new ArgumentException("The flight \"" + flight.FlightNumber + "\"'s departure date must be more than 14 days from today, but no more than 365 days");
+                        }
+                    }
+
                     var ticketDetails = new Ticket_Flight();
                     ticketDetails.TicketNo = ticket.TicketNo;
                     ticketDetails.FlightNo = flight.FlightNumber;
@@ -103,13 +121,13 @@ public class FlightScheduleUtilities
                     int totalPassengers = passengers[0] + passengers[1] + passengers[2];
 
                     //List of vacant seats of the class
-                    var availableSeats = db.Seats.Where(p => p.Class.Equals(flight.Class) &&
+                    var availableSeats = db.Seats.Where(p => (flight.Class.Equals(ClassNames.Any) || p.Class.Equals(flight.Class)) &&
                     p.TakenSeats.Count(q => q.FlightNo.Equals(flight.FlightNumber)) == 0).Select(p => p.SeatID).ToList();
 
                     //Double check the database
                     if (availableSeats.Count < totalPassengers)
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException("There are not enough available seats for this specification");
                     }
 
                     for (int j = 0; j < totalPassengers; j++)
@@ -131,15 +149,47 @@ public class FlightScheduleUtilities
                     db.SaveChanges();
                 }
 
+                //Set ticket's status
+                string generatedCode = requestType.ToString("D2") + ticket.TicketNo.ToString();
+                switch (requestType)
+                {
+                    case TicketStatus.Confirmed:
+                        ChargeUser(userID, totalPrice);
+                        ticket.ConfirmationNo = generatedCode;
+                        ticket.Status = TicketStatus.Confirmed;
+                        break;
+
+                    case TicketStatus.Blocked:
+                        //Check if the date is valid for blocking
+
+                        ticket.BlockNo = generatedCode;
+                        ticket.Status = TicketStatus.Blocked;
+                        break;
+
+                    default:
+                        throw new ArgumentException("The requested command is not valid");
+                }
+                db.SaveChanges();
+
                 transaction.Complete();
                 return ticket;
             }
             catch (Exception ex)
             {
                 transaction.Dispose();
-                throw new Exception();
+                throw ex;
                 //return null;
             }
         }
+    }
+
+    /// <summary>
+    /// Charge user
+    /// </summary>
+    /// <param name="UserID"></param>
+    /// <param name="amount"></param>
+    private void ChargeUser(string UserID, decimal amount)
+    {
+        Console.WriteLine(UserID + " has just been charge for " + amount);
     }
 }

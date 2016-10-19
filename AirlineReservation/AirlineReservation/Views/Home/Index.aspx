@@ -629,7 +629,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button style="width: 200px" class="btn btn-success nextBtn btn-lg pull-right" type="button">Buy</button>
+                        <button style="width: 200px" class="btn btn-success nextBtn btn-lg pull-right" type="button" onclick="BuyTicket()">Buy</button>
                         <div style="width: 20px; height: 1px" class="pull-right"></div>
                         <button style="width: 200px" class="btn btn-danger nextBtn btn-lg pull-right" onclick="BlockTicket()" type="button">Block (Free)</button>
                     </div>

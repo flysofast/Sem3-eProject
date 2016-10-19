@@ -232,7 +232,6 @@ function SubmitStep2() {
 
     $("#btn-step-3").removeClass("disabled");
     InitStep3();
-    GetFlights();
 }
 
 //------------------------------------------STEP 3---------------------------
@@ -256,6 +255,7 @@ function InitStep3() {
     $('#btStep3Submit').prop('disabled', true);
 
     CheckSelectedFlights();
+    GetFlights();
 }
 
 //Called when a flight radio button is checked
@@ -397,7 +397,7 @@ function GetFlights() {
                         html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
                         html += '<div class="col-md-1 vcenter">' + currencyFormat(item['Price']) + '</div>';
                         html += '<div class="col-md-1">';
-                        html += '<input  name="optReturningFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="1" sequence="' + i + ' value="' + item['FlightNumber'] + '"/>';
+                        html += '<input  name="optReturningFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="1" sequence="' + i + '" value="' + item['FlightNumber'] + '"/>';
                         html += '</div>';
                         html += '</div>';
                     }
@@ -449,7 +449,7 @@ function initStep4() {
         },
         success: function (result) {
             if (result == "true") {
-                $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>');
+                $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep4()">Next</button>');
             }
             //console.log(result);
         }
@@ -738,22 +738,57 @@ function SubmitStep4() {
 
 //-----------------------STEP 5---------------------------------------------
 function BlockTicket() {
-    var obj = {
-        SelectedFlights: _selectedFlights,
-        Classes: _classes,
-        Passengers: _passengers
-    }
-    $.ajax({
-        url: 'Home/BlockTicketAPI',
-        contentType: "application/json; charset=utf-8",
-        dataType: 'json',
-        type: 'POST',
-        data: JSON.stringify(obj),
-        error: function (data) {
-            swal("Error", data.responseText, "error");
-        },
-        success: function (result) {
-            swal("CHECK CONSOLE", result, "success");
-        }
-    });
+    swal({
+        title: "Are you sure?", text: "Do you really want to block this ticket?", type: "warning", showCancelButton: true,
+        confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, block it!", closeOnConfirm: false
+    },
+        function () {
+            var obj = {
+                SelectedFlights: _selectedFlights,
+                Classes: _classes,
+                Passengers: _passengers,
+                RequestType: 3 //Block command code
+            }
+            $.ajax({
+                url: 'Home/BookTicketAPI',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                error: function (data) {
+                    swal("Error", data.responseText, "error");
+                },
+                success: function (result) {
+                    swal("You have successfully blocked the ticket!", "Blocking number: " + result, "success");
+                }
+            });
+        });
+}
+
+function BuyTicket() {
+    swal({
+        title: "Are you sure?", text: "Do you really want to buy this ticket?", type: "warning", showCancelButton: true,
+        confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, buy it!", closeOnConfirm: false
+    },
+        function () {
+            var obj = {
+                SelectedFlights: _selectedFlights,
+                Classes: _classes,
+                Passengers: _passengers,
+                RequestType: 1 //Buy command code
+            }
+            $.ajax({
+                url: 'Home/BookTicketAPI',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                error: function (data) {
+                    swal("Error", data.responseText, "error");
+                },
+                success: function (result) {
+                    swal("You have successfully purchased the ticket!", "Confirmation number: " + result, "success");
+                }
+            });
+        });
 }
