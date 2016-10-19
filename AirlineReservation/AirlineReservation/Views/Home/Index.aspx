@@ -221,8 +221,44 @@
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3>Select Flight</h3>
-                        <h4><span id="routeTitle"></span></h4>
-                        <h4><span id="routeInfo"></span></h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><span id="routeTitle"></span></h4>
+                                <h4><span id="routeInfo"></span></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                                Passengers Information
+                                        <div class="caption">
+                                            <h3>Passenger and Cost</h3>
+                                            <p class="card-description">
+                                                <table class="table" style="text-align: left;">
+                                                    <tr>
+                                                        <td>Adults:</td>
+                                                        <td id="step3-adult-number"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Children:</td>
+                                                        <td id="step3-children-number"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Senior citizens:</td>
+                                                        <td id="step3-senior-number"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total Departure:</td>
+                                                        <td id="step3-total-departure-price">0</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total Return:</td>
+                                                         <td id="step3-total-return-price">0</td>
+                                                    </tr>
+                                                </table>
+                                            </p>
+                                        </div>
+                                            </div>
+                            </div>
+                        </div>
 
                         <ul class="nav nav-tabs" style="margin-bottom: 22px">
                             <li class="active">
