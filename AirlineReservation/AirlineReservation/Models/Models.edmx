@@ -4,12 +4,59 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AirlineReservationSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AirlineReservationSystemModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="AirlineReservationSystemModelStoreContainer">
+          <EntitySet Name="City" EntityType="AirlineReservationSystemModel.Store.City" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Flight" EntityType="AirlineReservationSystemModel.Store.Flight" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Route" EntityType="AirlineReservationSystemModel.Store.Route" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Seat" EntityType="AirlineReservationSystemModel.Store.Seat" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="AirlineReservationSystemModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TakenSeat" EntityType="AirlineReservationSystemModel.Store.TakenSeat" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ticket" EntityType="AirlineReservationSystemModel.Store.Ticket" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Ticket_Flight" EntityType="AirlineReservationSystemModel.Store.Ticket_Flight" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="AirlineReservationSystemModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Flight_Route" Association="AirlineReservationSystemModel.Store.FK_Flight_Route">
+            <End Role="Route" EntitySet="Route" />
+            <End Role="Flight" EntitySet="Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_City" Association="AirlineReservationSystemModel.Store.FK_Route_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Route_City1" Association="AirlineReservationSystemModel.Store.FK_Route_City1">
+            <End Role="City" EntitySet="City" />
+            <End Role="Route" EntitySet="Route" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TakenSeat_Flight" Association="AirlineReservationSystemModel.Store.FK_TakenSeat_Flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="TakenSeat" EntitySet="TakenSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TakenSeat_Seat" Association="AirlineReservationSystemModel.Store.FK_TakenSeat_Seat">
+            <End Role="Seat" EntitySet="Seat" />
+            <End Role="TakenSeat" EntitySet="TakenSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TakenSeat_Ticket" Association="AirlineReservationSystemModel.Store.FK_TakenSeat_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="TakenSeat" EntitySet="TakenSeat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Flight_Flight" Association="AirlineReservationSystemModel.Store.FK_Ticket_Flight_Flight">
+            <End Role="Flight" EntitySet="Flight" />
+            <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Flight_Ticket" Association="AirlineReservationSystemModel.Store.FK_Ticket_Flight_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_User" Association="AirlineReservationSystemModel.Store.FK_Ticket_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="City">
           <Key>
             <PropertyRef Name="CityID" />
           </Key>
-          <Property Name="CityID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CityID" Type="varchar" Nullable="false" MaxLength="3" />
           <Property Name="CityName" Type="nvarchar" MaxLength="50" />
           <Property Name="InService" Type="bit" Nullable="false" />
         </EntityType>
@@ -17,8 +64,8 @@
           <Key>
             <PropertyRef Name="FlightNo" />
           </Key>
-          <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
-          <Property Name="CurrentPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FlightNo" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="CurrentPrice" Type="decimal" Nullable="false" Scale="2" />
           <Property Name="DepartureTime" Type="datetime" Nullable="false" />
           <Property Name="RouteID" Type="int" Nullable="false" />
           <Property Name="CancellationFee" Type="float" Nullable="false" />
@@ -28,9 +75,9 @@
           <Key>
             <PropertyRef Name="RouteID" />
           </Key>
-          <Property Name="RouteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OriginalCityID" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="DestinationCityID" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="RouteID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OriginalCityID" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="DestinationCityID" Type="varchar" Nullable="false" MaxLength="3" />
           <Property Name="Distance" Type="int" Nullable="false" />
           <Property Name="InService" Type="bit" Nullable="false" />
         </EntityType>
@@ -38,16 +85,16 @@
           <Key>
             <PropertyRef Name="SeatID" />
           </Key>
-          <Property Name="SeatID" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="SeatID" Type="varchar" Nullable="false" MaxLength="4" />
           <Property Name="Class" Type="nvarchar" MaxLength="25" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
@@ -56,20 +103,20 @@
             <PropertyRef Name="SeatID" />
             <PropertyRef Name="FlightNo" />
           </Key>
-          <Property Name="SeatID" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SeatID" Type="varchar" Nullable="false" MaxLength="4" />
+          <Property Name="FlightNo" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="TicketNo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Ticket">
           <Key>
             <PropertyRef Name="TicketNo" />
           </Key>
-          <Property Name="TicketNo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TicketNo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ConfirmationNo" Type="varchar" MaxLength="10" />
           <Property Name="BlockNo" Type="varchar" MaxLength="10" />
           <Property Name="CancellationNo" Type="varchar" MaxLength="10" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Nullable="false" Scale="2" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="NumberOfAdults" Type="int" Nullable="false" />
           <Property Name="NumberOfChildren" Type="int" Nullable="false" />
@@ -82,7 +129,7 @@
             <PropertyRef Name="FlightNo" />
           </Key>
           <Property Name="TicketNo" Type="int" Nullable="false" />
-          <Property Name="FlightNo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="FlightNo" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="SequenceNo" Type="int" Nullable="false" />
           <Property Name="IsReturning" Type="bit" Nullable="false" />
         </EntityType>
@@ -90,20 +137,20 @@
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UserID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="Sex" Type="bit" Nullable="false" />
-          <Property Name="CreditcardNumber" Type="varchar" MaxLength="20" />
+          <Property Name="CreditcardNumber" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_Flight_Route">
-          <End Role="Route" Type="Self.Route" Multiplicity="1" />
-          <End Role="Flight" Type="Self.Flight" Multiplicity="*" />
+          <End Role="Route" Type="AirlineReservationSystemModel.Store.Route" Multiplicity="1" />
+          <End Role="Flight" Type="AirlineReservationSystemModel.Store.Flight" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Route">
               <PropertyRef Name="RouteID" />
@@ -114,8 +161,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Route_City">
-          <End Role="City" Type="Self.City" Multiplicity="1" />
-          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <End Role="City" Type="AirlineReservationSystemModel.Store.City" Multiplicity="1" />
+          <End Role="Route" Type="AirlineReservationSystemModel.Store.Route" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="City">
               <PropertyRef Name="CityID" />
@@ -126,8 +173,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Route_City1">
-          <End Role="City" Type="Self.City" Multiplicity="1" />
-          <End Role="Route" Type="Self.Route" Multiplicity="*" />
+          <End Role="City" Type="AirlineReservationSystemModel.Store.City" Multiplicity="1" />
+          <End Role="Route" Type="AirlineReservationSystemModel.Store.Route" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="City">
               <PropertyRef Name="CityID" />
@@ -138,8 +185,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TakenSeat_Flight">
-          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
-          <End Role="TakenSeat" Type="Self.TakenSeat" Multiplicity="*" />
+          <End Role="Flight" Type="AirlineReservationSystemModel.Store.Flight" Multiplicity="1" />
+          <End Role="TakenSeat" Type="AirlineReservationSystemModel.Store.TakenSeat" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Flight">
               <PropertyRef Name="FlightNo" />
@@ -150,8 +197,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TakenSeat_Seat">
-          <End Role="Seat" Type="Self.Seat" Multiplicity="1" />
-          <End Role="TakenSeat" Type="Self.TakenSeat" Multiplicity="*" />
+          <End Role="Seat" Type="AirlineReservationSystemModel.Store.Seat" Multiplicity="1" />
+          <End Role="TakenSeat" Type="AirlineReservationSystemModel.Store.TakenSeat" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Seat">
               <PropertyRef Name="SeatID" />
@@ -162,8 +209,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TakenSeat_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
-          <End Role="TakenSeat" Type="Self.TakenSeat" Multiplicity="*" />
+          <End Role="Ticket" Type="AirlineReservationSystemModel.Store.Ticket" Multiplicity="1" />
+          <End Role="TakenSeat" Type="AirlineReservationSystemModel.Store.TakenSeat" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ticket">
               <PropertyRef Name="TicketNo" />
@@ -174,8 +221,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ticket_Flight_Flight">
-          <End Role="Flight" Type="Self.Flight" Multiplicity="1" />
-          <End Role="Ticket_Flight" Type="Self.Ticket_Flight" Multiplicity="*" />
+          <End Role="Flight" Type="AirlineReservationSystemModel.Store.Flight" Multiplicity="1" />
+          <End Role="Ticket_Flight" Type="AirlineReservationSystemModel.Store.Ticket_Flight" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Flight">
               <PropertyRef Name="FlightNo" />
@@ -186,8 +233,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ticket_Flight_Ticket">
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
-          <End Role="Ticket_Flight" Type="Self.Ticket_Flight" Multiplicity="*" />
+          <End Role="Ticket" Type="AirlineReservationSystemModel.Store.Ticket" Multiplicity="1" />
+          <End Role="Ticket_Flight" Type="AirlineReservationSystemModel.Store.Ticket_Flight" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ticket">
               <PropertyRef Name="TicketNo" />
@@ -198,8 +245,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ticket_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <End Role="User" Type="AirlineReservationSystemModel.Store.User" Multiplicity="1" />
+          <End Role="Ticket" Type="AirlineReservationSystemModel.Store.Ticket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="UserID" />
@@ -209,53 +256,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="AirlineReservationSystemModelStoreContainer">
-          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Flight" EntityType="Self.Flight" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Route" EntityType="Self.Route" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Seat" EntityType="Self.Seat" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TakenSeat" EntityType="Self.TakenSeat" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Ticket_Flight" EntityType="Self.Ticket_Flight" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Flight_Route" Association="Self.FK_Flight_Route">
-            <End Role="Route" EntitySet="Route" />
-            <End Role="Flight" EntitySet="Flight" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Route_City" Association="Self.FK_Route_City">
-            <End Role="City" EntitySet="City" />
-            <End Role="Route" EntitySet="Route" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Route_City1" Association="Self.FK_Route_City1">
-            <End Role="City" EntitySet="City" />
-            <End Role="Route" EntitySet="Route" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TakenSeat_Flight" Association="Self.FK_TakenSeat_Flight">
-            <End Role="Flight" EntitySet="Flight" />
-            <End Role="TakenSeat" EntitySet="TakenSeat" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TakenSeat_Seat" Association="Self.FK_TakenSeat_Seat">
-            <End Role="Seat" EntitySet="Seat" />
-            <End Role="TakenSeat" EntitySet="TakenSeat" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TakenSeat_Ticket" Association="Self.FK_TakenSeat_Ticket">
-            <End Role="Ticket" EntitySet="Ticket" />
-            <End Role="TakenSeat" EntitySet="TakenSeat" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Flight_Flight" Association="Self.FK_Ticket_Flight_Flight">
-            <End Role="Flight" EntitySet="Flight" />
-            <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_Flight_Ticket" Association="Self.FK_Ticket_Flight_Ticket">
-            <End Role="Ticket" EntitySet="Ticket" />
-            <End Role="Ticket_Flight" EntitySet="Ticket_Flight" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ticket_User" Association="Self.FK_Ticket_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Ticket" EntitySet="Ticket" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -398,7 +398,7 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Sex" Type="Boolean" Nullable="false" />
-          <Property Name="CreditcardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreditcardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Tickets" Relationship="AirlineReservationSystemModel.FK_Ticket_User" FromRole="User" ToRole="Ticket" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
@@ -652,7 +652,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
