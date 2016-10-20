@@ -198,12 +198,12 @@ namespace AirlineReservation.Controllers
 
                     #region Departure flight search
 
-                    var searchResult = ru.FindFlights(routes, numberOfRequestedSeats, classes[0], dates[0].from.Date);
-                    var departureFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                    var searchResult = ru.FindFlights(routes, numberOfRequestedSeats, classes[0], dates[0].from.Date, dates[0].to.Date);
+                    var departureFlightLists = searchResult.Where(node => node != null).Select(node => node.OrderBy(p => p.DepartureTime).Select(flight => new
                     {
                         FlightNumber = flight.FlightNo,
-                        Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
-                        Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                        Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.DepartureTime.Date.ToShortDateString() + ")",
+                        Arrival = flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortTimeString() + " (" + flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortDateString() + ")",
                         Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
                         Price = flight.CurrentPrice,
                     })).ToList();
@@ -221,12 +221,12 @@ namespace AirlineReservation.Controllers
                         returningPath.Add(routes.Last());
                         returningPath.Add(routes.First());
 
-                        searchResult = ru.FindFlights(returningPath, numberOfRequestedSeats, classes[1], dates[1].from.Date);
-                        var returningFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                        searchResult = ru.FindFlights(returningPath, numberOfRequestedSeats, classes[1], dates[1].from.Date, dates[1].to.Date);
+                        var returningFlightLists = searchResult.Where(node => node != null).Select(node => node.OrderBy(p => p.DepartureTime).Select(flight => new
                         {
                             FlightNumber = flight.FlightNo,
-                            Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
-                            Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                            Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.DepartureTime.Date.ToShortDateString() + ")",
+                            Arrival = flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortTimeString() + " (" + flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortDateString() + ")",
                             Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
                             Price = flight.CurrentPrice,
                         })).ToList();

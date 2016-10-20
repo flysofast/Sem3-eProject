@@ -216,6 +216,10 @@ function SubmitStep2() {
         _classes = [departureClass];
     }
 
+    if (_dates[0].from > _dates[0].to || (_dates.length > 1 && _dates[1].from > _dates[1].to)) {
+        swal("Date range selections are not valid", "We will get you the closest results to your specifications", "warning");
+    }
+
     $("#btn-step-3").removeClass("disabled");
     InitStep3();
 }
