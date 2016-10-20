@@ -85,7 +85,7 @@ The Airline Reservation System (ARS) is a software application to assist an airl
     <div class="se-pre-con"></div>
     <!-- End -->
 
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -111,6 +111,7 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                     <%}else{ %>
                     <li>
                         <a class="page-scroll" id="nav-menu-login" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
+                        <a class="page-scroll" id="nav-menu-personal" href="Personal" style="display:none">Personal</a>
                     </li>
                     <%} %>
                     <li>

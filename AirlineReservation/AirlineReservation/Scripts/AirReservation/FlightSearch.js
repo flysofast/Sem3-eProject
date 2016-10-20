@@ -504,9 +504,16 @@ function loginValidation(form) {
         },
         success: function (result) {
             if (result == "1") {
-                $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>');
-                $("#nav-menu-login").hide();
-                $("#nav-menu-personal").show();
+                if (form == "main") {
+                    swal("Successfully!", "Welcome back!", "success");
+                    $("#myModal").modal('hide');
+                    $("#nav-menu-login").hide();
+                    $("#nav-menu-personal").show();
+                } else {
+                    $("#step-4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div><button class="btn btn-primary nextBtn btn-lg pull-right" type="button">Next</button>');
+                    $("#nav-menu-login").hide();
+                    $("#nav-menu-personal").show();
+                }
             } else {
                 sweetAlert("Error", "Your account number and password combination are not correct, Please try again!", "error");
             }

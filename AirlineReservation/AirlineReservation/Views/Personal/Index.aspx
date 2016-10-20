@@ -12,13 +12,36 @@
     });
 
 </script>
-    <div class="float-button-container" id="float-button-group">
+    <div class="float-button-container" id="float-button-group" style="display:none">
         <div class="float-button" style="background-image:url(../../Images/job-search_small.png)" onclick="changePage('information')"></div>
         <div class="float-button" style="background-image:url(../../Images/ticket_small.png)" onclick="changePage('ticket')"></div>
         <div class="float-button" style="background-image:url(../../Images/notebook_small.png)" onclick="changePage('log')"></div>
     </div>
 
-
+    <style>
+        /* Let's get this party started */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+ 
+        /* Track */
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+        }
+ 
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: rgba(30,144,255,0.8); 
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+        }
+        ::-webkit-scrollbar-thumb:window-inactive {
+	        background: rgba(30,144,255,0.4); 
+        }
+    </style>
 <div class="container-fluid cards-row" id="card-row-index">
 <div class="container">
 <div class="row">
@@ -56,69 +79,63 @@
 </div>
 </div>
 </div>
-
-    <div class="container" id="formPersonalInformation" style="min-height: 300px;">
+    
+    <div class="container" id="formPersonalInformation"  style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
         <h2>Your personal information</h2>  
         <div class="form-group row">
             <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="Text1">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="example-search-input" class="col-xs-3 col-form-label">Password</label>
-            <div class="col-xs-7">
-                <input class="form-control" type="password" id="Password1">
+                <input class="form-control" type="text" id="personal-username">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-text-input" class="col-xs-3 col-form-label">First Name</label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="Text2">
+                <input class="form-control" type="text" id="personal-firstname">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Last Name</label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="Password2">
+                <input class="form-control" type="text" id="personal-lastname">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Email</label>
             <div class="col-xs-7">
-                <input class="form-control" type="email" id="Text3">
+                <input class="form-control" type="email" id="personal-email">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Phone Number</label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="Text4">
+                <input class="form-control" type="text" id="personal-phone">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="Text5">
+                <input class="form-control" type="text" id="personal-gender">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Day Of Birth </label>
             <div class="col-xs-7">
-                <input class="form-control" type="date" id="Text6">
+                <input class="form-control" type="date" id="personal-dob">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Credit card </label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="Date2">
+                <input class="form-control" type="text" id="personal-creditcard">
             </div>
         </div>
         <div class="form-group row">
-            <button class="btn btn-primary nextBtn btn-lg" type="button">Update your personal information</button>
+            <button class="btn btn-primary nextBtn btn-lg" type="button" onclick="updateUserInfor()">Update your personal information</button>
         </div>
     </div>
 
-    <div class="container" id="formTicket" style="min-height: 300px;">
+    <div class="container" id="formTicket"  style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
         <h2>Your currently ticket</h2>  
         <div class="row">
             <div class="col-md-2 vcenter">Ticket Code</div>
@@ -144,7 +161,7 @@
             </div>
         </div>
     </div>
-    <div class="container" id="formLog" style="min-height: 300px;">
+    <div class="container" id="formLog" style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
        <h2>Your Log ticket</h2>  
         <div class="row">
             <div class="col-md-2 vcenter">Ticket Code</div>
