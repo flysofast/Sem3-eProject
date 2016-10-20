@@ -1,6 +1,7 @@
 ﻿using AirlineReservation.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -171,7 +172,7 @@ namespace AirlineReservation.Controllers
         /// If the flight list for a route is not available, makes it an empty list
         /// If one-way flight, returns a list with 1 object (a list of departure flights), otherwise returns 2 lists (departure and returning flights)
         /// If the whole schedule cannot be found, returns 0</returns>
-        public JsonResult GetFlightsAPI(List<string> routes, List<string> classes, List<DateTime> dates, List<int> passengers, bool isReturning)
+        public JsonResult GetFlightsAPI(List<string> routes, List<string> classes, List<DateRange> dates, List<int> passengers, bool isReturning)
         {
             try
             {
@@ -197,39 +198,17 @@ namespace AirlineReservation.Controllers
 
                     #region Departure flight search
 
-                    var searchResult = ru.FindFlights(routes, numberOfRequestedSeats, classes[0], dates[0].Date);
-                    var departureFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                    var searchResult = ru.FindFlights(routes, numberOfRequestedSeats, classes[0], dates[0].from.Date, dates[0].to.Date);
+                    var departureFlightLists = searchResult.Where(node => node != null).Select(node => node.OrderBy(p => p.DepartureTime).Select(flight => new
                     {
                         FlightNumber = flight.FlightNo,
-                        Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
-                        Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                        Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.DepartureTime.Date.ToShortDateString() + ")",
+                        Arrival = flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortTimeString() + " (" + flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortDateString() + ")",
                         Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
                         Price = flight.CurrentPrice,
                     })).ToList();
 
                     result.Add(departureFlightLists);
-
-                    #region TEST
-
-                    //var s = "";
-                    //foreach (var list in departureFlightLists)
-                    //{
-                    //    if (list.Count() > 0)
-                    //    {
-                    //        foreach (var flight in list)
-                    //        {
-                    //            s += string.Format("{0} - DEP: {1} - Arr: {2} - Duration: {3} - Price: {4}\n", flight.FlightNumber, flight.Departure, flight.Arrival, flight.Duration, flight.Price);
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        s += "Not found\n";
-                    //    }
-
-                    //    s += "------------------------------------\n";
-                    //}
-
-                    #endregion TEST
 
                     #endregion Departure flight search
 
@@ -242,12 +221,12 @@ namespace AirlineReservation.Controllers
                         returningPath.Add(routes.Last());
                         returningPath.Add(routes.First());
 
-                        searchResult = ru.FindFlights(returningPath, numberOfRequestedSeats, classes[1], dates[1].Date);
-                        var returningFlightLists = searchResult.Where(node => node != null).Select(node => node.Select(flight => new
+                        searchResult = ru.FindFlights(returningPath, numberOfRequestedSeats, classes[1], dates[1].from.Date, dates[1].to.Date);
+                        var returningFlightLists = searchResult.Where(node => node != null).Select(node => node.OrderBy(p => p.DepartureTime).Select(flight => new
                         {
                             FlightNumber = flight.FlightNo,
-                            Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.Route.OriginalCity.CityName + ")",
-                            Arrival = (flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration))).ToShortTimeString() + " (" + flight.Route.DestinationCity.CityName + ")",
+                            Departure = flight.DepartureTime.ToShortTimeString() + " (" + flight.DepartureTime.Date.ToShortDateString() + ")",
+                            Arrival = flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortTimeString() + " (" + flight.DepartureTime.Add(TimeSpan.FromHours(flight.Duration)).ToShortDateString() + ")",
                             Duration = TimeSpan.FromHours(flight.Duration).ToString("h\\h\\ mm\\m\\ "),
                             Price = flight.CurrentPrice,
                         })).ToList();
@@ -270,6 +249,15 @@ namespace AirlineReservation.Controllers
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message, JsonRequestBehavior.AllowGet); ;
             }
+        }
+
+        public class DateRange
+        {
+            [Display(Name = "from")]
+            public DateTime from { set; get; }
+
+            [Display(Name = "to")]
+            public DateTime to { set; get; }
         }
 
         #endregion Step 3

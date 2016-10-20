@@ -14,8 +14,8 @@ namespace DemoDijkstra
 
         private static void Main(string[] args)
         {
-            //GenerateFlights(20, 20);
-            //return;
+            GenerateFlights(28, 20, 400);
+            return;
 
             //GenerateSeats();
 
@@ -227,9 +227,8 @@ namespace DemoDijkstra
             }
         }
 
-        private static void GenerateFlights(int numberOfDays, int numberOfFlightPerday)
+        private static void GenerateFlights(int numberOfDays, int numberOfFlightPerday, int currentFlightID = 0)
         {
-            int currentFlightID = 1;
             DateTime startingDate = DateTime.Now.Date;
             Random r = new Random();
             var routeList = db.Routes.Where(p => p.InService).ToList();
@@ -239,8 +238,8 @@ namespace DemoDijkstra
                 for (int i = 0; i < numberOfFlightPerday; i++)
                 {
                     Flight flight = new Flight();
-                    flight.FlightNo = "AR" + currentFlightID.ToString("D4");
                     currentFlightID++;
+                    flight.FlightNo = "AR" + currentFlightID.ToString("D4");
                     //flight.d
                     DateTime departureDate = startingDate.AddDays(day);
                     TimeSpan time = new TimeSpan(r.Next(0, 24), r.Next(0, 12) * 5, 0);

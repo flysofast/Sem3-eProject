@@ -158,10 +158,9 @@ function SubmitStep1() {
 }
 //------------------------------------STEP 2------------------------------------------
 var _passengers;//[<AdultsNumber>, <ChildrenNumber>, <SeniorCitizensNumber>]
-var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returning flight, otherwise one way flight
+var _dates;//[ <{ from:<departure from>, to: <departure to>}> [, { from: <returning from>, to: <returning to>}] ]  if (dates.length==2): returning flight, otherwise one way flight
 var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
 var _isReturning = false;
-
 
 //Get the list of classes
 function GetClassList(dropdownControl) {
@@ -199,20 +198,26 @@ function InitStep2() {
 function SubmitStep2() {
     _passengers = [$("#adultsNo").val(), $("#childrenNo").val(), $("#elderNo").val()];
 
-    var departureDate = new Date($('#inputDepartureDate').val());
+    var departureDateFrom = new Date($('#inputDepartureDateFrom').val());
+    var departureDateTo = new Date($('#inputDepartureDateTo').val());
     var departureClass = $("#DepartureClass").val();
 
     //If it's returning flight
     _isReturning = document.getElementById("optFlightReturn").checked;
     if (_isReturning) {
-        var returningDate = new Date($('#inputReturnDate').val());
+        var returningDateFrom = new Date($('#inputReturnDateFrom').val());
+        var returningDateTo = new Date($('#inputReturnDateTo').val());
         var returningClass = $("#ReturningClass").val();
-        _dates = [departureDate, returningDate];
+        _dates = [{ from: departureDateFrom, to: departureDateTo }, { from: returningDateFrom, to: returningDateTo }];
         _classes = [departureClass, returningClass];
     }
     else {
-        _dates = [departureDate];
+        _dates = [{ from: departureDateFrom, to: departureDateTo }];
         _classes = [departureClass];
+    }
+
+    if (_dates[0].from > _dates[0].to || (_dates.length > 1 && _dates[1].from > _dates[1].to)) {
+        swal("Date range selections are not valid", "We will get you the closest results to your specifications", "warning");
     }
 
     $("#btn-step-3").removeClass("disabled");
@@ -227,9 +232,26 @@ function InitStep3() {
     $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
         + _selectedRoute[_selectedRoute.length - 1].CityID + " (" + _selectedRoute[_selectedRoute.length - 1].CityName + ")");
 
-    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    $("#routeInfo").html(_dates[0].toLocaleString([], options));
+    var datetimeString = "<hr><b>Depart:</b> " + _dates[0].from.toLocaleDateString([], options);
+
+    //If the end date is the start date then don't show the range at all
+    if (_dates[0].from.getDate() != _dates[0].to.getDate()) {
+        datetimeString += " &rarr; " + _dates[0].to.toLocaleDateString([], options);
+    }
+
+    //If returning flight
+    if (_dates.length > 1) {
+        datetimeString += "<br/><b>Return:</b> " + _dates[1].from.toLocaleDateString([], options);
+
+        //If the end date is the start date then don't show the range at all
+        if (_dates[1].from.getDate() != _dates[1].to.getDate()) {
+            datetimeString += " &rarr; " + _dates[1].to.toLocaleDateString([], options);
+        }
+    }
+
+    $("#routeInfo").html(datetimeString);
 
     //Init total region
     $("#step3-adult-number").html(_passengers[0]);
@@ -762,7 +784,7 @@ function BlockTicket() {
 
 function BuyTicket() {
     swal({
-        title: "Are you sure?", text: "Do you really want to buy this ticket?", type: "warning", showCancelButton: true,
+        title: "Are you sure?", text: "Do you really want to buy this ticket? You will be charge by your provided credit card number.", type: "warning", showCancelButton: true,
         confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, buy it!", closeOnConfirm: false
     },
         function () {

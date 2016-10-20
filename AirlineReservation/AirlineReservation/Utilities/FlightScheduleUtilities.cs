@@ -19,15 +19,22 @@ public class FlightScheduleUtilities
     /// <param name="destinationCityID"></param>
     /// <param name="passengers"></param>
     /// <param name="className"></param>
-    /// <param name="date"></param>
+    /// <param name="fromDate"></param>
+    /// <param name="toDate">The end of date range</param>
     /// <returns>Empty list if no flight found, else returns the list</returns>
-    public List<Flight> FindFlightsOfRoute(string originalCityID, string destinationCityID, int passengers, string className, DateTime date)
+    public List<Flight> FindFlightsOfRoute(string originalCityID, string destinationCityID, int passengers, string className, DateTime fromDate, DateTime toDate)
     {
         var route = db.Routes.FirstOrDefault(p => p.InService && p.OriginalCityID == originalCityID && p.DestinationCityID == destinationCityID);
 
         if (route == null)
         {
             return new List<Flight>(); ;
+        }
+
+        //If date range is an invalid range
+        if (toDate < fromDate)
+        {
+            toDate = fromDate;
         }
 
         return db.Flights.Where(flight =>
@@ -38,8 +45,8 @@ public class FlightScheduleUtilities
             //Check departure date
             //DateTime.Compare(flight.DepartureTime.Date, date) == 0 &&
             //flight.DepartureTime == date &&
-            EntityFunctions.TruncateTime(flight.DepartureTime) == EntityFunctions.TruncateTime(date) &&
-
+            EntityFunctions.TruncateTime(flight.DepartureTime) >= EntityFunctions.TruncateTime(fromDate) &&
+            EntityFunctions.TruncateTime(flight.DepartureTime) <= EntityFunctions.TruncateTime(toDate) &&
             //Check if there are enough available seats of the requested class
 
             //All the seats of the class
@@ -58,19 +65,28 @@ public class FlightScheduleUtilities
     /// <param name="cityIDSequence"></param>
     /// <param name="passengers"></param>
     /// <param name="className"></param>
-    /// <param name="date"></param>
+    /// <param name="fromDate"></param>
     /// <returns></returns>
-    public List<List<Flight>> FindFlights(List<string> cityIDSequence, int passengers, string className, DateTime date)
+    public List<List<Flight>> FindFlights(List<string> cityIDSequence, int passengers, string className, DateTime fromDate, DateTime toDate)
     {
         List<List<Flight>> result = new List<List<Flight>>();
         for (int i = 0; i < cityIDSequence.Count - 1; i++)
         {
-            result.Add(FindFlightsOfRoute(cityIDSequence[i], cityIDSequence[i + 1], passengers, className, date));
+            result.Add(FindFlightsOfRoute(cityIDSequence[i], cityIDSequence[i + 1], passengers, className, fromDate, toDate));
         }
 
         return result;
     }
 
+    /// <summary>
+    /// Block or Buy a ticket
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="flights"></param>
+    /// <param name="passengers"></param>
+    /// <param name="totalPrice"></param>
+    /// <param name="requestType">Block request or Buy request. More on TicketStatus class.</param>
+    /// <returns>If the process succeeded, returns the ticket, otherwise returns null</returns>
     public Ticket CreateTicket(string userID, List<BookedFlightInfo> flights, int[] passengers, decimal totalPrice, int requestType)
     {
         using (var transaction = new TransactionScope())
@@ -105,7 +121,7 @@ public class FlightScheduleUtilities
                         var dateDiff = theFlight.DepartureTime.Subtract(DateTime.Now).TotalDays;
                         if (dateDiff < 14 || dateDiff > 365)
                         {
-                            throw new ArgumentException("The flight \"" + flight.FlightNumber + "\"'s departure date must be more than 14 days from today, but no more than 365 days");
+                            throw new ArgumentException(string.Format("The flight {0} ({1} to {2}) departure date must be more than 14 days from today, but no more than 365 days", flight.FlightNumber, theFlight.Route.OriginalCity.CityName, theFlight.Route.DestinationCity.CityName));
                         }
                     }
 
@@ -190,6 +206,24 @@ public class FlightScheduleUtilities
     /// <param name="amount"></param>
     private void ChargeUser(string UserID, decimal amount)
     {
+        var user = db.Users.Single(p => p.UserID.Equals(UserID));
+
+        //Validate
+        if (!ValidateCreditCardNumber(user.CreditcardNumber))
+        {
+            throw new ArgumentException("The credit card information is not valid");
+        }
+
         Console.WriteLine(UserID + " has just been charge for " + amount);
+    }
+
+    /// <summary>
+    /// Validate the credit card info
+    /// </summary>
+    /// <param name="creditCard"></param>
+    /// <returns></returns>
+    private bool ValidateCreditCardNumber(string creditCard)
+    {
+        return !string.IsNullOrEmpty(creditCard);
     }
 }
