@@ -127,11 +127,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-2" for="To">Departure:</label>
                         <div class="col-md-4">
-                            <input id="inputDepartureDateFrom" type="date" required="required" class="form-control" style="margin-left: 5px;" />                            
+                            <input id="inputDepartureDateFrom" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                         <label class="control-label col-md-1" for="To">To:</label>
                         <div class="col-md-4">
-                            <input id="inputDepartureDateTo" type="date" required="required" class="form-control" style="margin-left: 5px;" />                             
+                            <input id="inputDepartureDateTo" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -146,11 +146,11 @@
                     <div class="form-group" id="returnDateForm">
                         <label class="control-label col-md-2" for="To">Return:</label>
                         <div class="col-md-4">
-                            <input id="inputReturnDateFrom" type="date" required="required" class="form-control" style="margin-left: 5px;" />                            
+                            <input id="inputReturnDateFrom" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                         <label class="control-label col-md-1" for="To">To:</label>
                         <div class="col-md-4">
-                            <input id="inputReturnDateTo" type="date" required="required" class="form-control" style="margin-left: 5px;" />                             
+                            <input id="inputReturnDateTo" type="date" required="required" class="form-control" style="margin-left: 5px;" />
                         </div>
                         <!-- <div class="col-md-9">
                             <input id="inputReturnDate" type="date" required="required" class="form-control" style="margin-left: 5px;" />
@@ -222,7 +222,7 @@
             <div class="row setup-content" id="step-3">
                 <div class="col-xs-12">
                     <div class="col-md-12">
-                        <h3>Select Flight</h3>
+                        <h3>Select Flights</h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <h4><span id="routeTitle"></span></h4>
@@ -375,7 +375,7 @@
                 </div>
             </div>
             <div class="row setup-content" id="step-4">
-                
+
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3>Login/Register</h3>
@@ -505,7 +505,6 @@
                                     </div>
                                 </div>
                                 <!-- End Register -->
-                            
                             </div>
                         </div>
                         <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="SubmitStep4()">Next</button>
