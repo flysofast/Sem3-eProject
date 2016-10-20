@@ -162,7 +162,6 @@ var _dates;//[ <DepartureDate> [,ReturningDate] ]  if (dates.length==2): returni
 var _classes;//[ <DepartureClass> [,ReturningClass] ] Ex: ["First class", "Any"]
 var _isReturning = false;
 
-
 //Get the list of classes
 function GetClassList(dropdownControl) {
     $.ajax({
@@ -199,13 +198,13 @@ function InitStep2() {
 function SubmitStep2() {
     _passengers = [$("#adultsNo").val(), $("#childrenNo").val(), $("#elderNo").val()];
 
-    var departureDate = new Date($('#inputDepartureDate').val());
+    var departureDate = new Date($('#inputDepartureDateFrom').val());
     var departureClass = $("#DepartureClass").val();
 
     //If it's returning flight
     _isReturning = document.getElementById("optFlightReturn").checked;
     if (_isReturning) {
-        var returningDate = new Date($('#inputReturnDate').val());
+        var returningDate = new Date($('#inputReturnDateFrom').val());
         var returningClass = $("#ReturningClass").val();
         _dates = [departureDate, returningDate];
         _classes = [departureClass, returningClass];
