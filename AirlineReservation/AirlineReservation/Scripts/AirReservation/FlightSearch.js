@@ -761,7 +761,7 @@ function BlockTicket() {
 
 function BuyTicket() {
     swal({
-        title: "Are you sure?", text: "Do you really want to buy this ticket?", type: "warning", showCancelButton: true,
+        title: "Are you sure?", text: "Do you really want to buy this ticket? You will be charge by your provided credit card number.", type: "warning", showCancelButton: true,
         confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, buy it!", closeOnConfirm: false
     },
         function () {
