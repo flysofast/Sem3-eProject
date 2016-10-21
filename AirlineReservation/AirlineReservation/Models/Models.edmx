@@ -97,7 +97,7 @@
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Sex" Type="bit" Nullable="false" />
-          <Property Name="CreditcardNumber" Type="varchar" MaxLength="20" />
+          <Property Name="CreditcardNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
@@ -398,7 +398,7 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Sex" Type="Boolean" Nullable="false" />
-          <Property Name="CreditcardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreditcardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Tickets" Relationship="AirlineReservationSystemModel.FK_Ticket_User" FromRole="User" ToRole="Ticket" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />

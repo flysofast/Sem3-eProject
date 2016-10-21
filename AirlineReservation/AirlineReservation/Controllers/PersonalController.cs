@@ -1,15 +1,15 @@
-﻿using System;
+﻿using AirlineReservation.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AirlineReservation.Models;
 
 namespace AirlineReservation.Controllers
-{    
+{
     public class PersonalController : Controller
     {
-        AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+        private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
         //
         // GET: /Personal/
 
@@ -36,7 +36,7 @@ namespace AirlineReservation.Controllers
             try
             {
                 var userID = (string)(Session[Constants.SessionUserIDKey]);
-                User data = db.Users.Where(p => p.UserID == userID).FirstOrDefault() ;
+                User data = db.Users.Where(p => p.UserID == userID).FirstOrDefault();
                 data.FirstName = FirstName;
                 data.LastName = LastName;
                 data.Email = Email;
@@ -70,92 +70,6 @@ namespace AirlineReservation.Controllers
         public ActionResult AirplantSeat()
         {
             return View();
-        }
-
-        //
-        // GET: /Personal/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Personal/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /Personal/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /Personal/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Personal/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Personal/Delete/5
- 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Personal/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -157,6 +157,7 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Dijkstra.cs" />
     <Compile Include="Utilities\FlightScheduleUtilities.cs" />
+    <Compile Include="Utilities\PersonalProfileUtilities.cs" />
     <Compile Include="Views\Template.Master.cs">
       <DependentUpon>Template.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
