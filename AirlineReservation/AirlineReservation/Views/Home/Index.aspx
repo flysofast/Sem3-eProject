@@ -17,7 +17,7 @@
         });
     </script>
     <div class="container" style="width: 100%">
-        <h2 style="font-weight: bolder;">BOOKING ONLINE.</h2>
+        <h2 style="font-weight: bolder;">ONLINE TICKET RESERVATION SYSTEM</h2>
         <h3>It's Fast, Easy and Secure</h3>
         <div class="stepwizard">
             <div class="stepwizard-row setup-panel">

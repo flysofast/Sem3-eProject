@@ -18,13 +18,13 @@
 </head>
 <body>
     <!-- About us-->
-    <div class="about-us" id="aboutUsPage" style="display:none">
+    <div class="about-us" id="aboutUsPage" style="display: none">
         <div class="container" style="color: white" onclick="aboutUs()">
-            <img style="max-width: 50%;margin:30px auto;" src="https://www.topcv.vn/company_logos/aptech-computer-education-center-57982df91f555.jpg" alt="Alternate Text" class="img-responsive"/>
+            <img style="max-width: 50%; margin: 30px auto;" src="https://www.topcv.vn/company_logos/aptech-computer-education-center-57982df91f555.jpg" alt="Alternate Text" class="img-responsive" />
             <div class="row">
-                
+
                 <div class="col-md-3"></div>
-                <div class="col-md-6" style="text-align:center;">
+                <div class="col-md-6" style="text-align: center;">
                     <h2>Airlines Reservation</h2>
                     <h3>This is the sem 3 project of Team Unknown</h3>
                 </div>
@@ -33,11 +33,11 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="thumbnail">
-                     About Page
+                        About Page
                     <div class="caption">
-                        <h3> About Page</h3>
+                        <h3>About Page</h3>
                         <p class="card-description">
-Gone are the days when people used to spend all their lives in the same city and tour was a word for rich people only. Now, with the technological advancements, cheaper flight, and ever increasing awareness towards other states and countries, the world has become a smaller place. So to reduce stress on desk-reservation systems, reservation online is the best ways.
+                            Gone are the days when people used to spend all their lives in the same city and tour was a word for rich people only. Now, with the technological advancements, cheaper flight, and ever increasing awareness towards other states and countries, the world has become a smaller place. So to reduce stress on desk-reservation systems, reservation online is the best ways.
 The project is to design an airline reservation system that will take care of all the reservation related issues and will give the result in quick time.
 The Airline Reservation System (ARS) is a software application to assist an airline with transactions related to making ticket reservations, which includes blocking, reserving, canceling and rescheduling tickets.
                         </p>
@@ -46,9 +46,9 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                 </div>
                 <div class="col-md-6">
                     <div class="thumbnail">
-                     About Team
+                        About Team
                     <div class="caption">
-                        <h3> About Team</h3>
+                        <h3>About Team</h3>
                         <p class="card-description">
                             <table class="table" style="text-align: left;">
                                 <tr>
@@ -91,7 +91,7 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Airline Reservation System</a>
+                <a class="navbar-brand page-scroll" href="/">Airline Reservation System</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -100,21 +100,22 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                         <a class="page-scroll" href="#services">Tickets</a>
                     </li>
                     <%
-                        if(Session["isLogged"]=="true"){
+                        if (Session["isLogged"] == "true")
+                        {
                     %>
                     <li>
                         <a class="page-scroll" id="nav-menu-personal" href="Personal">Personal</a>
                     </li>
-                    
-                    <%}else{ %>
+
+                    <%}
+                    else
+                    { %>
                     <li>
                         <a class="page-scroll" id="nav-menu-login" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
-                        <a class="page-scroll" id="nav-menu-personal" href="Personal" style="display:none">Personal</a>
-                        
-                    
+                        <a class="page-scroll" id="nav-menu-personal" href="Personal" style="display: none">Personal</a>
                     </li>
                     <li>
-                        <a class="page-scroll" id="nav-menu-admin" href="Admin" style="display:none">Admin</a>
+                        <a class="page-scroll" id="nav-menu-admin" href="Admin" style="display: none">Admin</a>
                     </li>
                     <%} %>
                     <%
@@ -285,6 +286,5 @@ The Airline Reservation System (ARS) is a software application to assist an airl
     <!-- End -->
 
     <script src="../Scripts/sweetalert.min.js"></script>
-
 </body>
 </html>

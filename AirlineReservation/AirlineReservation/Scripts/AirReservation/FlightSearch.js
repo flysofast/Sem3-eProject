@@ -293,7 +293,7 @@ function CheckSelectedFlights(flight_number) {
     $("#step3-grand-total-price").html("<b>" + currencyFormat(departureTotal + returningTotal) + "</b>");
 
     //Check if user has choosen enough flights for the schedule. If he has, enable him to move to the next step
-    if (selectedFlights.length == _selectedRoute.length - 1) {
+    if (selectedFlights.length == (_selectedRoute.length - (_isReturning ? 0 : 1))) { //length -1 + 1 (returning flight)
         $('#btStep3Submit').prop('disabled', false);
     }
 }
@@ -545,8 +545,6 @@ function loginValidation(form) {
             }
         }
     });
-
-    
 }
 function checkIfAdminLogged() {
     $.ajax({
