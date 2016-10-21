@@ -273,6 +273,22 @@ namespace AirlineReservation.Controllers
             return Json(sSession, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult isCurrentUserAdmin()
+        {
+            var sSession = Session[Constants.SessionIsAdminLogged];
+            if (sSession == null)
+            {
+                sSession = false;
+                return Json(sSession, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(sSession, JsonRequestBehavior.AllowGet);
+            }
+            //var sSession = (string)Session[Constants.SessionIsAdminLogged] ?? "false";
+            
+        }
+
         public JsonResult LoginValidation(string UserID, string Password)
         {
             try
@@ -284,6 +300,7 @@ namespace AirlineReservation.Controllers
                     //The logged in user ID
                     //REMEMBER: set this value to null when the user logged out.
                     Session[Constants.SessionUserIDKey] = UserID;
+                    Session[Constants.SessionIsAdminLogged] = result.IsAdmin;
                     return Json("1", JsonRequestBehavior.AllowGet);
                 }
                 else
