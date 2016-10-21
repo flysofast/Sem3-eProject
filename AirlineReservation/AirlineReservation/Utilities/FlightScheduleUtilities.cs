@@ -37,6 +37,8 @@ public class FlightScheduleUtilities
             toDate = fromDate;
         }
 
+        var now = DateTime.Now;
+
         return db.Flights.Where(flight =>
 
             //Flights of the route
@@ -45,6 +47,7 @@ public class FlightScheduleUtilities
             //Check departure date
             //DateTime.Compare(flight.DepartureTime.Date, date) == 0 &&
             //flight.DepartureTime == date &&
+            flight.DepartureTime > now &&
             EntityFunctions.TruncateTime(flight.DepartureTime) >= EntityFunctions.TruncateTime(fromDate) &&
             EntityFunctions.TruncateTime(flight.DepartureTime) <= EntityFunctions.TruncateTime(toDate) &&
             //Check if there are enough available seats of the requested class
@@ -112,7 +115,7 @@ public class FlightScheduleUtilities
                     var theFlight = db.Flights.Single(p => p.FlightNo.Equals(flight.FlightNumber));
                     if (theFlight.DepartureTime < DateTime.Now)
                     {
-                        throw new ArgumentException("The departure date is not valid");
+                        throw new ArgumentException("The departure date and time is not valid");
                     }
 
                     if (requestType == TicketStatus.Blocked)
@@ -131,7 +134,6 @@ public class FlightScheduleUtilities
                     ticketDetails.SequenceNo = flight.SequenceNumber;
                     ticketDetails.IsReturning = flight.IsReturning;
                     db.Ticket_Flight.Add(ticketDetails);
-                    db.SaveChanges();
 
                     //Assign available seats for the passengers, prefer to put them next to each other
                     int totalPassengers = passengers[0] + passengers[1] + passengers[2];
@@ -163,6 +165,12 @@ public class FlightScheduleUtilities
                         db.TakenSeats.Add(takenSeat);
                     }
                     db.SaveChanges();
+                }
+
+                //Check if the sequence is correct
+                if (!CheckFlightsOrder(ticket.Ticket_Flight.ToList()))
+                {
+                    throw new ArgumentException("The flight list sequence is not possible. Please re-arrange the flight schedule");
                 }
 
                 //Set ticket's status
@@ -197,6 +205,30 @@ public class FlightScheduleUtilities
                 //return null;
             }
         }
+    }
+
+    /// <summary>
+    /// Check if the booked flights departure time are in  correct order of the schedule
+    /// </summary>
+    /// <param name="list"></param>
+    /// <returns></returns>
+    private bool CheckFlightsOrder(List<Ticket_Flight> list)
+    {
+        var sequenceOrderedList = list.OrderBy(p => p.IsReturning ? 1 : 0).ThenBy(p => p.SequenceNo).ToList();
+        var departureTimeOrderedList = list.OrderBy(p => p.Flight.DepartureTime).ToList();
+
+        if (sequenceOrderedList.Count() == departureTimeOrderedList.Count())
+        {
+            for (int i = 0; i < sequenceOrderedList.Count(); i++)
+            {
+                if (!sequenceOrderedList[i].FlightNo.Equals(departureTimeOrderedList[i].FlightNo))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
