@@ -8,6 +8,7 @@ public class Constants
 {
     public const string SessionUserIDKey = "UserID";
     public const string SessionIsLoggedInKey = "isLogged";
+    public const string SessionIsAdminLogged = "isAdmin";
 }
 
 public class TicketStatus

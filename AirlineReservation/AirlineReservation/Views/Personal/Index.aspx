@@ -115,7 +115,10 @@
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-3 col-form-label">Gender</label>
             <div class="col-xs-7">
-                <input class="form-control" type="text" id="personal-gender">
+                <select class="form-control" id="personal-gender">
+                    <option value="true">Male</option>
+                    <option value="false">Female</option>
+                </select>
             </div>
         </div>
         <div class="form-group row">
@@ -139,27 +142,12 @@
         <h2>Your currently ticket</h2>  
         <div class="row">
             <div class="col-md-2 vcenter">Ticket Code</div>
-            <div class="col-md-2 vcenter">From</div>
-            <div class="col-md-2 vcenter">To</div>
-            <div class="col-md-2 vcenter">Date Booking</div>
+            <div class="col-md-2 vcenter">CreatedDate</div>
+            <div class="col-md-2 vcenter">Price</div>
             <div class="col-md-2 vcenter">Status</div>
             <div class="col-md-2 vcenter">Action</div>
         </div>
-        <div class="flight-result">
-            <div class="row">
-                <div class="col-md-2 vcenter">T0001</div>
-                <div class="col-md-2 vcenter">Hanoi</div>
-                <div class="col-md-2 vcenter">Hue</div>
-                <div class="col-md-2 vcenter">2016/02/02</div>
-                <div class="col-md-2 vcenter">Block</div>
-                <div class="col-md-1 vcenter">
-                    <button>Confirm</button>
-                </div>
-                <div class="col-md-1 vcenter">
-                    <button>Cancel</button>
-                </div>
-            </div>
-        </div>
+        <div id="currentlyTicketList"></div>
     </div>
     <div class="container" id="formLog" style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
        <h2>Your Log ticket</h2>  

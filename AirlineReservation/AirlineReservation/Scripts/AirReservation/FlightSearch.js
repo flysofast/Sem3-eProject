@@ -532,18 +532,40 @@ function loginValidation(form) {
                     $("#myModal").modal('hide');
                     $("#nav-menu-login").hide();
                     $("#nav-menu-personal").show();
+                    checkIfAdminLogged();
                 } else {
                     $("#login-register-form-step4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div>');
                     $("#nav-menu-login").hide();
                     $("#nav-menu-personal").show();
+                    checkIfAdminLogged();
+                    //$("#nav-menu-admin").show();
                 }
             } else {
                 sweetAlert("Error", "Your account number and password combination are not correct, Please try again!", "error");
             }
         }
     });
-}
 
+    
+}
+function checkIfAdminLogged() {
+    $.ajax({
+        url: 'Home/isCurrentUserAdmin',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function () {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == true) {
+                $("#nav-menu-admin").show();
+            } else {
+                $("#nav-menu-admin").hide();
+            }
+        }
+    });
+}
 function createUserInfo(form) {
     var flag = true;
     var error_msg = "";

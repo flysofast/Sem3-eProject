@@ -97,9 +97,6 @@ The Airline Reservation System (ARS) is a software application to assist an airl
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="#about">About</a>
-                    </li>
-                    <li>
                         <a class="page-scroll" href="#services">Tickets</a>
                     </li>
                     <%
@@ -108,10 +105,24 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                     <li>
                         <a class="page-scroll" id="nav-menu-personal" href="Personal">Personal</a>
                     </li>
+                    
                     <%}else{ %>
                     <li>
                         <a class="page-scroll" id="nav-menu-login" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
                         <a class="page-scroll" id="nav-menu-personal" href="Personal" style="display:none">Personal</a>
+                        
+                    
+                    </li>
+                    <li>
+                        <a class="page-scroll" id="nav-menu-admin" href="Admin" style="display:none">Admin</a>
+                    </li>
+                    <%} %>
+                    <%
+                        var a = Session["isAdmin"];
+                        if (Convert.ToBoolean(Session["isAdmin"]) == true)
+                        {
+                    %><li>
+                        <a class="page-scroll" id="nav-menu-admin" href="Admin">Admin</a>
                     </li>
                     <%} %>
                     <li>
