@@ -14,8 +14,7 @@ function changePage(mode) {
         case "information":
             hideAllDiv();
             $("#card-row-index").hide("slide");
-            if ($("#float-button-group").css('display') == 'none')
-            {
+            if ($("#float-button-group").css('display') == 'none') {
                 $("#float-button-group").show("slide")
             };
             initPersonalInfor();
@@ -120,7 +119,7 @@ function confirmTicket(ticketNo) {
         var obj = {
             'TicketNo': ticketNo,
             'Code': inputValue,
-            'Mode':'Confirm'
+            'Mode': 1 //Confirmed code
         };
         $.ajax({
             url: 'Personal/CheckTicketCode',
@@ -133,7 +132,7 @@ function confirmTicket(ticketNo) {
             },
             success: function (result) {
                 if (result == "1") {
-                    swal("OK","Correct code", "success");
+                    swal("OK", "Correct code", "success");
                 } else {
                     swal("Error", "Wrong code", "error");
                 }
@@ -146,7 +145,7 @@ function ToJavaScriptDate(value) {
     var pattern = /Date\(([^)]+)\)/;
     var results = pattern.exec(value);
     var dt = new Date(parseFloat(results[1]));
-    return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate()+1);
+    return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1);
 }
 
 function updateUserInfor() {
@@ -238,7 +237,7 @@ function updateUserInfor() {
         'Phone': $("#personal-phone").val(),
         'DOB': $("#personal-dob").val(),
         'CreditCard': $("#personal-creditcard").val(),
-    }; 
+    };
     $.ajax({
         url: 'Personal/UpdateUserValidation',
         contentType: "application/json; charset=utf-8",

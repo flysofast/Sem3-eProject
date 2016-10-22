@@ -15,6 +15,10 @@ namespace AirlineReservation.Controllers
 
         public ActionResult Index()
         {
+            if (Session[Constants.SessionUserIDKey] == null)
+            {
+                Response.Redirect("Home");
+            }
             return View();
         }
 

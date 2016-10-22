@@ -6,8 +6,11 @@ using System.Web;
 
 public class Constants
 {
+    /// <summary>
+    /// If the user is not logged in, the session value associated with this key will be null
+    /// </summary>
     public const string SessionUserIDKey = "UserID";
-    public const string SessionIsLoggedInKey = "isLogged";
+
     public const string SessionIsAdminLogged = "isAdmin";
 }
 

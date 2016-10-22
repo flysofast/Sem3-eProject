@@ -48,7 +48,7 @@
 
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail" onclick="changePage('information')">
-                        <img src="../../Images/reunion.png" alt="Bootstrap Thumbnail Customization">
+                        <img src="../../Images/reunion.png" alt="Bootstrap Thumbnail Customization" />
                         <div class="caption">
                             <h3>Administrator Information</h3>
                             <p class="card-description">Add/Show Administrator list</p>
@@ -58,7 +58,7 @@
 
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail" onclick="changePage('ticket')">
-                        <img src="../../Images/travel.png" alt="Bootstrap Thumbnail Customization">
+                        <img src="../../Images/travel.png" alt="Bootstrap Thumbnail Customization" />
                         <div class="caption">
                             <h3>Flight Management</h3>
                             <p class="card-description">View/Edit flight</p>
@@ -68,7 +68,7 @@
 
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail" onclick="changePage('log')">
-                        <img src="../../Images/cityscape.png" alt="Bootstrap Thumbnail Customization">
+                        <img src="../../Images/cityscape.png" alt="Bootstrap Thumbnail Customization" />
                         <div class="caption">
                             <h3>City and Route Mangement</h3>
                             <p class="card-description">View/Edit City and Route</p>

@@ -15,9 +15,7 @@ namespace AirlineReservation.Controllers
 
         public ActionResult Index()
         {
-            var sSession = (string)Session[Constants.SessionIsLoggedInKey] ?? "false";
-            System.Console.Write(sSession);
-            if (sSession == "false")
+            if (Session[Constants.SessionUserIDKey] == null)
             {
                 this.Response.Redirect("Home");
             }
@@ -27,39 +25,40 @@ namespace AirlineReservation.Controllers
         public JsonResult GetCurrentUserInfor()
         {
             var userID = (string)(Session[Constants.SessionUserIDKey]);
-            var data = db.Users.Select(p => new {p.CreditcardNumber,p.DateOfBirth,p.Email,p.FirstName,p.IsAdmin,p.LastName,p.Password,p.PhoneNumber,p.Sex,p.UserID}).Where(p => p.UserID == userID).FirstOrDefault();
+            var data = db.Users.Select(p => new { p.CreditcardNumber, p.DateOfBirth, p.Email, p.FirstName, p.IsAdmin, p.LastName, p.Password, p.PhoneNumber, p.Sex, p.UserID }).Where(p => p.UserID == userID).FirstOrDefault();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetCurrentUserTicketList()
         {
             var userID = (string)(Session[Constants.SessionUserIDKey]);
-            var data = db.Tickets.Select(p => new { p.TicketNo,p.UserID,p.ConfirmationNo,p.BlockNo,p.CancellationNo,p.Price,p.CreatedDate,p.NumberOfAdults,p.NumberOfChildren,p.NumberOfSeniorCitizens,p.Status }).Where(p => p.UserID == userID).ToList();
+            var data = db.Tickets.Select(p => new { p.TicketNo, p.UserID, p.ConfirmationNo, p.BlockNo, p.CancellationNo, p.Price, p.CreatedDate, p.NumberOfAdults, p.NumberOfChildren, p.NumberOfSeniorCitizens, p.Status }).Where(p => p.UserID == userID).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult CheckTicketCode(int TicketNo, string Code, string Mode)
+        public JsonResult CheckTicketCode(int TicketNo, string Code, int Mode)
         {
             var userID = (string)(Session[Constants.SessionUserIDKey]);
             //var data = new Ticket();
             switch (Mode)
             {
-                case "Confirm":
+                case TicketStatus.Confirmed:
                     var data = db.Tickets.Select(p => new { p.TicketNo, p.UserID, p.ConfirmationNo }).Where(p => p.TicketNo == TicketNo).Where(p => p.UserID == userID).Where(p => p.ConfirmationNo == Code).FirstOrDefault();
                     return Json(data == null ? 0 : 1, JsonRequestBehavior.AllowGet);
-                    break;
-                case "Block":
+
+                case TicketStatus.Blocked:
                     //data = db.Tickets.Where(p => p.UserID == userID).Where(p => p.BlockNo == Code).FirstOrDefault();
                     break;
-                case "Cancel":
+
+                case TicketStatus.Cancelled:
                     //data = db.Tickets.Where(p => p.UserID == userID).Where(p => p.CancellationNo == Code).FirstOrDefault();
                     break;
+
                 default:
                     break;
             }
             return Json(0, JsonRequestBehavior.AllowGet);
         }
-
 
         public JsonResult UpdateUserValidation(string UserID, string FirstName, string LastName, string Email, bool Gender, string Phone, DateTime DOB, string CreditCard)
         {

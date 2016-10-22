@@ -269,7 +269,7 @@ namespace AirlineReservation.Controllers
         /// </summary>
         public JsonResult isUserLogged()
         {
-            var sSession = (string)Session[Constants.SessionIsLoggedInKey] ?? "false";
+            var sSession = Session[Constants.SessionUserIDKey] == null ? "false" : "true";
             return Json(sSession, JsonRequestBehavior.AllowGet);
         }
 
@@ -286,7 +286,6 @@ namespace AirlineReservation.Controllers
                 return Json(sSession, JsonRequestBehavior.AllowGet);
             }
             //var sSession = (string)Session[Constants.SessionIsAdminLogged] ?? "false";
-            
         }
 
         public JsonResult LoginValidation(string UserID, string Password)
@@ -296,7 +295,6 @@ namespace AirlineReservation.Controllers
                 var result = db.Users.Where(p => p.UserID == UserID).Where(p => p.Password == Password).FirstOrDefault();
                 if (result != null)
                 {
-                    Session[Constants.SessionIsLoggedInKey] = "true";
                     //The logged in user ID
                     //REMEMBER: set this value to null when the user logged out.
                     Session[Constants.SessionUserIDKey] = UserID;
