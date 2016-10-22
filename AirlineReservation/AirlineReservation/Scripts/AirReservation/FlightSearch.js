@@ -530,16 +530,16 @@ function loginValidation(form) {
                 if (form == "main") {
                     swal("Successfully!", "Welcome back!", "success");
                     $("#myModal").modal('hide');
-                    $("#nav-menu-login").hide();
-                    $("#nav-menu-personal").show();
-                    checkIfAdminLogged();
+                   
                 } else {
                     $("#login-register-form-step4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div>');
-                    $("#nav-menu-login").hide();
-                    $("#nav-menu-personal").show();
-                    checkIfAdminLogged();
                     //$("#nav-menu-admin").show();
                 }
+
+                $("#nav-menu-login").hide();
+                $("#nav-menu-personal").show();
+                $("#nav-menu-sign-out").show();
+                checkIfAdminLogged();
             } else {
                 sweetAlert("Error", "Your account number and password combination are not correct, Please try again!", "error");
             }

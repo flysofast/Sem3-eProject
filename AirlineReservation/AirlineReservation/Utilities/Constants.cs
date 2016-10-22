@@ -11,6 +11,9 @@ public class Constants
     /// </summary>
     public const string SessionUserIDKey = "UserID";
 
+    /// <summary>
+    /// If the user is not an admin, the session value associated with this key will be null
+    /// </summary>
     public const string SessionIsAdminLogged = "isAdmin";
 }
 

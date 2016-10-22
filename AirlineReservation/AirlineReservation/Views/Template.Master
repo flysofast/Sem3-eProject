@@ -99,33 +99,29 @@ The Airline Reservation System (ARS) is a software application to assist an airl
                     <li>
                         <a class="page-scroll" href="#services">Tickets</a>
                     </li>
+
                     <%
-                        if (Session[Constants.SessionUserIDKey] != null)
-                        {
+                        var isLoggedin = (Session[Constants.SessionUserIDKey] != null);
+                        var isAdmin = (Session[Constants.SessionIsAdminLogged] != null && (bool)Session[Constants.SessionIsAdminLogged] == true);
+
+                        string hideStyle = " style=\"display:none\" ";
+
                     %>
                     <li>
-                        <a class="page-scroll" id="nav-menu-personal" href="Personal">Personal</a>
+                        <a class="page-scroll" id="nav-menu-login" <%=isLoggedin? hideStyle:"" %> href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" id="nav-menu-personal" <%=isLoggedin ? "": hideStyle %> href="Personal">Personal</a>
                     </li>
 
-                    <%}
-                        else
-                        { %>
                     <li>
-                        <a class="page-scroll" id="nav-menu-login" href="#portfolio" data-toggle="modal" data-target="#myModal">Login</a>
-                        <a class="page-scroll" id="nav-menu-personal" href="Personal" style="display: none">Personal</a>
+                        <a class="page-scroll" id="nav-menu-admin" <%=isAdmin?"": hideStyle %> href="Admin">Admin</a>
                     </li>
+
                     <li>
-                        <a class="page-scroll" id="nav-menu-admin" href="Admin" style="display: none">Admin</a>
+                        <a class="page-scroll" id="nav-menu-sign-out" <%=isLoggedin?"": hideStyle %> href="Personal/SignOut">Sign out</a>
                     </li>
-                    <%} %>
-                    <%
-                        var a = Session["isAdmin"];
-                        if (Convert.ToBoolean(Session["isAdmin"]) == true)
-                        {
-                    %><li>
-                        <a class="page-scroll" id="nav-menu-admin" href="Admin">Admin</a>
-                    </li>
-                    <%} %>
+
                     <li>
                         <a class="page-scroll" href="#contact" onclick="aboutUs()">About us</a>
                     </li>

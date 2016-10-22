@@ -17,9 +17,16 @@ namespace AirlineReservation.Controllers
         {
             if (Session[Constants.SessionUserIDKey] == null)
             {
-                this.Response.Redirect("Home");
+                this.Response.Redirect("/");
             }
             return View();
+        }
+
+        public ActionResult SignOut()
+        {
+            Session[Constants.SessionUserIDKey] = null;
+            Session[Constants.SessionIsAdminLogged] = null;
+            return Index();
         }
 
         public JsonResult GetCurrentUserInfor()
