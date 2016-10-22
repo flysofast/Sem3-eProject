@@ -107,6 +107,9 @@ public class FlightScheduleUtilities
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
 
+                //Assign available seats for the passengers, prefer to put them next to each other
+                int totalPassengers = passengers[0] + passengers[1] + passengers[2];
+
                 for (int i = 0; i < flights.Count; i++)
                 {
                     var flight = flights[i];
@@ -134,9 +137,6 @@ public class FlightScheduleUtilities
                     ticketDetails.SequenceNo = flight.SequenceNumber;
                     ticketDetails.IsReturning = flight.IsReturning;
                     db.Ticket_Flight.Add(ticketDetails);
-
-                    //Assign available seats for the passengers, prefer to put them next to each other
-                    int totalPassengers = passengers[0] + passengers[1] + passengers[2];
 
                     //List of vacant seats of the class
                     var availableSeats = db.Seats.Where(p => (flight.Class.Equals(ClassNames.Any) || p.Class.Equals(flight.Class)) &&
@@ -193,6 +193,15 @@ public class FlightScheduleUtilities
                     default:
                         throw new ArgumentException("The requested command is not valid");
                 }
+
+                //Increase sky miles for the user
+                if (requestType == TicketStatus.Confirmed)
+                {
+                    var user = db.Users.Single(p => p.UserID.Equals(userID));
+                    var skyMiles = ticket.Ticket_Flight.Sum(p => p.Flight.Route.Distance) * totalPassengers;
+                    user.Skymiles += skyMiles;
+                }
+
                 db.SaveChanges();
 
                 transaction.Complete();

@@ -29,6 +29,7 @@ namespace AirlineReservation.Models
         public string CreditcardNumber { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public bool IsAdmin { get; set; }
+        public double Skymiles { get; set; }
     
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
