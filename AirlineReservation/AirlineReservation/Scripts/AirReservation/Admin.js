@@ -7,6 +7,7 @@ function hideAllDiv() {
     $("#formPersonalInformation").hide("fast");
     $("#formTicket").hide("fast");
     $("#formLog").hide("fast");
+    $("#formSeatInformation").hide("fast");
 }
 function changePage(mode) {
     //$("#float-button-group").show();
@@ -36,13 +37,360 @@ function changePage(mode) {
             if ($("#float-button-group").css('display') == 'none') {
                 $("#float-button-group").show("slide")
             };
+            initCityList();
+            initRouteList();
+            initCityOption();
             $("#formLog").show("slide");
+            break;
+        case "seat":
+            hideAllDiv();
+            $("#card-row-index").hide("slide");
+            if ($("#float-button-group").css('display') == 'none') {
+                $("#float-button-group").show("slide")
+            };
+            initSeatOfClass();
+            $("#formSeatInformation").show("slide");
             break;
         default:
             hideAllDiv();
             $("#card-row-index").show("slide");
             break;
     }
+}
+function initSeatOfClass() {
+    $.ajax({
+        url: 'Admin/GetAllSeat',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            $("#seat_business_class").html("");
+            $("#seat_club_class").html("");
+            $("#seat_first_class").html("");
+            $("#seat_non_smoking_class").html("");
+            $("#seat_smoking_class").html("");
+
+            $.each(result, function (k, item) {
+                if (item['Class'] == 'Business class') {
+                    $("#seat_business_class").append(item["SeatID"] + ",");
+                }
+                if (item['Class'] == 'Club class') {
+                    $("#seat_club_class").append(item["SeatID"] + ",");
+                }
+                if (item['Class'] == 'First class') {
+                    $("#seat_first_class").append(item["SeatID"] + ",");
+                }
+                if (item['Class'] == 'Non-smoking class') {
+                    $("#seat_non_smoking_class").append(item["SeatID"] + ",");
+                }
+                if (item['Class'] == 'Smoking class') {
+                    $("#seat_smoking_class").append(item["SeatID"] + ",");
+                }
+            });
+            $("#seat_business_class").html($("#seat_business_class").html().slice(0, -1));
+            $("#seat_club_class").html($("#seat_club_class").html().slice(0, -1));
+            $("#seat_first_class").html($("#seat_first_class").html().slice(0, -1));
+            $("#seat_non_smoking_class").html($("#seat_non_smoking_class").html().slice(0, -1));
+            $("#seat_smoking_class").html($("#seat_smoking_class").html().slice(0, -1));
+            
+        }
+    });
+}
+
+function initCityOption() {
+    $.ajax({
+        url: 'Admin/GetAllCity',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            $("#admin-route-register-originalcity").html();
+            $("#admin-route-register-destinatecity").html();
+            var html = "";
+            $.each(result, function (k, item) {
+                html += '<option value=\'' + item['CityID'] + '\'>' + item['CityName'] + '</option>';                
+            });
+            $("#admin-route-register-originalcity").html(html);
+            $("#admin-route-register-destinatecity").html(html);
+        }
+    });
+}
+
+function createCity() {
+    var cityID = $("#admin-city-register-id").val();
+    var cityName = $("#admin-city-register-name").val();
+    var inService = $("#admin-city-register-inservice").is(":checked");
+    if (cityID == "" || cityName == "") {
+        swal("Error", "Please fill all field", "error");
+        return false;
+    }
+    var obj = {
+        'CityID': cityID,
+        'CityName': cityName,
+        'InService': inService,
+    };
+    $.ajax({
+        url: 'Admin/CreateCity',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                initCityList();
+                initCityOption();
+                swal("OK", "Added new City", "success");
+            } else {
+                swal("Error", "Cannot change", "error");
+            }
+        }
+    });
+}
+
+function createRoute() {
+    //var routeID = $("#admin-route-register-routeID").val();
+    var originalCity = $("#admin-route-register-originalcity").val();
+    var destinationCity = $("#admin-route-register-destinatecity").val();
+    var distance = $("#admin-route-register-distance").val();
+    var inService = $("#admin-route-register-inservice").is(":checked");
+    if (originalCity == "" || destinationCity == "" || distance == "") {
+        swal("Error", "Please fill all field", "error");
+        return false;
+    }
+    /*$(".routeID_check").each(function (index) {
+        if (parseInt(routeID) == parseInt($(this).text())) {
+            swal("Error", "This route ID already in database, Please enter another one", "error");
+            return false;
+        }
+    });*/
+    if (originalCity == destinationCity) {
+        swal("Error", "Please select another destination city", "error");
+        return false;
+    }
+    var obj = {
+        'OriginalCityID': originalCity,
+        'DestinateCityID': destinationCity,
+        'Distance': distance,
+        'InService': inService,
+    };
+    $.ajax({
+        url: 'Admin/CreateRoute',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                swal("OK", "Added new Route", "success");
+                initRouteList();
+            } else {
+                swal("Error", "Cannot change", "error");
+            }
+        }
+    });
+}
+
+function initCityList() {
+    $.ajax({
+        url: 'Admin/GetAllCity',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            $("#cityList").html();
+            var html = "";
+            $.each(result, function (k, item) {
+                html += '<div class="flight-result">';
+                html += '<div class="row">';
+                html += '<div class="col-md-3 vcenter">' + item['CityID'] + '</div>';
+                html += '<div class="col-md-3 vcenter">' + item['CityName'] + '</div>';
+                html += '<div class="col-md-3 vcenter">' + item['InService'] + '</div>';
+                html += '<div class="col-md-3 vcenter"><button class="btn btn-danger btn-xs" onclick="editCity(\'' + item['CityID'] + '\')">Edit</button></div>';
+                html += '</div>';
+                html += '</div>';
+            });
+            $("#cityList").html(html);
+        }
+    });    
+}
+
+function editCity(cityID) {
+    //Init value to update
+    $("#updateCityBtn").show();
+    $("admin-city-register-id-hidden").val(cityID);
+    var obj = {
+        'CityID': cityID,
+    };
+    $.ajax({
+        url: 'Admin/GetCityByCityID',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            $("#admin-city-register-id-hidden").val(result['CityID']);
+            $("#admin-city-register-id").val(result['CityID']);
+            $("#admin-city-register-name").val(result['CityName']);
+            $("#admin-city-register-inservice").prop('checked', result['InService']);
+        }
+    });
+    //End
+}
+
+function updateCity() {
+    var cityID = $("#admin-city-register-id-hidden").val();
+    var cityName = $("#admin-city-register-name").val();
+    var inService = $("#admin-city-register-inservice").is(":checked");
+    if (cityID == "" || cityName == "") {
+        swal("Error", "Please fill all field", "error");
+        return false;
+    }
+    var obj = {
+        'CityID': cityID,
+        'CityName': cityName,
+        'InService': inService,
+    };
+    $.ajax({
+        url: 'Admin/UpdateCity',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                initCityList();
+                initCityOption();
+                swal("OK", "Added new City", "success");
+            } else {
+                swal("Error", "Cannot change", "error");
+            }
+        }
+    });
+}
+
+function editRoute(routeID) {
+    //Init value to update
+    $("#updateRouteBtn").show();
+    var obj = {
+        'RouteID': routeID,
+    };
+    $.ajax({
+        url: 'Admin/GetRouteByRouteID',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            console.log(result);
+            $("#admin-route-register-routeID").val(result['RouteID']);
+            $("#admin-route-register-originalcity").val(result['OriginalCityID']);
+            $("#admin-route-register-destinatecity").val(result['DestinationCityID']);
+            $("#admin-route-register-distance").val(result['Distance']);
+            $("#admin-route-register-inservice").prop('checked', result['InService']);
+        }
+    });
+    //End
+}
+
+function updateRoute() {
+    var routeID = $("#admin-route-register-routeID").val();
+    var originalCity = $("#admin-route-register-originalcity").val();
+    var destinationCity = $("#admin-route-register-destinatecity").val();
+    var distance = $("#admin-route-register-distance").val();
+    var inService = $("#admin-route-register-inservice").is(":checked");
+    if (originalCity == "" || destinationCity == "" || distance == "") {
+        swal("Error", "Please fill all field", "error");
+        return false;
+    }
+    /*$(".routeID_check").each(function (index) {
+        if (parseInt(routeID) == parseInt($(this).text())) {
+            swal("Error", "This route ID already in database, Please enter another one", "error");
+            return false;
+        }
+    });*/
+    if (originalCity == destinationCity) {
+        swal("Error", "Please select another destination city", "error");
+        return false;
+    }
+    var obj = {
+        'RouteID' : routeID,
+        'OriginalCityID': originalCity,
+        'DestinateCityID': destinationCity,
+        'Distance': distance,
+        'InService': inService,
+    };
+    $.ajax({
+        url: 'Admin/UpdateRoute',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                swal("OK", "Updated Route", "success");
+                initRouteList();
+            } else {
+                swal("Error", "Cannot change", "error");
+            }
+        }
+    });
+}
+
+function initRouteList() {
+    $.ajax({
+        url: 'Admin/GetAllRoute',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            console.log(result);
+            $("#routeList").html();
+            var html = "";
+            $.each(result, function (k, item) {
+                html += '<div class="flight-result">';
+                html += '<div class="row">';
+                html += '<div class="col-md-2 vcenter routeID_check">' + item['RouteID'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['OriginalCity'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['DestinationCity'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['Distance'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['InService'] + '</div>';
+                html += '<div class="col-md-2 vcenter"><button class="btn btn-danger btn-xs" onclick="editRoute(\'' + item['RouteID'] + '\')">Edit</button></div>';
+                html += '</div>';
+                html += '</div>';
+            });
+            $("#routeList").html(html);
+        }
+    });    
 }
 
 function initRouteFlighOption() {

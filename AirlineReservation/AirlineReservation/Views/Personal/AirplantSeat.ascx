@@ -511,10 +511,103 @@ ol {
     </li>
     
   </ol>
-        <button onclick="post_value()">Submit</button>
+        <button id="mainStep" onclick="post_value()" >Submit</button>
+        <button id="adminPage" onclick="saveSeatValue()" style="display:none">Submit</button>
 </div>
     <script src="../../Scripts/jquery-2.0.0.min.js"></script>
     <script>
+        $(document).ready(function () {
+            var classType = getGetVariable('ClassType');
+            if (classType != "") {
+                $("#mainStep").hide();
+                $("#adminPage").show();
+                var className = "";
+                switch (classType) {
+                    case "business":
+                        className = "Business class";
+                        break;
+                    case "club":
+                        className = "Club class";
+                        break;
+                    case "first":
+                        className = "First class";
+                        break;
+                    case "non_smoking":
+                        className = "Non-smoking class";
+                        break;
+                    case "smoking":
+                        className = "Smoking class";
+                        break;
+                }
+                var obj = {
+                    'ClassType': className,
+                };
+                $.ajax({
+                    url: '../Admin/GetSeatByClassType',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: JSON.stringify(obj),
+                    error: function (data) {
+                        console.log("Error", data.responseText, "error");
+                    },
+                    success: function (result) {
+                        $.each(result, function (k, item) {
+                            $("#" + item["SeatID"]).prop('checked', true);
+                        });
+                    }
+                });
+            }
+
+
+        });
+
+        function saveSeatValue() {
+            var checkedValues = $('input:checkbox:checked').map(function () {
+                return this.value;
+            }).get();
+
+            var classType = getGetVariable('ClassType');
+            switch (classType) {
+                case "business":
+                    className = "Business class";
+                    break;
+                case "club":
+                    className = "Club class";
+                    break;
+                case "first":
+                    className = "First class";
+                    break;
+                case "non_smoking":
+                    className = "Non-smoking class";
+                    break;
+                case "smoking":
+                    className = "Smoking class";
+                    break;
+            }
+            var obj = {
+                'SeatID': checkedValues,
+                'ClassType': className
+            };
+            $.ajax({
+                url: '../Admin/UpdateSeat',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                error: function (data) {
+                    swal("Error", data.responseText, "error");
+                },
+                success: function (result) {
+                    window.opener.initSeatOfClass();
+                    window.close();
+                }
+            });
+
+            //
+
+        }
+
         function post_value() {
             var checkedValues = $('input:checkbox:checked').map(function () {
                 return this.value;

@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <script src="../Scripts/modernizr.js"></script>
     <script src="../../Scripts/AirReservation/Admin.js"></script>
+    <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
     <script>
         $(window).load(function () {
             setTimeout(function () {
@@ -15,6 +16,7 @@
         <div class="float-button" style="background-image: url(../../Images/reunion_small.png)" onclick="changePage('information')"></div>
         <div class="float-button" style="background-image: url(../../Images/travel_small.png)" onclick="changePage('ticket')"></div>
         <div class="float-button" style="background-image: url(../../Images/cityscape_small.png)" onclick="changePage('log')"></div>
+        <div class="float-button" style="background-image: url(../../Images/cinema-small.png)" onclick="changePage('seat')"></div>
     </div>
 
     <style>
@@ -75,6 +77,62 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" onclick="changePage('seat')">
+                        <img src="../../Images/cinema.png" alt="Bootstrap Thumbnail Customization" />
+                        <div class="caption">
+                            <h3>Seat</h3>
+                            <p class="card-description">Management seat for class</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="formSeatInformation" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
+        <h2>Seat list</h2>
+        <div class="row">
+            <div class="col-md-2 vcenter">Class Type</div>
+            <div class="col-md-9 vcenter">Seats List</div>
+            <div class="col-md-1 vcenter"></div>
+        </div>
+        <!-- Result -->
+        <div class="flight-result">
+            <div class="row">
+                <div class="col-md-2 vcenter">Business class</div>
+                <div class="col-md-9 vcenter" id="seat_business_class">Club class</div>
+                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('business')">Choose Seat</button></div>
+            </div>
+        </div>
+        <div class="flight-result">
+            <div class="row">
+                <div class="col-md-2 vcenter">Club class</div>
+                <div class="col-md-9 vcenter" id="seat_club_class"></div>
+                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('club')">Choose Seat</button></div>
+            </div>
+        </div>
+        <div class="flight-result">
+            <div class="row">
+                <div class="col-md-2 vcenter">First class</div>
+                <div class="col-md-9 vcenter" id="seat_first_class"></div>
+                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('first')">Choose Seat</button></div>
+            </div>
+        </div>
+        <div class="flight-result">
+            <div class="row">
+                <div class="col-md-2 vcenter">Non-smoking class</div>
+                <div class="col-md-9 vcenter" id="seat_non_smoking_class"></div>
+                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('non_smoking')">Choose Seat</button></div>
+            </div>
+        </div>
+        <div class="flight-result">
+            <div class="row">
+                <div class="col-md-2 vcenter">Smoking class</div>
+                <div class="col-md-9 vcenter" id="seat_smoking_class"></div>
+                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('smoking')">Choose Seat</button></div>
             </div>
         </div>
     </div>
@@ -164,22 +222,102 @@
             <div id="FlightList"></div>
         </div>
     </div>
-    <div class="container" id="formLog" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
+    <div class="container" id="formLog" style="height: 600px; display: block;">
         <h2>City and Route Mangement</h2>
         <div class="row">
-            <div class="col-md-2 vcenter">Ticket Code</div>
-            <div class="col-md-2 vcenter">From</div>
-            <div class="col-md-2 vcenter">To</div>
-            <div class="col-md-2 vcenter">Date Booking</div>
-            <div class="col-md-2 vcenter">Status</div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">City ID</label>
+                    <div class="col-xs-7">
+                        <input class="form-control" type="hidden" id="admin-city-register-id-hidden" />
+                        <input class="form-control" type="text" id="admin-city-register-id" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">City Name</label>
+                    <div class="col-xs-7">
+                        <input class="form-control" type="text" id="admin-city-register-name" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">In Service</label>
+                    <div class="col-xs-7">
+                         <label><input type="checkbox" id="admin-city-register-inservice" /></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">Route ID</label>
+                    <div class="col-xs-7">
+                        <input class="form-control" type="number" id="admin-route-register-routeID" disabled/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">Original City</label>
+                    <div class="col-xs-7">
+                        <select class="form-control" id="admin-route-register-originalcity">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">Destination City</label>
+                    <div class="col-xs-7">
+                        <select class="form-control" id="admin-route-register-destinatecity">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">Distance</label>
+                    <div class="col-xs-7">
+                        <input class="form-control" type="number" id="admin-route-register-distance" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-search-input" class="col-xs-3 col-form-label">In Service</label>
+                    <div class="col-xs-7">
+                         <label><input type="checkbox" id="admin-route-register-inservice" /></label>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flight-result">
-            <div class="row">
-                <div class="col-md-2 vcenter">T0001</div>
-                <div class="col-md-2 vcenter">Hanoi</div>
-                <div class="col-md-2 vcenter">Hue</div>
-                <div class="col-md-2 vcenter">2016/02/02</div>
-                <div class="col-md-2 vcenter">Done</div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <a href="#" class="btn btn-primary btn-md" onclick="createCity()">Create new</a>
+                <a id="updateCityBtn" style="display: none" href="#" class="btn btn-primary btn-md" onclick="updateCity()">Update</a>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="btn btn-primary btn-md" onclick="createRoute()">Create new</a>
+                <a id="updateRouteBtn" style="display: none" href="#" class="btn btn-primary btn-md" onclick="updateRoute()">Update</a>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+            <div class="col-md-6">
+                <div style="height: 240px; display: block; overflow-y: scroll; overflow-x: hidden;">
+                    <div class="row">
+                        <div class="col-md-3 vcenter">City ID</div>
+                        <div class="col-md-3 vcenter">City Name</div>
+                        <div class="col-md-3 vcenter">In service</div>
+                        <div class="col-md-3 vcenter"></div>
+                    </div>        
+                    <div id="cityList"></div>       
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div style="height: 240px; display: block; overflow-y: scroll; overflow-x: hidden;">
+                    <div class="row">
+                        <div class="col-md-2 vcenter">Route ID</div>
+                        <div class="col-md-2 vcenter">Originale City</div>
+                        <div class="col-md-2 vcenter">Destination City</div>
+                        <div class="col-md-2 vcenter">Distance</div>
+                        <div class="col-md-2 vcenter">In service</div>
+                        <div class="col-md-2 vcenter"></div>
+                    </div>
+                    <div id="routeList"></div>   
+                </div>
             </div>
         </div>
     </div>

@@ -69,13 +69,77 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult CreateCity(string CityID, string CityName, bool InService)
+        {
+            var data = new City();
+            data.CityID = CityID;
+            data.CityName = CityName;
+            data.InService = InService;
+            db.Cities.Add(data);
+            return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateCity(string CityID, string CityName, bool InService)
+        {
+            var data = db.Cities.Where(p => p.CityID == CityID).FirstOrDefault();
+            data.CityName = CityName;
+            data.InService = InService;
+            return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCityByCityID(string CityID)
+        {
+            var data = db.Cities.Select(p => new
+            {
+                p.CityID,
+                p.CityName,
+                p.InService,
+            }).Where(p => p.CityID == CityID).FirstOrDefault();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetRouteByRouteID(int RouteID)
+        {
+            var data = db.Routes.Select(p => new
+            {
+                p.RouteID,
+                p.Distance,
+                p.DestinationCityID,
+                p.OriginalCityID,
+                p.InService,
+            }).Where(p => p.RouteID == RouteID).FirstOrDefault();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CreateRoute(string OriginalCityID, string DestinateCityID, int Distance, bool InService)
+        {
+            var data = new Route();
+            data.OriginalCityID = OriginalCityID;
+            data.DestinationCityID = DestinateCityID;
+            data.Distance = Distance;
+            data.InService = InService;
+            db.Routes.Add(data);
+            return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateRoute(int RouteID, string OriginalCityID, string DestinateCityID, int Distance, bool InService)
+        {
+            var data = db.Routes.Where(p => p.RouteID == RouteID).FirstOrDefault();
+            data.DestinationCityID = DestinateCityID;
+            data.Distance = Distance;
+            data.InService = InService;
+            return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetAllRoute()
         {
-            var data = db.Routes.Where(p => p.InService).Select(p => new
+            var data = db.Routes.Select(p => new
             {
                 p.RouteID,
                 OriginalCity = p.OriginalCity.CityName,
                 DestinationCity = p.DestinationCity.CityName,
+                p.InService,
+                p.Distance
             }).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -94,6 +158,18 @@ namespace AirlineReservation.Controllers
             }).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetAllCity()
+        {
+            var data = db.Cities.Select(p => new
+            {
+                p.CityID,
+                p.CityName,
+                p.InService
+            }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult GetFlightByFlightNo(string FlightNo)
         {
@@ -126,5 +202,38 @@ namespace AirlineReservation.Controllers
             data.IsAdmin = IsAdmin;
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetAllSeat()
+        {
+            var data = db.Seats.Select(p => new
+            {
+                p.SeatID,
+                p.Class,
+            }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetSeatByClassType(string ClassType)
+        {
+            var data = db.Seats.Select(p => new
+            {
+                p.SeatID,
+                p.Class,
+            }).Where(p => p.Class == ClassType).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateSeat(string[] SeatID,string ClassType)
+        {
+            foreach (string element in SeatID)
+            {
+                var data = db.Seats.Where(p => p.SeatID == element).FirstOrDefault();
+                data.Class = ClassType;
+                db.SaveChanges();
+            }
+            
+            return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

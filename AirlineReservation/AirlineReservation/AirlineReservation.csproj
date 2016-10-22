@@ -251,6 +251,8 @@
       <LastGenOutput>Models.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Images\businessman.png" />
+    <Content Include="Images\cinema-small.png" />
+    <Content Include="Images\cinema.png" />
     <Content Include="Images\cityscape.png" />
     <Content Include="Images\cityscape_small.png" />
     <Content Include="Images\job-search.png" />

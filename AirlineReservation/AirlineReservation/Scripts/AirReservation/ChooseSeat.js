@@ -2,6 +2,10 @@
     PopupCenter('Personal/AirplantSeat?flightID='+flightID, 'xtf', '900', '500');
 }
 
+function selectSeatWithClass(classType) {
+    PopupCenter('Personal/AirplantSeat?ClassType=' + classType, 'xtf', '900', '500');
+}
+
 function PopupCenter(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
