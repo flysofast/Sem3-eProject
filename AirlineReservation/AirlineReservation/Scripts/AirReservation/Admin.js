@@ -57,8 +57,8 @@ function initRouteFlighOption() {
         success: function (result) {
             $("#admin-flight-register-routeID").html();
             var html = "";
-            $.each(result, function (k) {
-                html += '<option value='+ result[k]['RouteID'] +'>'+ result[k]['RouteID'] +'</option>';
+            $.each(result, function (k, item) {
+                html += '<option value=' + item['RouteID'] + '>' + item['RouteID'] + ' (' + item['OriginalCity'] + ' - ' + item['DestinationCity'] + ')</option>';
             });
             $("#admin-flight-register-routeID").html(html);
         }
@@ -77,15 +77,15 @@ function initFlightList() {
         success: function (result) {
             $("#FlightList").html();
             var html = "";
-            $.each(result, function (k) {
+            $.each(result, function (k, item) {
                 html += '<div class="flight-result">';
                 html += '<div class="row">';
-                html += '<div class="col-md-2 vcenter">' + result[k]['FlightNo'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + result[k]['CurrentPrice'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(result[k]['DepartureTime']) + '</div>';
-                html += '<div class="col-md-1 vcenter">' + result[k]['RouteID'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + result[k]['CancellationFee'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + result[k]['Duration'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['FlightNo'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToCurrencyFormat(item['CurrentPrice']) + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(item['DepartureTime']) + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['OriginalCity'] + '-' + item['DestinationCity'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['CancellationFee'] + '</div>';
+                html += '<div class="col-md-1 vcenter">' + ToTimeFormat(item['Duration']) + '</div>';
                 html += '<div class="col-md-1 vcenter"><button class="btn btn-danger btn-xs" onclick="editFlight(\'' + result[k]['FlightNo'] + '\')">Edit</button></div>';
                 html += '</div>';
                 html += '</div>';
@@ -111,7 +111,6 @@ function editFlight(flightNo) {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            
             $("#admin-flight-register-flightNo-choose").val(result['FlightNo']);
             $("#admin-flight-register-flightNo").val(result['FlightNo']);
             $("#admin-flight-register-price").val(result['CurrentPrice']);
@@ -195,9 +194,9 @@ function initAdministratorList() {
     });
 }
 function removeAdmin(userID) {
-    var obj ={
-        'UserID' : userID,
-        'IsAdmin' : false
+    var obj = {
+        'UserID': userID,
+        'IsAdmin': false
     };
     $.ajax({
         url: 'Admin/UpdateAdmin',
@@ -250,6 +249,16 @@ function ToJavaScriptDate(value) {
     var results = pattern.exec(value);
     var dt = new Date(parseFloat(results[1]));
     return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1);
+}
+
+function ToTimeFormat(value) {
+    var hours = Math.floor(value);
+    var minutes = Math.floor((value - hours) * 60);
+    return hours + "h " + minutes + "m";
+}
+
+function ToCurrencyFormat(number) {
+    return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND";
 }
 
 function addAdministrator() {
