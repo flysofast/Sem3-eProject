@@ -21,7 +21,6 @@
     $("#forgotPasswordFormMain").hide();
 });
 
-
 function formMain(mode) {
     switch (mode) {
         case "login":
@@ -49,7 +48,7 @@ function formMain(mode) {
 
 function aboutUs() {
     if ($("#aboutUsPage").is(":visible")) {
-        $("#aboutUsPage").hide("slow");
+        $("#aboutUsPage").slideUp("slow");
     } else {
         $("#aboutUsPage").slideDown("slow");
     }

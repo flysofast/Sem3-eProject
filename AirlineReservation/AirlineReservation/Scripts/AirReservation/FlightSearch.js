@@ -226,7 +226,7 @@ function SubmitStep2() {
 
 //------------------------------------------STEP 3---------------------------
 var _selectedFlightNumber;//[{Departure:<DepartureFlight>,Return:<ReturnFlight>}]
-var _selectedFlights;//[{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>},{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>} ]
+var _selectedFlights;//[{<DepartureFlight>,<IsReturning>,<SequenceNumber>},{<DepartureFlight>,<Seat>,<IsReturning>,<SequenceNumber>} ]
 var _total_ticket_price = 0;
 function InitStep3() {
     $("#routeTitle").html(_selectedRoute[0].CityID + " (" + _selectedRoute[0].CityName + ") &rarr; "
@@ -331,18 +331,17 @@ function GetFlights() {
             var departureFlightLists = result[0];
             for (i = 0; i < departureFlightLists.length; i++) {
                 var html = "";
-                html += '<div class="flight-result">';
+                html += '<b><div class="flight-result">';
                 html += '<div class="row" data-toggle="collapse" data-target="#collapse-departurer-' + i + '" aria-expanded="false" aria-controls="collapse-departurer-' + i + '">';
                 html += '<div class="col-md-12">';
                 html += '<div class="col-md-2 vcenter">Route ' + (i + 1) + '</div>';
                 html += '<div class="col-md-2 vcenter">From ' + _selectedRoute[i].CityName + '</div>';
                 html += '<div class="col-md-2 vcenter">To ' + _selectedRoute[i + 1].CityName + '</div>';
                 html += '<div class="col-md-2 vcenter">Duration</div>';
-                html += '<div class="col-md-2 vcenter">Seats</div>';
-                html += '<div class="col-md-1 vcenter">Price</div>';
-                html += '<div class="col-md-1 vcenter">Select</div>';
+                html += '<div class="col-md-2 vcenter">Price</div>';
+                html += '<div class="col-md-2 vcenter">Select</div>';
                 html += '</div>';
-                html += '</div>';
+                html += '</div></b>';
                 html += '<div class="row">';
                 html += '<div class="collapse" id="collapse-departurer-' + i + '" style="border-top: 1px solid">';
                 if (departureFlightLists[i] == "") {
@@ -355,10 +354,8 @@ function GetFlights() {
                     html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
                     html += '<div class="col-md-2 vcenter">' + item['Arrival'] + '</div>';
                     html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
-                    html += '<div class="col-md-2 vcenter">';
-                    html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
-                    html += '<div class="col-md-1 vcenter">' + currencyFormat(item['Price']) + '</div>';
-                    html += '<div class="col-md-1">';
+                    html += '<div class="col-md-2 vcenter">' + currencyFormat(item['Price']) + '</div>';
+                    html += '<div class="col-md-2">';
                     html += '<input  name="optDepartureFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="0" sequence="' + i + '" value="' + item['FlightNumber'] + '"/>';
                     html += '</div>';
                     html += '</div>';
@@ -376,18 +373,17 @@ function GetFlights() {
                 var returningFlightLists = result[1];
                 for (i = 0; i < returningFlightLists.length; i++) {
                     var html = "";
-                    html += '<div class="flight-result">';
+                    html += '<b><div class="flight-result">';
                     html += '<div class="row" data-toggle="collapse" data-target="#collapse-return-' + i + '" aria-expanded="false" aria-controls="collapse-return-' + i + '">';
                     html += '<div class="col-md-12">';
                     html += '<div class="col-md-2 vcenter">Route ' + (i + 1) + '</div>';
                     html += '<div class="col-md-2 vcenter">From ' + _selectedRoute[_selectedRoute.length - 1].CityName + '</div>';
                     html += '<div class="col-md-2 vcenter">To ' + _selectedRoute[0].CityName + '</div>';
                     html += '<div class="col-md-2 vcenter">Duration</div>';
-                    html += '<div class="col-md-2 vcenter">Seats</div>';
-                    html += '<div class="col-md-1 vcenter">Price</div>';
-                    html += '<div class="col-md-1 vcenter">Select</div>';
+                    html += '<div class="col-md-2 vcenter">Price</div>';
+                    html += '<div class="col-md-2 vcenter">Select</div>';
                     html += '</div>';
-                    html += '</div>';
+                    html += '</div></b>';
                     html += '<div class="row">';
                     html += '<div class="collapse" id="collapse-return-' + i + '" style="border-top: 1px solid">';
                     if (returningFlightLists[i] == "") {
@@ -400,8 +396,6 @@ function GetFlights() {
                         html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
                         html += '<div class="col-md-2 vcenter">' + item['Arrival'] + '</div>';
                         html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
-                        html += '<div class="col-md-2 vcenter">';
-                        html += '<span style="color:blue" onclick="selectSeatWithFlightID(\'' + item['FlightNumber'] + '\')">Choose Seat</span><span id="seat_' + item['FlightNumber'] + '"></span> </div>';
                         html += '<div class="col-md-1 vcenter">' + currencyFormat(item['Price']) + '</div>';
                         html += '<div class="col-md-1">';
                         html += '<input  name="optReturningFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="1" sequence="' + i + '" value="' + item['FlightNumber'] + '"/>';
@@ -431,15 +425,14 @@ function SubmitStep3() {
             var seqNo = parseInt($this.attr("sequence"));
             var returning = $this.attr("returning") == "1";
             if (optRadio.indexOf("Departure") !== -1) {
-                _selectedFlights.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': returning, 'SequenceNumber': seqNo });
+                _selectedFlights.push({ 'FlightNumber': value,  'IsReturning': returning, 'SequenceNumber': seqNo });
             }
             if (optRadio.indexOf("Return") !== -1) {
-                _selectedFlights.push({ 'FlightNumber': value, 'SeatList': $("#seat_" + value).html(), 'IsReturning': returning, 'SequenceNumber': seqNo });
+                _selectedFlights.push({ 'FlightNumber': value,  'IsReturning': returning, 'SequenceNumber': seqNo });
             }
             //urls.push('<div class="' + id + '">' + url + '</div>');
         }
     });
-    console.log(_selectedFlights);
     $("#btn-step-4").removeClass("disabled");
     initStep4();
 }
