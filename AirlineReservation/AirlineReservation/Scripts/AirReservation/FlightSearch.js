@@ -143,11 +143,11 @@ $(document).ready(function () {
 
     fromLocations.on('change', function () {
         GetCityList(toLocations, fromLocations.val());
-        SetNearestAvailable($(this))
+        SetNearestAvailable($(this));
     });
 
     toLocations.on('change', function () {
-        SetNearestAvailable($(this))
+        SetNearestAvailable($(this));
     });
 });
 

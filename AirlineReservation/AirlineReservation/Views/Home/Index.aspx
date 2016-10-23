@@ -5,9 +5,6 @@
     <script src="../Scripts/modernizr.js"></script>
     <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
 
-    <link href="../../Content/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <script src="../../Scripts/bootstrap-datepicker.min.js"></script>
-
     <script>
         $(window).load(function () {
             setTimeout(function () {

@@ -19,6 +19,7 @@
     $("#aboutUsPage").hide();
     $("#registerFormMain").hide();
     $("#forgotPasswordFormMain").hide();
+
 });
 
 function formMain(mode) {
