@@ -109,6 +109,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,6 +287,7 @@
     <Content Include="Scripts\AirReservation\AirReservationHome.js" />
     <Content Include="Scripts\AirReservation\ChooseSeat.js" />
     <Content Include="Scripts\AirReservation\FlightSearch.js" />
+    <Content Include="Scripts\AirReservation\Ticket.js" />
     <Content Include="Scripts\AirReservation\Personal.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\modernizr.js" />
@@ -305,6 +307,7 @@
     <Content Include="Views\Personal\AirplantSeat.ascx" />
     <Content Include="Views\Personal\Index.aspx" />
     <Content Include="Views\Test\Index.aspx" />
+    <Content Include="Views\Ticket\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

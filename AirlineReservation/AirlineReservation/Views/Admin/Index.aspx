@@ -156,7 +156,7 @@
         <h2>Flight Mangement</h2>
         <div class="flight-result" style="padding: 25px; width: 90%">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group row">
                         <label for="example-text-input" class="col-xs-3 col-form-label">Flight No</label>
                         <div class="col-xs-7">
@@ -171,11 +171,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="form-group row">
                         <label for="example-search-input" class="col-xs-3 col-form-label">Departure Time</label>
                         <div class="col-xs-7">
-                            <input class="form-control" type="date" id="admin-flight-register-departureTime" />
+                            <input class="form-control" type="datetime-local" id="admin-flight-register-departureTime" />
                         </div>
                     </div>
 
