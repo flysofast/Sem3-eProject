@@ -248,11 +248,13 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Models.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\aeroplane.ico" />
     <Content Include="Images\businessman.png" />
     <Content Include="Images\cinema-small.png" />
     <Content Include="Images\cinema.png" />
     <Content Include="Images\cityscape.png" />
     <Content Include="Images\cityscape_small.png" />
+    <Content Include="Images\feather.png" />
     <Content Include="Images\job-search.png" />
     <Content Include="Images\job-search_small.png" />
     <Content Include="Images\notebook.png" />
