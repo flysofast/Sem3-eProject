@@ -9,8 +9,27 @@ using System.Transactions;
 
 public class FlightScheduleUtilities
 {
-    private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
-    private Random random = new Random();
+    private static AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+    private static Random random = new Random();
+    private static FlightScheduleUtilities sharedInstance = null;
+
+    private FlightScheduleUtilities()
+    {
+    }
+
+    /// <summary>
+    /// Get the shared instance of the class
+    /// </summary>
+    /// <returns></returns>
+    public static FlightScheduleUtilities GetSharedInstance()
+    {
+        if (sharedInstance == null)
+        {
+            sharedInstance = new FlightScheduleUtilities();
+        }
+
+        return sharedInstance;
+    }
 
     /// <summary>
     /// Find list of flights that sastisfy the conditions
@@ -224,20 +243,18 @@ public class FlightScheduleUtilities
     private bool CheckFlightsOrder(List<Ticket_Flight> list)
     {
         var sequenceOrderedList = list.OrderBy(p => p.IsReturning ? 1 : 0).ThenBy(p => p.SequenceNo).ToList();
-        var departureTimeOrderedList = list.OrderBy(p => p.Flight.DepartureTime).ToList();
 
-        if (sequenceOrderedList.Count() == departureTimeOrderedList.Count())
+        for (int i = 0; i < sequenceOrderedList.Count() - 1; i++)
         {
-            for (int i = 0; i < sequenceOrderedList.Count(); i++)
+            var f1 = sequenceOrderedList[i].Flight;
+            var f2 = sequenceOrderedList[i + 1].Flight;
+            if ((f1.DepartureTime + TimeSpan.FromHours(f1.Duration)) > f2.DepartureTime)
             {
-                if (!sequenceOrderedList[i].FlightNo.Equals(departureTimeOrderedList[i].FlightNo))
-                {
-                    return false;
-                }
+                return false;
             }
-            return true;
         }
-        return false;
+
+        return true;
     }
 
     /// <summary>
@@ -245,7 +262,7 @@ public class FlightScheduleUtilities
     /// </summary>
     /// <param name="UserID"></param>
     /// <param name="amount"></param>
-    private void ChargeUser(string UserID, decimal amount)
+    public void ChargeUser(string UserID, decimal amount)
     {
         var user = db.Users.Single(p => p.UserID.Equals(UserID));
 
@@ -266,5 +283,24 @@ public class FlightScheduleUtilities
     private bool ValidateCreditCardNumber(string creditCard)
     {
         return !string.IsNullOrEmpty(creditCard);
+    }
+
+    /// <summary>
+    /// Get total cancellation fee for a ticket
+    /// </summary>
+    /// <param name="ticket"></param>
+    /// <returns></returns>
+    public double GetCancellationFee(Ticket ticket)
+    {
+        double totalFee = 0;
+        foreach (var item in ticket.Ticket_Flight)
+        {
+            var flight = item.Flight;
+            var feePerDay = flight.CancellationFee / 100;
+            var daysUntilDeparture = (DateTime.Now - flight.DepartureTime).Days;
+            totalFee += daysUntilDeparture * feePerDay * decimal.ToDouble(flight.CurrentPrice);
+        }
+
+        return totalFee;
     }
 }

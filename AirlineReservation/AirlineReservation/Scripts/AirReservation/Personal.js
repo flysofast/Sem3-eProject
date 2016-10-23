@@ -67,77 +67,108 @@ function initPersonalInfor() {
 }
 
 function initPersonalTicketList() {
+    $('.se-pre-con-2').show();
     $.ajax({
         url: 'Personal/GetCurrentUserTicketList',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
         error: function (data) {
+            $('.se-pre-con-2').fadeOut('slow');
+
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
             $("#currentlyTicketList").html();
             var html = "";
-            $.each(result, function (k) {
+            $.each(result, function (k, item) {
                 html += '<div class="flight-result">';
                 html += '<div class="row">';
-                html += '<div class="col-md-2 vcenter">' + result[k]['TicketNo'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(result[k]['CreatedDate']) + '</div>';
-                html += '<div class="col-md-2 vcenter">' + result[k]['Price'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + result[k]['Status'] + '</div>';
-                html += '<div class="col-md-1 vcenter">';
-                html += '<button onclick="confirmTicket(\' ' + result[k]['TicketNo'] + ' \')">Confirm</button>';
-                html += '</div>';
-                html += '<div class="col-md-1 vcenter">';
-                html += '<button>Cancel</button>';
-                html += '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['TicketNo'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(item['CreatedDate']) + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['Price'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND" + '</div>';
+                html += '<div class="col-md-2 vcenter">' + item['Status'] + '</div>';
+
+                if (item['StatusCode'] == 3) //Blocked code
+                    html += '<div class="col-md-1 vcenter"><button class="btn btn-default btn-success" onclick="confirmTicket(' + item['TicketNo'] + ')">Confirm</button></div>';
+                html += '<div class="col-md-1 vcenter"><button class="btn btn-default btn-danger" onclick="cancelTicket(' + item['TicketNo'] + ')">Cancel</button></div>';
                 html += '</div>';
                 html += '</div>';
                 //console.log(result[k]);
             });
             $("#currentlyTicketList").html(html);
+            $('.se-pre-con-2').fadeOut('slow');
         }
     });
 }
 
 function confirmTicket(ticketNo) {
     swal({
-        title: "An input!",
-        text: "Write something interesting:",
-        type: "input",
-        showCancelButton: true,
-        closeOnConfirm: false,
-        animation: "slide-from-top",
-        inputPlaceholder: "Write something"
-    }, function (inputValue) {
-        if (inputValue === false) return false;
-        if (inputValue === "") {
-            swal.showInputError("You need to write something!");
-            return false
+        title: "Are you sure?", text: "Do you really want to buy this ticket? You will be charged by your provided credit card number.", type: "warning", showCancelButton: true,
+        confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, buy it!", closeOnConfirm: false
+    },
+       function () {
+           var obj = {
+               'ticketNo': ticketNo,
+               'actionCode': 1, //Confirm code
+           };
+           $.ajax({
+               url: 'Personal/TakeActionForTicket',
+               contentType: "application/json; charset=utf-8",
+               dataType: 'json',
+               type: 'POST',
+               data: JSON.stringify(obj),
+               error: function (data) {
+                   swal("Error", data.responseText, "error");
+               },
+               success: function (result) {
+                   swal("Succeeded", "The ticket has successfully confirmed", "success");
+                   initPersonalTicketList();
+               }
+           });
+       });
+}
+
+function ToCurrencyFormat(number) {
+    return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND";
+}
+
+function cancelTicket(ticketNo) {
+    var obj = {
+        'ticketNo': ticketNo,
+        'actionCode': 2, //Confirm code
+    };
+
+    $.ajax({
+        url: 'Personal/GetCancellationFeeAPI',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        data: JSON.stringify(obj),
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            swal({
+                title: "Are you sure?", text: "Do you really want to cancel this ticket? You will be charged " + ToCurrencyFormat(result) + " for cancellation fee!", type: "warning", showCancelButton: true,
+                confirmButtonColor: "#DD6B55", confirmButtonText: "Yes, cancel it!", closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: 'Personal/TakeActionForTicket',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: JSON.stringify(obj),
+                    error: function (data) {
+                        swal("Error", data.responseText, "error");
+                    },
+                    success: function (result) {
+                        swal("Succeeded", "The ticket has successfully canceled", "success");
+                        initPersonalTicketList();
+                    }
+                });
+            });
         }
-        //confirm code
-        var obj = {
-            'TicketNo': ticketNo,
-            'Code': inputValue,
-            'Mode': 1 //Confirmed code
-        };
-        $.ajax({
-            url: 'Personal/CheckTicketCode',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            type: 'POST',
-            data: JSON.stringify(obj),
-            error: function (data) {
-                swal("Error", data.responseText, "error");
-            },
-            success: function (result) {
-                if (result == "1") {
-                    swal("OK", "Correct code", "success");
-                } else {
-                    swal("Error", "Wrong code", "error");
-                }
-            }
-        });
     });
 }
 

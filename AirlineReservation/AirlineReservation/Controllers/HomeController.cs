@@ -194,7 +194,7 @@ namespace AirlineReservation.Controllers
                         numberOfRequestedSeats += item;
                     }
 
-                    FlightScheduleUtilities ru = new FlightScheduleUtilities();
+                    FlightScheduleUtilities ru = FlightScheduleUtilities.GetSharedInstance();
 
                     #region Departure flight search
 
@@ -386,7 +386,7 @@ namespace AirlineReservation.Controllers
                         total += db.Flights.SingleOrDefault(p => p.FlightNo.Equals(item.FlightNumber)).CurrentPrice;
                     }
 
-                    var fsu = new FlightScheduleUtilities();
+                    var fsu = FlightScheduleUtilities.GetSharedInstance();
 
                     if (RequestType == TicketStatus.Confirmed)
                     {

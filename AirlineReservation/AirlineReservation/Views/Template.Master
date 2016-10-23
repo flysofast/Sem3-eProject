@@ -81,8 +81,10 @@ The Airline Reservation System (ARS) is a software application to assist an airl
     </div>
     <!-- End-->
 
-    <!-- Loading spin -->
+    <!-- Loading spins -->
     <div class="se-pre-con"></div>
+
+    <div class="se-pre-con-2" style="display:none"></div>
     <!-- End -->
 
     <nav class="navbar navbar-default navbar-fixed-top">

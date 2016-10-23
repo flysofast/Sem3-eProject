@@ -1,21 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Template.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-<script src="../Scripts/modernizr.js"></script>
-<script src="../../Scripts/AirReservation/Personal.js"></script>
-<script>
-    $(window).load(function () {
-        setTimeout(function () {
-            $('.se-pre-con').fadeOut('slow', function () {
-            });
-        }, 1000); // set the time here
-    });
-
-</script>
-    <div class="float-button-container" id="float-button-group" style="display:none">
-        <div class="float-button" style="background-image:url(../../Images/job-search_small.png)" onclick="changePage('information')"></div>
-        <div class="float-button" style="background-image:url(../../Images/ticket_small.png)" onclick="changePage('ticket')"></div>
-        <div class="float-button" style="background-image:url(../../Images/notebook_small.png)" onclick="changePage('log')"></div>
+    <script src="../Scripts/modernizr.js"></script>
+    <script src="../../Scripts/AirReservation/Personal.js"></script>
+    <script>
+        $(window).load(function () {
+            setTimeout(function () {
+                $('.se-pre-con').fadeOut('slow', function () {
+                });
+            }, 1000); // set the time here
+        });
+    </script>
+    <div class="float-button-container" id="float-button-group" style="display: none">
+        <div class="float-button" style="background-image: url(../../Images/job-search_small.png)" onclick="changePage('information')"></div>
+        <div class="float-button" style="background-image: url(../../Images/ticket_small.png)" onclick="changePage('ticket')"></div>
+        <div class="float-button" style="background-image: url(../../Images/notebook_small.png)" onclick="changePage('log')"></div>
     </div>
 
     <style>
@@ -23,65 +22,65 @@
         ::-webkit-scrollbar {
             width: 12px;
         }
- 
+
         /* Track */
         ::-webkit-scrollbar-track {
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
             -webkit-border-radius: 10px;
             border-radius: 10px;
         }
- 
+
         /* Handle */
         ::-webkit-scrollbar-thumb {
             -webkit-border-radius: 10px;
             border-radius: 10px;
-            background: rgba(30,144,255,0.8); 
-            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+            background: rgba(30,144,255,0.8);
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
         }
-        ::-webkit-scrollbar-thumb:window-inactive {
-	        background: rgba(30,144,255,0.4); 
-        }
-    </style>
-<div class="container-fluid cards-row" id="card-row-index">
-<div class="container">
-<div class="row">
 
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail" onclick="changePage('information')">
-      <img src="../../Images/job-search.png" alt="Bootstrap Thumbnail Customization">
-      <div class="caption">
-        <h3>Personal Information</h3>
-        <p class="card-description">View/Edit your personal information</p>
-      </div>
+            ::-webkit-scrollbar-thumb:window-inactive {
+                background: rgba(30,144,255,0.4);
+            }
+    </style>
+    <div class="container-fluid cards-row" id="card-row-index">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" onclick="changePage('information')">
+                        <img src="../../Images/job-search.png" alt="Bootstrap Thumbnail Customization">
+                        <div class="caption">
+                            <h3>Personal Information</h3>
+                            <p class="card-description">View/Edit your personal information</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" onclick="changePage('ticket')">
+                        <img src="../../Images/ticket.png" alt="Bootstrap Thumbnail Customization">
+                        <div class="caption">
+                            <h3>View/Edit your ticket</h3>
+                            <p class="card-description">View/Edit your personal information</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail" onclick="changePage('log')">
+                        <img src="../../Images/notebook.png" alt="Bootstrap Thumbnail Customization">
+                        <div class="caption">
+                            <h3>History</h3>
+                            <p class="card-description">Show your history log</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  
-    <div class="col-sm-6 col-md-4">
-    <div class="thumbnail"  onclick="changePage('ticket')">
-      <img src="../../Images/ticket.png" alt="Bootstrap Thumbnail Customization">
-      <div class="caption">
-        <h3>View/Edit your ticket</h3>
-        <p class="card-description">View/Edit your personal information</p>
-      </div>
-    </div>
-  </div>
-  
-    <div class="col-sm-6 col-md-4">
-    <div class="thumbnail" onclick="changePage('log')">
-      <img src="../../Images/notebook.png" alt="Bootstrap Thumbnail Customization">
-      <div class="caption">
-        <h3>History</h3>
-        <p class="card-description">Show your history log</p>
-      </div>
-    </div>
-  </div>
-  
-</div>
-</div>
-</div>
-    
-    <div class="container" id="formPersonalInformation"  style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
-        <h2>Your personal information</h2>  
+
+    <div class="container" id="formPersonalInformation" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
+        <h2>Your personal information</h2>
         <div class="form-group row">
             <label for="example-text-input" class="col-xs-3 col-form-label">Username</label>
             <div class="col-xs-7">
@@ -138,8 +137,8 @@
         </div>
     </div>
 
-    <div class="container" id="formTicket"  style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
-        <h2>Your currently ticket</h2>  
+    <div class="container" id="formTicket" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
+        <h2>Your active tickets</h2>
         <div class="row">
             <div class="col-md-2 vcenter">Ticket Code</div>
             <div class="col-md-2 vcenter">CreatedDate</div>
@@ -149,13 +148,13 @@
         </div>
         <div id="currentlyTicketList"></div>
     </div>
-    <div class="container" id="formLog" style="height: 600px;display:block;overflow-y:scroll;overflow-x: hidden;">
-       <h2>Your Log ticket</h2>  
+    <div class="container" id="formLog" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
+        <h2>Your Log ticket</h2>
         <div class="row">
             <div class="col-md-2 vcenter">Ticket Code</div>
             <div class="col-md-2 vcenter">From</div>
             <div class="col-md-2 vcenter">To</div>
-            <div class="col-md-2 vcenter">Date Booking</div>
+            <div class="col-md-2 vcenter">Booking Date</div>
             <div class="col-md-2 vcenter">Status</div>
         </div>
         <div class="flight-result">
@@ -168,7 +167,6 @@
             </div>
         </div>
     </div>
-    
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="head" runat="server">

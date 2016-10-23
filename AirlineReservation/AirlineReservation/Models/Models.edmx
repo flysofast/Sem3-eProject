@@ -10,7 +10,7 @@
             <PropertyRef Name="CityID" />
           </Key>
           <Property Name="CityID" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="InService" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Flight">
@@ -39,7 +39,7 @@
             <PropertyRef Name="SeatID" />
           </Key>
           <Property Name="SeatID" Type="varchar" MaxLength="4" Nullable="false" />
-          <Property Name="Class" Type="nvarchar" MaxLength="25" />
+          <Property Name="Class" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -99,8 +99,8 @@
           <Property Name="Sex" Type="bit" Nullable="false" />
           <Property Name="CreditcardNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
-          <Property Name="Skymiles" Type="float" Nullable="false" />
           <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="Skymiles" Type="float" Nullable="false" />
         </EntityType>
         <Association Name="FK_Flight_Route">
           <End Role="Route" Type="Self.Route" Multiplicity="1" />
@@ -313,7 +313,7 @@
             <PropertyRef Name="CityID" />
           </Key>
           <Property Name="CityID" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="InService" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="RoutesAsOriginal" Relationship="AirlineReservationSystemModel.FK_Route_City" FromRole="City" ToRole="Route" />
           <NavigationProperty Name="RoutesAsDestination" Relationship="AirlineReservationSystemModel.FK_Route_City1" FromRole="City" ToRole="Route" />
@@ -515,7 +515,7 @@
           <Key>
             <PropertyRef Name="SeatID" />
           </Key>
-          <Property Name="Class" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SeatID" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TakenSeats" Relationship="AirlineReservationSystemModel.FK_TakenSeat_Seat" FromRole="Seat" ToRole="TakenSeat" />
         </EntityType>
@@ -655,7 +655,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

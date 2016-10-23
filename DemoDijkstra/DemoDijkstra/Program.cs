@@ -14,8 +14,8 @@ namespace DemoDijkstra
 
         private static void Main(string[] args)
         {
-            GenerateFlights(28, 20, 400);
-            return;
+            //GenerateFlights(28, 20, 400);
+            //return;
 
             //GenerateSeats();
 
@@ -75,7 +75,7 @@ namespace DemoDijkstra
                     var ticketDetails = new Ticket_Flight();
                     ticketDetails.TicketNo = ticket.TicketNo;
                     ticketDetails.FlightNo = flight.FlightNo;
-                    ticketDetails.SequenceNo = 1;
+                    ticketDetails.SequenceNo = 0;
                     ticketDetails.IsReturning = false;
                     db.Ticket_Flight.Add(ticketDetails);
                     db.SaveChanges();
