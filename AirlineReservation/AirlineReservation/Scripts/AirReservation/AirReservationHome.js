@@ -19,8 +19,8 @@
     $("#aboutUsPage").hide();
     $("#registerFormMain").hide();
     $("#forgotPasswordFormMain").hide();
-});
 
+});
 
 function formMain(mode) {
     switch (mode) {
@@ -49,7 +49,7 @@ function formMain(mode) {
 
 function aboutUs() {
     if ($("#aboutUsPage").is(":visible")) {
-        $("#aboutUsPage").hide("slow");
+        $("#aboutUsPage").slideUp("slow");
     } else {
         $("#aboutUsPage").slideDown("slow");
     }

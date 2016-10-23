@@ -5,9 +5,6 @@
     <script src="../Scripts/modernizr.js"></script>
     <script src="../../Scripts/AirReservation/ChooseSeat.js"></script>
 
-    <link href="../../Content/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <script src="../../Scripts/bootstrap-datepicker.min.js"></script>
-
     <script>
         $(window).load(function () {
             setTimeout(function () {
@@ -45,6 +42,7 @@
         </div>
         <form role="form" method="post" class="form-horizontal">
             <div class="row setup-content" id="step-1">
+
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3 style="font-weight: bold;">Flight scheduler</h3>
@@ -279,7 +277,6 @@
                                             <div class="col-md-2 vcenter">From Hanoi</div>
                                             <div class="col-md-2 vcenter">To Hue</div>
                                             <div class="col-md-2 vcenter">Duration</div>
-                                            <div class="col-md-2 vcenter">Seats</div>
                                             <div class="col-md-1 vcenter">Price</div>
                                             <div class="col-md-1 vcenter">Select</div>
                                         </div>
@@ -309,7 +306,6 @@
                                             <div class="col-md-2 vcenter">From Hue</div>
                                             <div class="col-md-2 vcenter">To Ho Chi Minh</div>
                                             <div class="col-md-2 vcenter">Duration</div>
-                                            <div class="col-md-2 vcenter">Seats</div>
                                             <div class="col-md-1 vcenter">Price</div>
                                             <div class="col-md-1 vcenter">Select</div>
                                         </div>
