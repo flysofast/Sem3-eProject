@@ -297,10 +297,10 @@ public class FlightScheduleUtilities
         {
             var flight = item.Flight;
             var feePerDay = flight.CancellationFee / 100;
-            var daysUntilDeparture = (DateTime.Now - flight.DepartureTime).Days;
+            var daysUntilDeparture = (flight.DepartureTime - DateTime.Now).Days;
             totalFee += daysUntilDeparture * feePerDay * decimal.ToDouble(flight.CurrentPrice);
         }
 
-        return totalFee;
+        return Math.Round(totalFee);
     }
 }
