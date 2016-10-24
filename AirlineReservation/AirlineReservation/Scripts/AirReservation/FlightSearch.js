@@ -929,7 +929,14 @@ function BlockTicket() {
                     swal("Error", data.responseText, "error");
                 },
                 success: function (result) {
-                    swal("You have successfully blocked the ticket!", "Blocking number: " + result, "success");
+                    swal({
+                        title: "You have successfully blocked the ticket!",
+                        text: "Blocking number: " + result,
+                        type: "success"
+                    },
+                     function () {
+                         window.location.href = 'Home/Thanks';
+                     })
                 }
             });
         });
@@ -957,7 +964,14 @@ function BuyTicket() {
                     swal("Error", data.responseText, "error");
                 },
                 success: function (result) {
-                    swal("You have successfully purchased the ticket!", "Confirmation number: " + result, "success");
+                    swal({ 
+                        title: "You have successfully purchased the ticket!",
+                        text: "Confirmation number: " + result,
+                        type: "success" 
+                    },
+                      function(){
+                          window.location.href = 'Home/Thanks';
+                      })
                 }
             });
         });
