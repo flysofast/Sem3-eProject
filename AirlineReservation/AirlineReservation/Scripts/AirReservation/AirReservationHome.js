@@ -7,19 +7,18 @@
     //Check ticket type, show/hide input return date
     $("input[name=optFlight]:radio").change(function () {
         if ($('#optFlightReturn').is(':checked')) {
-            $("#returnDateForm").show("slow");
-            $("#lblReturnClass").show("slow");
-            $("#returnClass").show("slow");
+            $("#returnDateForm").slideDown("slow");
+            $("#lblReturnClass").slideDown("slow");
+            $("#returnClass").slideDown("slow");
         } else {
-            $("#returnDateForm").hide();
-            $("#lblReturnClass").hide();
-            $("#returnClass").hide();
+            $("#returnDateForm").slideUp();
+            $("#lblReturnClass").slideUp();
+            $("#returnClass").slideUp();
         }
     });
     $("#aboutUsPage").hide();
     $("#registerFormMain").hide();
     $("#forgotPasswordFormMain").hide();
-
 });
 
 function formMain(mode) {
