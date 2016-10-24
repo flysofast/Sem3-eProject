@@ -14,13 +14,16 @@
             navListItems.removeClass('btn-primary').addClass('btn-default');
             $item.addClass('btn-primary');
 
-            allWells.hide('slide', function () {
-                // Animation complete.
+            allWells.slideUp(function () {
                 $(".datepicker").hide();
-            });
-            $target.show('slide', function () {
-                // Animation complete.
-            });
+            })
+            $target.slideDown();
+            //allWells.hide('slide', function () {
+            //    // Animation complete.
+            //});
+            //$target.show('slide', function () {
+            //    // Animation complete.
+            //});
             $target.find('input:eq(0)').focus();
         }
     });

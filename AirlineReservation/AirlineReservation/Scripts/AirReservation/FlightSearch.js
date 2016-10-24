@@ -32,7 +32,7 @@ $(document).ready(function () {
                         $('#toLocation').val(result[0]["DestinationCityID"]);
                         GetPossibleFlightSchedule();
                     }, 200);
-                    
+
                     if (result[0]["IsReturning"] == "1") {
                         $("#optFlightReturn").prop("checked", true);
                         $("#returnDateForm").show("slow");
@@ -45,14 +45,13 @@ $(document).ready(function () {
                 }
             });
         }, 2000);
-        
     }
 });
 
 function getQueryParam(param) {
     location.search.substr(1)
         .split("&")
-        .some(function(item) { // returns first occurence and stops
+        .some(function (item) { // returns first occurence and stops
             return item.split("=")[0] == param && (param = item.split("=")[1])
         })
     return param
@@ -99,7 +98,7 @@ function GetPossibleFlightSchedule() {
                     routeDetails += " &rarr; " + result[i].CityID + " (" + result[i].CityName + ")";
                 }
                 $("#foundRouteDetails").html(routeDetails);
-                $("#step1-result").show("slow");
+                $("#step1-result").fadeIn();
 
                 _selectedRoute = result;
                 $('#btStep1Submit').prop('disabled', false);
@@ -486,10 +485,10 @@ function SubmitStep3() {
             var seqNo = parseInt($this.attr("sequence"));
             var returning = $this.attr("returning") == "1";
             if (optRadio.indexOf("Departure") !== -1) {
-                _selectedFlights.push({ 'FlightNumber': value,  'IsReturning': returning, 'SequenceNumber': seqNo });
+                _selectedFlights.push({ 'FlightNumber': value, 'IsReturning': returning, 'SequenceNumber': seqNo });
             }
             if (optRadio.indexOf("Return") !== -1) {
-                _selectedFlights.push({ 'FlightNumber': value,  'IsReturning': returning, 'SequenceNumber': seqNo });
+                _selectedFlights.push({ 'FlightNumber': value, 'IsReturning': returning, 'SequenceNumber': seqNo });
             }
             //urls.push('<div class="' + id + '">' + url + '</div>');
         }
@@ -584,7 +583,6 @@ function loginValidation(form) {
                 if (form == "main") {
                     swal("Successfully!", "Welcome back!", "success");
                     $("#myModal").modal('hide');
-                   
                 } else {
                     $("#login-register-form-step4").html('<div class="flight-result" style="padding: 25px; width: 80%"><div class="row"><div class="col-xs-12" style="text-align:center">You are already logged, Click the button to the final step</div></div></div>');
                     //$("#nav-menu-admin").show();
@@ -839,7 +837,6 @@ function initStep5() {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            
             $("#confirm_show_fullname").html(result['FirstName'] + " " + result['LastName']);
             $("#confirm_show_firstname").html(result['FirstName']);
             $("#confirm_show_lastname").html(result['LastName']);
@@ -856,7 +853,7 @@ function initStep5() {
 
             $("#confirm_show_departure").html();
             $("#confirm_show_return").html();
-            
+
             console.log(_selectedFlights);
             $.each(_selectedFlights, function (key, value) {
                 console.log(value['IsReturning'])
@@ -901,7 +898,7 @@ function initStep5() {
                             html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
                             html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
                             html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
-                             $("#confirm_show_departure").append(html);
+                            $("#confirm_show_departure").append(html);
                         }
                     });
                 }
@@ -965,7 +962,6 @@ function BuyTicket() {
             });
         });
 }
-
 
 function ToJavaScriptDate(value) {
     var pattern = /Date\(([^)]+)\)/;
