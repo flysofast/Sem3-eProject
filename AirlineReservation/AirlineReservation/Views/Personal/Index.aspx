@@ -148,9 +148,9 @@
         </div>
         <div id="currentlyTicketList"></div>
     </div>
-    <div class="container" id="formLog" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
+    <div class="container" id="formLog" style="height: 600px; display: block;">
         <h2>Your Log ticket</h2>
-        <div class="container" style="height: 300px; display: block; overflow-y: scroll; overflow-x: hidden;">
+        <div class="container" style="height: 500px; display: block; overflow-y: scroll; overflow-x: hidden;">
             <div class="row">
                 <div class="col-md-2 vcenter">Ticket No</div>
                 <div class="col-md-2 vcenter">Original City</div>
