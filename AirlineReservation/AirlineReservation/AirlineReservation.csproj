@@ -304,6 +304,7 @@
     <Content Include="Scripts\sweetalert.min.js" />
     <Content Include="Views\Admin\Index.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\Thanks.aspx" />
     <Content Include="Views\Personal\AirplantSeat.ascx" />
     <Content Include="Views\Personal\Index.aspx" />
     <Content Include="Views\Flight\Index.aspx" />

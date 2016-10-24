@@ -358,6 +358,7 @@ namespace AirlineReservation.Controllers
         #endregion Step 4
 
         #region Step 5
+
         public JsonResult GetCurrentUserInformation()
         {
             var UserID = Session[Constants.SessionUserIDKey];
@@ -428,5 +429,10 @@ namespace AirlineReservation.Controllers
         }
 
         #endregion Step 5
+
+        public ActionResult Thanks()
+        {
+            return View();
+        }
     }
 }
