@@ -108,7 +108,6 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -250,12 +249,12 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Models.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Images\aeroplane.ico" />
     <Content Include="Images\businessman.png" />
     <Content Include="Images\cinema-small.png" />
     <Content Include="Images\cinema.png" />
     <Content Include="Images\cityscape.png" />
     <Content Include="Images\cityscape_small.png" />
+    <Content Include="Images\favicon.ico" />
     <Content Include="Images\feather.png" />
     <Content Include="Images\job-search.png" />
     <Content Include="Images\job-search_small.png" />
@@ -306,7 +305,6 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Personal\AirplantSeat.ascx" />
     <Content Include="Views\Personal\Index.aspx" />
-    
     <Content Include="Views\Ticket\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
