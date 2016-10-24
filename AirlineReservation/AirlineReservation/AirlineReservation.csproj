@@ -255,6 +255,7 @@
     <Content Include="Images\cinema.png" />
     <Content Include="Images\cityscape.png" />
     <Content Include="Images\cityscape_small.png" />
+    <Content Include="Images\favicon.ico" />
     <Content Include="Images\feather.png" />
     <Content Include="Images\job-search.png" />
     <Content Include="Images\job-search_small.png" />
