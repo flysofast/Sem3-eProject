@@ -273,7 +273,7 @@ public class FlightScheduleUtilities
         }
 
         string action = "";
-        if (amount > 0)
+        if (amount < 0)
         {
             action = "received";
         }
