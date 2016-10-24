@@ -272,7 +272,17 @@ public class FlightScheduleUtilities
             throw new ArgumentException("The credit card information is not valid");
         }
 
-        Console.WriteLine(UserID + " has just been charge for " + amount);
+        string action = "";
+        if (amount > 0)
+        {
+            action = "received";
+        }
+        else
+        {
+            action = "been charged for";
+        }
+
+        Console.WriteLine(UserID + " has just " + action + amount);
     }
 
     /// <summary>
@@ -301,6 +311,7 @@ public class FlightScheduleUtilities
             totalFee += daysUntilDeparture * feePerDay * decimal.ToDouble(flight.CurrentPrice);
         }
 
+        totalFee += decimal.ToDouble(ticket.Price);
         return Math.Round(totalFee);
     }
 }

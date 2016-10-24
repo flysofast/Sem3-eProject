@@ -121,17 +121,21 @@ namespace AirlineReservation.Controllers
                     var ticket = db.Tickets.Single(p => p.TicketNo.Equals(ticketNo));
                     string generatedCode = actionCode.ToString("D2") + ticket.TicketNo.ToString();
 
+                    FlightScheduleUtilities fu = FlightScheduleUtilities.GetSharedInstance();
+
                     if (actionCode == TicketStatus.Confirmed)
                     {
                         ticket.ConfirmationNo = generatedCode;
+                        fu.ChargeUser(ticket.UserID, ticket.Price);
+
                     }
                     else if (actionCode == TicketStatus.Cancelled)
                     {
                         ticket.CancellationNo = generatedCode;
+                        fu.ChargeUser(ticket.UserID, Convert.ToDecimal(fu.GetCancellationFee(ticket)));
+
                     }
                     ticket.Status = actionCode;
-                    FlightScheduleUtilities fu = FlightScheduleUtilities.GetSharedInstance();
-                    fu.ChargeUser(ticket.UserID, ticket.Price);
 
                     db.SaveChanges();
 
