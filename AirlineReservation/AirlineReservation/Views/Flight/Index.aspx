@@ -11,34 +11,34 @@
     });
     </script>
 <div class="container" id="formTicket" style="height: 600px; display: block;">
-        <h2>Search ticket information</h2>
+        <h2>Search Flight information</h2>
         <div class="flight-result" style="padding: 25px; width: 90%">
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group row">
-                        <label for="example-text-input" class="col-xs-3 col-form-label">Your ticket number:</label>
+                        <label for="example-text-input" class="col-xs-3 col-form-label">Flight number:</label>
                         <div class="col-xs-7">
-                            <input class="form-control" type="number" id="ticket_number_search" />
+                            <input class="form-control" type="text" id="flight_number_search" />
                         </div>
                     </div>
                 </div>                
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <a href="#" class="btn btn-primary btn-lg" onclick="searchTicket()">Search</a>
+                    <a href="#" class="btn btn-primary btn-lg" onclick="searchFlight()">Search</a>
                 </div>
             </div>
         </div>
         <div class="container" style="height: 300px; display: block; overflow-y: scroll; overflow-x: hidden;">
             <div class="row">
-                <div class="col-md-2 vcenter">Ticket No</div>
+                <div class="col-md-2 vcenter">Flight No</div>
                 <div class="col-md-2 vcenter">Original City</div>
                 <div class="col-md-2 vcenter">Destination City</div>
-                <div class="col-md-2 vcenter">Created Date</div>
+                <div class="col-md-2 vcenter">Departure time</div>
+                <div class="col-md-2 vcenter">Duration</div>
                 <div class="col-md-2 vcenter">Price</div>
-                <div class="col-md-2 vcenter">Status</div>
             </div>
-            <div id="TicketList"></div>
+            <div id="TicketList" style="display:none"></div>
         </div>
     </div>
 

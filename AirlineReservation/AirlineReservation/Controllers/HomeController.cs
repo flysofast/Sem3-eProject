@@ -358,6 +358,23 @@ namespace AirlineReservation.Controllers
         #endregion Step 4
 
         #region Step 5
+        public JsonResult GetCurrentUserInformation()
+        {
+            var UserID = Session[Constants.SessionUserIDKey];
+            var data = db.Users.Select(p => new
+            {
+                p.CreditcardNumber,
+                p.DateOfBirth,
+                p.Email,
+                p.FirstName,
+                p.IsAdmin,
+                p.LastName,
+                p.PhoneNumber,
+                p.Sex,
+                p.UserID
+            }).Where(p => p.UserID == UserID).FirstOrDefault();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult BookTicketAPI(List<BookedFlightInfo> SelectedFlights, string[] Classes, int[] Passengers, int RequestType)
         {

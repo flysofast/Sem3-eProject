@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Airlines Reservation System</title>
+    <title></title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <link href="../Content/AirlineReservation.css" rel="stylesheet" />
@@ -101,9 +101,12 @@ The Airline Reservation System (ARS) is a software application to assist an airl
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
+<<<<<<< HEAD
                     <li>
-                        <a class="page-scroll" href="Flight">Search Flight</a>
+                        <a class="page-scroll" href="Ticket">Tickets</a>
                     </li>
+=======
+>>>>>>> bce3f733b66b79fb2c41aefcc943ede264750c01
 
                     <%
                         var isLoggedin = (Session[Constants.SessionUserIDKey] != null);

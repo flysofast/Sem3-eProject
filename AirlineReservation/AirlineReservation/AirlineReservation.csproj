@@ -108,8 +108,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PersonalController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -306,8 +305,7 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Personal\AirplantSeat.ascx" />
     <Content Include="Views\Personal\Index.aspx" />
-    
-    <Content Include="Views\Ticket\Index.aspx" />
+    <Content Include="Views\Flight\Index.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

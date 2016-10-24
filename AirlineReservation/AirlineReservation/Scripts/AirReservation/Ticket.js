@@ -1,15 +1,15 @@
-﻿function searchTicket() {
-    var ticketNo = $("#ticket_number_search").val();
-    if (ticketNo == "") {
+﻿function searchFlight() {
+    var flightNo = $("#flight_number_search").val();
+    if (flightNo == "") {
         swal("Error", "Please enter your ticket number", "error");
         return false;
     }
 
     var obj = {
-        'TicketNo': ticketNo,
+        'FlightNo': flightNo,
     };
     $.ajax({
-        url: 'Ticket/SearchTicketById',
+        url: 'Flight/SearchFlightById',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',
@@ -18,24 +18,35 @@
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
-            console.log(result);
+            //console.log(result);
+            if (result.length == 0) {
+                swal("Not found", "This Flight does not exists, please try again!", "error");
+                return false;
+            }
             $("#TicketList").html("");
             var html = "";
             $.each(result, function (k) {
                 html += '<div class="flight-result">';
                 html += '<div class="row">';
-                html += '<div class="col-md-2 vcenter">' + result[k]['TicketNo'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + result[k]['FlightNo'] + '</div>';
                 html += '<div class="col-md-2 vcenter">' + result[k]['Original'] + '</div>';
                 html += '<div class="col-md-2 vcenter">' + result[k]['Destination'] + '</div>';
-                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(result[k]['CreatedDate']) + '</div>';
-                html += '<div class="col-md-2 vcenter">' + ToCurrencyFormat(result[k]['Price']) + '</div>';
-                html += '<div class="col-md-2 vcenter">' + result[k]['Status'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(result[k]['DepartureTime']) + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToTimeFormat(result[k]['Duration']) + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToCurrencyFormat(result[k]['CurrentPrice']) + '</div>';
                 html += '</div>';
                 html += '</div>';
             })
             $("#TicketList").html(html);
+            $("#TicketList").slideDown();
         }
     });
+}
+
+function ToTimeFormat(value) {
+    var hours = Math.floor(value);
+    var minutes = Math.floor((value - hours) * 60);
+    return hours + "h " + minutes + "m";
 }
 
 function ToJavaScriptDate(value) {

@@ -7,7 +7,7 @@ using AirlineReservation.Models;
 
 namespace AirlineReservation.Controllers
 {
-    public class TicketController : Controller
+    public class FlightController : Controller
     {
         //
         // GET: /Ticket/
@@ -15,6 +15,33 @@ namespace AirlineReservation.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public JsonResult SearchFlightById(string FlightNo)
+        {
+            var data = db.Flights.Join(db.Routes,
+                                    f => f.RouteID,
+                                    r => r.RouteID,
+                                    (f,r) => new { Route = r, Flight = f}
+                                ) .Join(db.Cities,
+                                r => r.Route.OriginalCityID,
+                                c => c.CityID,
+                                (r, c) => new {r.Flight, Route = r, City = c }
+                                )
+                                .Join(db.Cities,
+                                r => r.Route.Route.DestinationCityID,
+                                c2 => c2.CityID,
+                                (r, c2) => new {r.Flight, r.City, Route = r, City2 = c2 }
+                                ).Select(p => new
+                                {
+                                    p.Flight.FlightNo,
+                                    p.Flight.CurrentPrice,
+                                    p.Flight.DepartureTime,
+                                    p.Flight.Duration,
+                                    Original = p.City.CityName,
+                                    Destination = p.City2.CityName,
+                                }).Where(p => p.FlightNo == FlightNo).ToList();
+
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SearchTicketById(int TicketNo)
@@ -57,8 +84,11 @@ namespace AirlineReservation.Controllers
                                     p.Ticket.NumberOfSeniorCitizens,
                                     p.Ticket_Flight.Ticket_Flight.FlightNo,
                                     p.Flight.Flight.RouteID,
+                                    p.Route.Route.Route.DestinationCityID,
+                                    p.Route.Route.Route.OriginalCityID,
                                     Original = p.City.CityName,
                                     Destination = p.City2.CityName,
+                                    p.Ticket_Flight.Ticket_Flight.IsReturning,
                                     Status = p.Ticket.Status == TicketStatus.Blocked ? "Blocked" : p.Ticket.Status == TicketStatus.Confirmed ? "Confirmed" : p.Ticket.Status == TicketStatus.Cancelled ? "Canceled" : "Undefined"
                                 }).Where(p => p.TicketNo == TicketNo).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);

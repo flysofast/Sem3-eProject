@@ -511,11 +511,11 @@
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <h3>Confirm Personal information</h3>
-                        <div class="flight-result" style="padding: 25px; width: 80%">
+                        <div class="flight-result" style="padding: 25px; width: 100%">
                             <div class="card card-block">
                                 <div class="card card-block" style="padding: 20px;">
                                     <div class="row">
-                                        <div class="col-sm-6 col-md-4">
+                                        <div class="col-sm-6 col-md-3">
                                             <div class="thumbnail">
                                                 Customer Information
                                         <div class="caption">
@@ -524,45 +524,45 @@
                                                 <table class="table" style="text-align: left;">
                                                     <tr>
                                                         <td>First Name</td>
-                                                        <td>Thai Bao</td>
+                                                        <td id="confirm_show_firstname">Thai Bao</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Last Name</td>
-                                                        <td>Nguyen</td>
+                                                        <td id="confirm_show_lastname">Nguyen</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Email</td>
-                                                        <td>bao@gmail.com</td>
+                                                        <td id="confirm_show_email">bao@gmail.com</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Phone number</td>
-                                                        <td>0123456789</td>
+                                                        <td id="confirm_show_phone">0123456789</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Gender</td>
-                                                        <td>male</td>
+                                                        <td id="confirm_show_gender">male</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Day of Birth</td>
-                                                        <td>01/01/1992</td>
+                                                        <td id="confirm_show_dob">01/01/1992</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Credit Card</td>
-                                                        <td>00233342343</td>
+                                                        <td id="confirm_show_creditcard">00233342343</td>
                                                     </tr>
                                                 </table>
                                             </p>
                                         </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-md-4">
+                                        <div class="col-sm-6 col-md-3">
                                             <div class="thumbnail">
-                                                Ticket Details
+                                                Ticket Departure Details
                                         <div class="caption">
                                             <h3>Detail</h3>
                                             <p class="card-description">
-                                                <table class="table" style="text-align: left;">
-                                                    <tr>
+                                                <table class="table" style="text-align: left;" id="confirm_show_departure">
+                                                    <!--<tr>
                                                         <td colspan="2">Departure Flight</td>
                                                     </tr>
                                                     <tr>
@@ -576,10 +576,21 @@
                                                     <tr>
                                                         <td>Departure date:</td>
                                                         <td>15/10/2016</td>
-                                                    </tr>
+                                                    </tr>-->
                                                 </table>
-                                                <table class="table" style="text-align: left;">
-                                                    <tr>
+                                                
+                                            </p>
+                                        </div>
+                                            </div>
+                                        </div>
+                                         <div class="col-sm-6 col-md-3">
+                                            <div class="thumbnail">
+                                                Ticket Return Details
+                                        <div class="caption">
+                                            <h3>Detail</h3>
+                                            <p class="card-description">
+                                                <table class="table" style="text-align: left;" id="confirm_show_return">
+                                                    <!--<tr>
                                                         <td colspan="2">Return Flight</td>
                                                     </tr>
                                                     <tr>
@@ -593,13 +604,14 @@
                                                     <tr>
                                                         <td>Return date:</td>
                                                         <td>20/10/2016</td>
-                                                    </tr>
+                                                    </tr>-->
                                                 </table>
+                                                
                                             </p>
                                         </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-6 col-md-4">
+                                        <div class="col-sm-6 col-md-3">
                                             <div class="thumbnail">
                                                 Passengers Information
                                         <div class="caption">
@@ -608,19 +620,19 @@
                                                 <table class="table" style="text-align: left;">
                                                     <tr>
                                                         <td>Adults:</td>
-                                                        <td>1</td>
+                                                        <td id="confirm_show_adults">1</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Children:</td>
-                                                        <td>1</td>
+                                                        <td id="confirm_show_children">1</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Senior citizens:</td>
-                                                        <td>1</td>
+                                                        <td id="confirm_show_senior">1</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Total:</td>
-                                                        <td>100000</td>
+                                                        <td id="confirm_show_total">100000</td>
                                                     </tr>
                                                 </table>
                                             </p>

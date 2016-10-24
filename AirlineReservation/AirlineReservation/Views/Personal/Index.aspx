@@ -150,21 +150,16 @@
     </div>
     <div class="container" id="formLog" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
         <h2>Your Log ticket</h2>
-        <div class="row">
-            <div class="col-md-2 vcenter">Ticket Code</div>
-            <div class="col-md-2 vcenter">From</div>
-            <div class="col-md-2 vcenter">To</div>
-            <div class="col-md-2 vcenter">Booking Date</div>
-            <div class="col-md-2 vcenter">Status</div>
-        </div>
-        <div class="flight-result">
+        <div class="container" style="height: 300px; display: block; overflow-y: scroll; overflow-x: hidden;">
             <div class="row">
-                <div class="col-md-2 vcenter">T0001</div>
-                <div class="col-md-2 vcenter">Hanoi</div>
-                <div class="col-md-2 vcenter">Hue</div>
-                <div class="col-md-2 vcenter">2016/02/02</div>
-                <div class="col-md-2 vcenter">Done</div>
+                <div class="col-md-2 vcenter">Ticket No</div>
+                <div class="col-md-2 vcenter">Original City</div>
+                <div class="col-md-2 vcenter">Destination City</div>
+                <div class="col-md-2 vcenter">Created Date</div>
+                <div class="col-md-2 vcenter">Price</div>
+                <div class="col-md-2 vcenter">Status</div>
             </div>
+            <div id="TicketList" style="display:none"></div>
         </div>
     </div>
 </asp:Content>

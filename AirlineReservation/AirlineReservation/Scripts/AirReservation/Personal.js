@@ -35,6 +35,7 @@ function changePage(mode) {
             if ($("#float-button-group").css('display') == 'none') {
                 console.log("aaa"); $("#float-button-group").show("slide")
             };
+            initAllPersonalTicket();
             $("#formLog").show("slide");
             break;
         default:
@@ -42,6 +43,50 @@ function changePage(mode) {
             $("#card-row-index").show("slide");
             break;
     }
+}
+
+function initAllPersonalTicket() {
+    $.ajax({
+        url: 'Personal/SearchAllTicketByUserId',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            console.log(result);
+            if (result.length == 0) {
+                swal("Not found", "This ticket does not exists, please try again!", "error");
+                return false;
+            }
+            $("#TicketList").html("");
+            var html = "";
+            $.each(result, function (k) {
+                html += '<div class="flight-result">';
+                html += '<div class="row">';
+                html += '<div class="col-md-2 vcenter">' + result[k]['TicketNo'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + result[k]['Original'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + result[k]['Destination'] + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToJavaScriptDate(result[k]['CreatedDate']) + '</div>';
+                html += '<div class="col-md-2 vcenter">' + ToCurrencyFormat(result[k]['Price']) + '</div>';
+                if (result[k]['Status'] == "Confirmed") {
+                    var status = result[k]['Status'] + '<button class="btn btn-primary" onclick="reschedule(\'' + result[k]["TicketNo"] + '\')">Reschedule</button>';
+                } else {
+                    var status = result[k]['Status'];
+                }
+                html += '<div class="col-md-2 vcenter">' + status + '</div>';
+                html += '</div>';
+                html += '</div>';
+            })
+            $("#TicketList").html(html);
+            $("#TicketList").slideDown();
+        }
+    });
+}
+
+function reschedule(ticketNo) {
+    window.location.href = "../Home?Reschedule=" + ticketNo;
 }
 
 function initPersonalInfor() {

@@ -1,4 +1,65 @@
-﻿//------------------------------------STEP 1------------------------------------------
+﻿//------------------------------------RESCHEDULE------------------------------------------
+$(document).ready(function () {
+    if (getQueryParam("Reschedule") != "Reschedule") {
+        var obj = {
+            'TicketNo': getQueryParam("Reschedule"),
+        };
+        setTimeout(function () {
+            $.ajax({
+                url: 'Flight/SearchTicketById',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                error: function (data) {
+                    swal("Error", data.responseText, "error");
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.length == 0) {
+                        swal("Not found", "This Ticket does not exists, please try again!", "error");
+                        return false;
+                    }
+                    var fromLocations = $('#fromLocation');
+                    var toLocations = $('#toLocation');
+
+                    $("#fromLocation option[value='" + result[0]["OriginalCityID"] + "']").prop('selected', true);
+                    $('#fromLocation').val(result[0]["OriginalCityID"]);
+                    GetCityList(toLocations, fromLocations.val());
+
+                    setTimeout(function () {
+                        $("#toLocation option[value='" + result[0]["DestinationCityID"] + "']").prop('selected', true);
+                        $('#toLocation').val(result[0]["DestinationCityID"]);
+                        GetPossibleFlightSchedule();
+                    }, 200);
+                    
+                    if (result[0]["IsReturning"] == "1") {
+                        $("#optFlightReturn").prop("checked", true);
+                        $("#returnDateForm").show("slow");
+                        $("#lblReturnClass").show("slow");
+                        $("#returnClass").show("slow");
+                    }
+                    $("#adultsNo").val(result[0]["NumberOfAdults"]);
+                    $("#childrenNo").val(result[0]["NumberOfChildren"]);
+                    $("#elderNo").val(result[0]["NumberOfSeniorCitizens"]);
+                }
+            });
+        }, 2000);
+        
+    }
+});
+
+function getQueryParam(param) {
+    location.search.substr(1)
+        .split("&")
+        .some(function(item) { // returns first occurence and stops
+            return item.split("=")[0] == param && (param = item.split("=")[1])
+        })
+    return param
+}
+//------------------------------------END------------------------------------------
+
+//------------------------------------STEP 1------------------------------------------
 var _selectedRoute;//[{<CityID>,<CityName>},{...},...{...}]
 
 //Get the shortest possible schedule for a route
@@ -396,8 +457,8 @@ function GetFlights() {
                         html += '<div class="col-md-2 vcenter">' + item['Departure'] + '</div>';
                         html += '<div class="col-md-2 vcenter">' + item['Arrival'] + '</div>';
                         html += '<div class="col-md-2 vcenter">' + item['Duration'] + '</div>';
-                        html += '<div class="col-md-1 vcenter">' + currencyFormat(item['Price']) + '</div>';
-                        html += '<div class="col-md-1">';
+                        html += '<div class="col-md-2 vcenter">' + currencyFormat(item['Price']) + '</div>';
+                        html += '<div class="col-md-2">';
                         html += '<input  name="optReturningFlight_' + i + '" class="flight-select" price="' + item['Price'] + '" onclick="CheckSelectedFlights()" type="radio" returning="1" sequence="' + i + '" value="' + item['FlightNumber'] + '"/>';
                         html += '</div>';
                         html += '</div>';
@@ -764,9 +825,89 @@ function SubmitStep4() {
     //Fixed bug cannot move to next step by automatic
     //$("#step-4").hide('slide');
     //$("#step-5").show('slide');
+    initStep5();
 }
 
 //-----------------------STEP 5---------------------------------------------
+function initStep5() {
+    $.ajax({
+        url: 'Home/GetCurrentUserInformation',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            $("#confirm_show_firstname").html(result['FirstName']);
+            $("#confirm_show_lastname").html(result['LastName']);
+            $("#confirm_show_email").html(result['Email']);
+            $("#confirm_show_phone").html(result['PhoneNumber']);
+            $("#confirm_show_gender").html(result['Sex'] == true ? "Male" : "Female");
+            $("#confirm_show_dob").html(ToJavaScriptDate(result['DateOfBirth']));
+            $("#confirm_show_creditcard").html(result['CreditcardNumber']);
+
+            $("#confirm_show_adults").html(_passengers[0]);
+            $("#confirm_show_children").html(_passengers[1]);
+            $("#confirm_show_senior").html(_passengers[2]);
+            $("#confirm_show_total").html($("#step3-grand-total-price").html());
+
+            $("#confirm_show_departure").html();
+            $("#confirm_show_return").html();
+            
+            console.log(_selectedFlights);
+            $.each(_selectedFlights, function (key, value) {
+                console.log(value['IsReturning'])
+                if (value['IsReturning'] == true) {
+                    var html = "";
+                    var obj = {
+                        'FlightNo': value['FlightNumber'],
+                    };
+                    $.ajax({
+                        url: 'Flight/SearchFlightById',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        type: 'POST',
+                        data: JSON.stringify(obj),
+                        error: function (data) {
+                            swal("Error", data.responseText, "error");
+                        },
+                        success: function (result) {
+                            html += '<tr><td colspan="2">Return Flight</td></tr>';
+                            html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
+                            html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
+                            html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
+                            $("#confirm_show_return").append(html);
+                        }
+                    });
+                } else {
+                    var html = "";
+                    var obj = {
+                        'FlightNo': value['FlightNumber'],
+                    };
+                    $.ajax({
+                        url: 'Flight/SearchFlightById',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        type: 'POST',
+                        data: JSON.stringify(obj),
+                        error: function (data) {
+                            swal("Error", data.responseText, "error");
+                        },
+                        success: function (result) {
+                            html += '<tr><td colspan="2">Departure Flight</td></tr>';
+                            html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
+                            html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
+                            html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
+                             $("#confirm_show_departure").append(html);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
 function BlockTicket() {
     swal({
         title: "Are you sure?", text: "Do you really want to block this ticket?", type: "warning", showCancelButton: true,
@@ -821,4 +962,19 @@ function BuyTicket() {
                 }
             });
         });
+}
+
+
+function ToJavaScriptDate(value) {
+    var pattern = /Date\(([^)]+)\)/;
+    var results = pattern.exec(value);
+    var dt = new Date(parseFloat(results[1]));
+    return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1);
+}
+
+function ToJavaScriptDateWithHM(value) {
+    var pattern = /Date\(([^)]+)\)/;
+    var results = pattern.exec(value);
+    var dt = new Date(parseFloat(results[1]));
+    return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1 + " " + dt.getHours() + ":" + dt.getMinutes());
 }
