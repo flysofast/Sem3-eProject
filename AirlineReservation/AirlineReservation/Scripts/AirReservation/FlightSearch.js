@@ -876,7 +876,7 @@ function initStep5() {
                             html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
                             html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
                             html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
-                            $("#confirm_show_return").append(html);
+                            $("#confirm_show_return").html(html);
                         }
                     });
                 } else {
@@ -898,7 +898,7 @@ function initStep5() {
                             html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
                             html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
                             html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
-                            $("#confirm_show_departure").append(html);
+                            $("#confirm_show_departure").html(html);
                         }
                     });
                 }
@@ -964,12 +964,12 @@ function BuyTicket() {
                     swal("Error", data.responseText, "error");
                 },
                 success: function (result) {
-                    swal({ 
+                    swal({
                         title: "You have successfully purchased the ticket!",
                         text: "Confirmation number: " + result,
-                        type: "success" 
+                        type: "success"
                     },
-                      function(){
+                      function () {
                           window.location.href = 'Home/Thanks';
                       })
                 }
