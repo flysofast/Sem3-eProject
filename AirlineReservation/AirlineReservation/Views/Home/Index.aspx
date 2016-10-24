@@ -519,7 +519,7 @@
                                             <div class="thumbnail">
                                                 Customer Information
                                         <div class="caption">
-                                            <h3>Thai Bao Nguyen</h3>
+                                            <h3 id="confirm_show_fullname">Thai Bao Nguyen</h3>
                                             <p class="card-description">
                                                 <table class="table" style="text-align: left;">
                                                     <tr>
