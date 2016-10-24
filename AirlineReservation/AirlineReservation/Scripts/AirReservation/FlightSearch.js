@@ -839,6 +839,8 @@ function initStep5() {
             swal("Error", data.responseText, "error");
         },
         success: function (result) {
+            
+            $("#confirm_show_fullname").html(result['FirstName'] + " " + result['LastName']);
             $("#confirm_show_firstname").html(result['FirstName']);
             $("#confirm_show_lastname").html(result['LastName']);
             $("#confirm_show_email").html(result['Email']);

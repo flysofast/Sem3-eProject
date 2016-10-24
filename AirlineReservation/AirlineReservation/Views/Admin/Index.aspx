@@ -139,7 +139,7 @@
 
     <div class="container" id="formPersonalInformation" style="height: 600px; display: block; overflow-y: scroll; overflow-x: hidden;">
         <h2>Administrator list</h2>
-        <button type="button" class="btn btn-primary" onclick="addAdministrator()">Add Administrator</button>
+        <button type="button" class="btn btn-primary" onclick="addAdministrator()" style="margin: 10px;">Add Administrator</button>
         <div class="row">
             <div class="col-md-2 vcenter">UserID</div>
             <div class="col-md-2 vcenter">First Name</div>
