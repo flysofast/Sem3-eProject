@@ -569,8 +569,12 @@ function loginValidation(form) {
             'Password': $("#step4-login-password").val()
         };
     }
+    var url = window.location.href;
+    var arr = url.split("/");
+    var baseURL = arr[0] + "//" + arr[2];
+
     $.ajax({
-        url: 'Home/LoginValidation',
+        url: baseURL + '/Home/LoginValidation',
         contentType: "application/json; charset=utf-8",
         dataType: 'json',
         type: 'POST',

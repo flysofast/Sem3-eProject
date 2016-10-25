@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 <script src="../../Scripts/AirReservation/Ticket.js"></script>
+    <script src="../../Scripts/AirReservation/FlightSearch.js"></script>
 <script>
     $(window).load(function () {
         setTimeout(function () {
