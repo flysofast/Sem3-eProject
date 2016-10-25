@@ -557,7 +557,7 @@
                                         </div>
                                         <div class="col-sm-6 col-md-3">
                                             <div class="thumbnail">
-                                                Ticket Departure Details
+                                                Departure Flights Details
                                         <div class="caption">
                                             <h3>Detail</h3>
                                             <p class="card-description">
@@ -585,7 +585,7 @@
                                         </div>
                                          <div class="col-sm-6 col-md-3">
                                             <div class="thumbnail">
-                                                Ticket Return Details
+                                                Returning flights details
                                         <div class="caption">
                                             <h3>Detail</h3>
                                             <p class="card-description">

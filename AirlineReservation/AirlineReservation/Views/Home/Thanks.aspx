@@ -9,9 +9,11 @@
             }, 1000); // set the time here
         });
     </script>
-    <div class="container" style="width: 100%">
+    <div class="container" style="width: 100%; text-align: center">
         <h2 style="font-weight: bolder;">ONLINE TICKET RESERVATION SYSTEM</h2>
         <h3>Thank you for travelling with us</h3>
+        <br />
+        <a href="/" class="btn btn-primary">Back to homepage</a>
     </div>
 </asp:Content>
 

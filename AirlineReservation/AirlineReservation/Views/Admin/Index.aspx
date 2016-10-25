@@ -96,43 +96,53 @@
         <h2>Seat list</h2>
         <div class="row">
             <div class="col-md-2 vcenter">Class Type</div>
-            <div class="col-md-9 vcenter">Seats List</div>
+            <div class="col-md-9 vcenter">Seat List</div>
             <div class="col-md-1 vcenter"></div>
         </div>
         <!-- Result -->
         <div class="flight-result">
             <div class="row">
                 <div class="col-md-2 vcenter">Business class</div>
-                <div class="col-md-9 vcenter" id="seat_business_class">Club class</div>
-                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('business')">Choose Seat</button></div>
+                <div class="col-md-7 vcenter" id="seat_business_class">Club class</div>
+                <div class="col-md-3 vcenter">
+                    <button class="btn btn-primary" onclick="selectSeatWithClass('business')">Choose Seat</button>
+                </div>
             </div>
         </div>
         <div class="flight-result">
             <div class="row">
                 <div class="col-md-2 vcenter">Club class</div>
-                <div class="col-md-9 vcenter" id="seat_club_class"></div>
-                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('club')">Choose Seat</button></div>
+                <div class="col-md-7 vcenter" id="seat_club_class"></div>
+                <div class="col-md-3 vcenter">
+                    <button class="btn btn-primary" onclick="selectSeatWithClass('club')">Choose Seat</button>
+                </div>
             </div>
         </div>
         <div class="flight-result">
             <div class="row">
                 <div class="col-md-2 vcenter">First class</div>
-                <div class="col-md-9 vcenter" id="seat_first_class"></div>
-                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('first')">Choose Seat</button></div>
+                <div class="col-md-7 vcenter" id="seat_first_class"></div>
+                <div class="col-md-3 vcenter">
+                    <button class="btn btn-primary" onclick="selectSeatWithClass('first')">Choose Seat</button>
+                </div>
             </div>
         </div>
         <div class="flight-result">
             <div class="row">
                 <div class="col-md-2 vcenter">Non-smoking class</div>
-                <div class="col-md-9 vcenter" id="seat_non_smoking_class"></div>
-                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('non_smoking')">Choose Seat</button></div>
+                <div class="col-md-7 vcenter" id="seat_non_smoking_class"></div>
+                <div class="col-md-3 vcenter">
+                    <button class="btn btn-primary" onclick="selectSeatWithClass('non_smoking')">Choose Seat</button>
+                </div>
             </div>
         </div>
         <div class="flight-result">
             <div class="row">
                 <div class="col-md-2 vcenter">Smoking class</div>
-                <div class="col-md-9 vcenter" id="seat_smoking_class"></div>
-                <div class="col-md-1 vcenter"><button onclick="selectSeatWithClass('smoking')">Choose Seat</button></div>
+                <div class="col-md-7 vcenter" id="seat_smoking_class"></div>
+                <div class="col-md-3 vcenter">
+                    <button class="btn btn-primary" onclick="selectSeatWithClass('smoking')">Choose Seat</button>
+                </div>
             </div>
         </div>
     </div>
@@ -242,7 +252,8 @@
                 <div class="form-group row">
                     <label for="example-search-input" class="col-xs-3 col-form-label">In Service</label>
                     <div class="col-xs-7">
-                         <label><input type="checkbox" id="admin-city-register-inservice" /></label>
+                        <label>
+                            <input type="checkbox" id="admin-city-register-inservice" /></label>
                     </div>
                 </div>
             </div>
@@ -250,7 +261,7 @@
                 <div class="form-group row">
                     <label for="example-search-input" class="col-xs-3 col-form-label">Route ID</label>
                     <div class="col-xs-7">
-                        <input class="form-control" type="number" id="admin-route-register-routeID" disabled/>
+                        <input class="form-control" type="number" id="admin-route-register-routeID" disabled />
                     </div>
                 </div>
 
@@ -277,12 +288,13 @@
                 <div class="form-group row">
                     <label for="example-search-input" class="col-xs-3 col-form-label">In Service</label>
                     <div class="col-xs-7">
-                         <label><input type="checkbox" id="admin-route-register-inservice" /></label>
+                        <label>
+                            <input type="checkbox" id="admin-route-register-inservice" /></label>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-6">
                 <a href="#" class="btn btn-primary btn-md" onclick="createCity()">Create new</a>
@@ -294,7 +306,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top:10px">
+        <div class="row" style="margin-top: 10px">
             <div class="col-md-6">
                 <div style="height: 240px; display: block; overflow-y: scroll; overflow-x: hidden;">
                     <div class="row">
@@ -302,8 +314,8 @@
                         <div class="col-md-3 vcenter">City Name</div>
                         <div class="col-md-3 vcenter">In service</div>
                         <div class="col-md-3 vcenter"></div>
-                    </div>        
-                    <div id="cityList"></div>       
+                    </div>
+                    <div id="cityList"></div>
                 </div>
             </div>
             <div class="col-md-6">
@@ -316,7 +328,7 @@
                         <div class="col-md-2 vcenter">In service</div>
                         <div class="col-md-2 vcenter"></div>
                     </div>
-                    <div id="routeList"></div>   
+                    <div id="routeList"></div>
                 </div>
             </div>
         </div>

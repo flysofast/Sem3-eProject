@@ -31,6 +31,8 @@ internal class Dijkstra
         label = new int[cities.Count];
         length = new double[cities.Count];
         prev = new int[cities.Count];
+
+        //Route matrix
         mat = new double[cities.Count, cities.Count];
 
         for (int i = 0; i < cities.Count; i++)
@@ -164,18 +166,10 @@ internal class Dijkstra
             while (k != firstVer)
             {
                 result.Add(cities[k]);
-                //Console.Write(cities[k].CityID + "<------------");
-                //fo << (k + 1) << " <--- ";
-                // Tìm ngược lại bằng mảng prev lưu đỉnh trước đó
                 k = prev[k];
             }
-            //Console.Write(cities[firstVer].CityID);
             result.Add(cities[firstVer]);
             result.Reverse();
-            //foreach (var item in result)
-            //{
-            //    Console.WriteLine(item.CityID);
-            //}
         }
 
         return result;

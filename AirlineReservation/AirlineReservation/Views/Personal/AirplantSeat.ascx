@@ -90,6 +90,7 @@
         }
 
         .row {
+            margin:20px;
         }
 
         .seats {
@@ -270,7 +271,7 @@
     </style>
 </head>
 <body>
-    <div class="plane">
+    <div class="plane" style="text-align:center">
         <div class="cockpit">
             <h1>Please select a seat</h1>
         </div>
@@ -530,15 +531,14 @@
                 </ol>
             </li>
         </ol>
-        <button id="mainStep" onclick="post_value()">Submit</button>
-        <button id="adminPage" onclick="saveSeatValue()" style="display: none">Submit</button>
+        <button id="mainStep" onclick="post_value()" style="display:none">Submit</button>
+        <button id="adminPage" class="btn btn-success" onclick="saveSeatValue()" style="display: none">Submit</button>
     </div>
     <script src="../../Scripts/jquery-2.0.0.min.js"></script>
     <script>
         $(document).ready(function () {
             var classType = getGetVariable('ClassType');
             if (classType != "") {
-                $("#mainStep").hide();
                 $("#adminPage").show();
                 var className = "";
                 switch (classType) {
