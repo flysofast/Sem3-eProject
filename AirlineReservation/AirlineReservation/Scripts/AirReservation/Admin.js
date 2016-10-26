@@ -2,6 +2,9 @@
     hideAllDiv();
 })
 
+/**
+ * Hide all form
+ */
 function hideAllDiv() {
     //$("#float-button-group").hide("fast");
     $("#formPersonalInformation").hide("fast");
@@ -9,6 +12,11 @@ function hideAllDiv() {
     $("#formLog").hide("fast");
     $("#formSeatInformation").hide("fast");
 }
+
+/**
+ * Change page, hide every page and show suitable div
+ * @param {mode}
+ */
 function changePage(mode) {
     //$("#float-button-group").show();
     switch (mode) {
@@ -57,6 +65,10 @@ function changePage(mode) {
             break;
     }
 }
+
+/**
+ * Initial all seat of class
+ */
 function initSeatOfClass() {
     $.ajax({
         url: 'Admin/GetAllSeat',
@@ -95,11 +107,13 @@ function initSeatOfClass() {
             $("#seat_first_class").html($("#seat_first_class").html().slice(0, -1));
             $("#seat_non_smoking_class").html($("#seat_non_smoking_class").html().slice(0, -1));
             $("#seat_smoking_class").html($("#seat_smoking_class").html().slice(0, -1));
-            
         }
     });
 }
 
+/**
+ * Initial city and set it into original city and destination city select box
+ */
 function initCityOption() {
     $.ajax({
         url: 'Admin/GetAllCity',
@@ -114,7 +128,7 @@ function initCityOption() {
             $("#admin-route-register-destinatecity").html();
             var html = "";
             $.each(result, function (k, item) {
-                html += '<option value=\'' + item['CityID'] + '\'>' + item['CityName'] + '</option>';                
+                html += '<option value=\'' + item['CityID'] + '\'>' + item['CityName'] + '</option>';
             });
             $("#admin-route-register-originalcity").html(html);
             $("#admin-route-register-destinatecity").html(html);
@@ -122,6 +136,10 @@ function initCityOption() {
     });
 }
 
+/**
+ * Create city
+ * @return result
+ */
 function createCity() {
     var cityID = $("#admin-city-register-id").val();
     var cityName = $("#admin-city-register-name").val();
@@ -156,6 +174,10 @@ function createCity() {
     });
 }
 
+/**
+ * Create Route
+ * @return result
+ */
 function createRoute() {
     //var routeID = $("#admin-route-register-routeID").val();
     var originalCity = $("#admin-route-register-originalcity").val();
@@ -202,6 +224,9 @@ function createRoute() {
     });
 }
 
+/**
+ * Initial city List
+ */
 function initCityList() {
     $.ajax({
         url: 'Admin/GetAllCity',
@@ -226,9 +251,13 @@ function initCityList() {
             });
             $("#cityList").html(html);
         }
-    });    
+    });
 }
 
+/**
+ * Edit city, initial value of city to edit form
+ * @param {Number} cityID
+ */
 function editCity(cityID) {
     //Init value to update
     $("#updateCityBtn").show();
@@ -255,6 +284,10 @@ function editCity(cityID) {
     //End
 }
 
+/**
+ * Edit city
+ * @return result
+ */
 function updateCity() {
     var cityID = $("#admin-city-register-id-hidden").val();
     var cityName = $("#admin-city-register-name").val();
@@ -289,6 +322,10 @@ function updateCity() {
     });
 }
 
+/**
+ * Edit route, initial value of route to edit form
+ * @param {Number} routeID
+ */
 function editRoute(routeID) {
     //Init value to update
     $("#updateRouteBtn").show();
@@ -316,6 +353,10 @@ function editRoute(routeID) {
     //End
 }
 
+/**
+ * Edit route
+ * @return result
+ */
 function updateRoute() {
     var routeID = $("#admin-route-register-routeID").val();
     var originalCity = $("#admin-route-register-originalcity").val();
@@ -337,7 +378,7 @@ function updateRoute() {
         return false;
     }
     var obj = {
-        'RouteID' : routeID,
+        'RouteID': routeID,
         'OriginalCityID': originalCity,
         'DestinateCityID': destinationCity,
         'Distance': distance,
@@ -363,6 +404,9 @@ function updateRoute() {
     });
 }
 
+/**
+ * Initial all route
+ */
 function initRouteList() {
     $.ajax({
         url: 'Admin/GetAllRoute',
@@ -390,9 +434,12 @@ function initRouteList() {
             });
             $("#routeList").html(html);
         }
-    });    
+    });
 }
 
+/**
+ * Initial flight route and set it into route select box
+ */
 function initRouteFlighOption() {
     $.ajax({
         url: 'Admin/GetAllRoute',
@@ -413,6 +460,9 @@ function initRouteFlighOption() {
     });
 }
 
+/**
+ * Initial flight list
+ */
 function initFlightList() {
     $.ajax({
         url: 'Admin/GetAllFlight',
@@ -443,6 +493,11 @@ function initFlightList() {
         }
     });
 }
+
+/**
+ * Edit Flight, initial value of flight to edit form
+ * @param {String} flightNo
+ */
 function editFlight(flightNo) {
     //Init value to update
     $("#updateFlightBtn").show();
@@ -471,6 +526,10 @@ function editFlight(flightNo) {
     //End
 }
 
+/**
+ * Edit Flight
+ * @return result
+ */
 function updateFlight() {
     var flightNo = $("#admin-flight-register-flightNo-choose").val();
     var price = $("#admin-flight-register-price").val();
@@ -510,6 +569,9 @@ function updateFlight() {
     });
 }
 
+/**
+ * Initial Administrator List
+ */
 function initAdministratorList() {
     $.ajax({
         url: 'Admin/GetAdministratorList',
@@ -541,6 +603,12 @@ function initAdministratorList() {
         }
     });
 }
+
+/**
+ * Remove user administrator role
+ * @param {String} userID
+ * @return result
+ */
 function removeAdmin(userID) {
     var obj = {
         'UserID': userID,
@@ -566,6 +634,10 @@ function removeAdmin(userID) {
     });
 }
 
+/**
+ * Add user administrator role
+ * @return result
+ */
 function addAdmin(userID) {
     var obj = {
         'UserID': userID,
@@ -592,23 +664,41 @@ function addAdmin(userID) {
     });
 }
 
+/**
+ * Convert Date time format from sql to text
+ * @param {String} value
+ * @return {string} yyyy-mm-dd hh:ii
+ */
 function ToJavaScriptDate(value) {
     var pattern = /Date\(([^)]+)\)/;
     var results = pattern.exec(value);
     var dt = new Date(parseFloat(results[1]));
-    return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1 + " " + dt.getHours()+":"+dt.getMinutes());
+    return dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + (dt.getDate() + 1 + " " + dt.getHours() + ":" + dt.getMinutes());
 }
 
+/**
+ * Convert Date time format from sql to hour: minute
+ * @param {String} value
+ * @return {string} hh h ii m
+ */
 function ToTimeFormat(value) {
     var hours = Math.floor(value);
     var minutes = Math.floor((value - hours) * 60);
     return hours + "h " + minutes + "m";
 }
 
+/**
+ * Convert number to Vietnamese currency
+ * @param {String} value
+ * @return {string} s VND
+ */
 function ToCurrencyFormat(number) {
     return number.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND";
 }
 
+/**
+ * Initial all normal user and show model box
+ */
 function addAdministrator() {
     $.ajax({
         url: 'Admin/GetNormalUserList',
@@ -643,6 +733,10 @@ function addAdministrator() {
     $('#userListModalBox').modal('show');
 }
 
+/**
+ * Create new Flight
+ * @return result
+ */
 function createFlight() {
     var flightNo = $("#admin-flight-register-flightNo").val();
     var price = $("#admin-flight-register-price").val();
