@@ -167,7 +167,7 @@ namespace AirlineReservation.Controllers
                                 p => p.Flight.RouteID,
                                 r => r.RouteID,
                                 (p, r) => new { p.Ticket, p.Ticket_Flight, Flight = p, Route = r }
-                                )
+                                ).Where(p => p.Flight.Flight.DepartureTime > DateTime.Now)
                                 .Join(db.Cities,
                                 r => r.Route.OriginalCityID,
                                 c => c.CityID,
