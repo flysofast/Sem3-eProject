@@ -45,7 +45,14 @@
 
                 <div class="col-xs-12">
                     <div class="col-md-12">
+                        <% if (Session[Constants.SessionRescheduledTicketKey] == null)
+                            {%>
                         <h3 style="font-weight: bold;">Flight scheduler</h3>
+                        <%}
+                            else
+                            { %>
+                        <h3 style="font-weight: bold;"><span style="background-color: red">Reschedule</span></h3>
+                        <%} %>
                         <div class="row" style="padding-top: 34px">
                             <div class="col-xs-6 col-md-4">
                                 <div class="form-group">
@@ -578,12 +585,11 @@
                                                         <td>15/10/2016</td>
                                                     </tr>-->
                                                 </table>
-                                                
                                             </p>
                                         </div>
                                             </div>
                                         </div>
-                                         <div class="col-sm-6 col-md-3">
+                                        <div class="col-sm-6 col-md-3">
                                             <div class="thumbnail">
                                                 Returning flights details
                                         <div class="caption">
@@ -606,7 +612,6 @@
                                                         <td>20/10/2016</td>
                                                     </tr>-->
                                                 </table>
-                                                
                                             </p>
                                         </div>
                                             </div>
@@ -643,9 +648,17 @@
                                 </div>
                             </div>
                         </div>
+                        <%if (Session[Constants.SessionRescheduledTicketKey] == null)
+                            { %>
                         <button style="width: 200px" class="btn btn-success nextBtn btn-lg pull-right" type="button" onclick="BuyTicket()">Buy</button>
                         <div style="width: 20px; height: 1px" class="pull-right"></div>
+
                         <button style="width: 200px" class="btn btn-danger nextBtn btn-lg pull-right" onclick="BlockTicket()" type="button">Block (Free)</button>
+                        <%}
+                            else
+                            { %>
+                        <button style="width: 200px" class="btn btn-primary nextBtn btn-lg pull-right" type="button" onclick="Reschedule()">Reschedule</button>
+                        <%} %>
                     </div>
                 </div>
             </div>

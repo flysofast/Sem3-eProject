@@ -22,10 +22,10 @@ $(document).ready(function () {
                     }
                     var fromLocations = $('#fromLocation');
                     var toLocations = $('#toLocation');
+                    GetCityList(toLocations, fromLocations.val());
 
                     $("#fromLocation option[value='" + result[0]["OriginalCityID"] + "']").prop('selected', true);
                     $('#fromLocation').val(result[0]["OriginalCityID"]);
-                    GetCityList(toLocations, fromLocations.val());
 
                     setTimeout(function () {
                         $("#toLocation option[value='" + result[0]["DestinationCityID"] + "']").prop('selected', true);
@@ -980,6 +980,43 @@ function BuyTicket() {
             });
         });
 }
+
+function Reschedule() {
+    swal({
+        title: "Are you sure?", text: "Do you really want to reschedule this ticket? You may have to pay more in addition", type: "warning", showCancelButton: true,
+        confirmButtonColor: "#DD6B55", confirmButtonText: "Yes", closeOnConfirm: false
+    },
+        function () {
+            var obj = {
+                SelectedFlights: _selectedFlights,
+                Classes: _classes,
+                Passengers: _passengers,
+                RequestType: 4 //Reschedule command code
+            }
+            $.ajax({
+                url: 'Home/BookTicketAPI',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                type: 'POST',
+                data: JSON.stringify(obj),
+                error: function (data) {
+                    swal("Error", data.responseText, "error");
+                },
+                success: function (result) {
+                    swal({
+                        title: "You have successfully rescheduled the ticket!",
+                        text: "Confirmation number: " + result,
+                        type: "success"
+                    },
+                      function () {
+                          window.location.href = 'Home/Thanks';
+                      })
+                }
+            });
+        });
+}
+
+//----------------------------------------END STEP 5-------------------------------------------------
 
 function ToJavaScriptDate(value) {
     var pattern = /Date\(([^)]+)\)/;

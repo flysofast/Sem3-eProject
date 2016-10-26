@@ -15,6 +15,7 @@ namespace AirlineReservation.Controllers
 
         public ActionResult Index()
         {
+            Session[Constants.SessionRescheduledTicketKey] = Request.QueryString["Reschedule"];
             return View();
         }
 
@@ -361,7 +362,7 @@ namespace AirlineReservation.Controllers
 
         public JsonResult GetCurrentUserInformation()
         {
-            var UserID = Session[Constants.SessionUserIDKey];
+            var UserID = (string)Session[Constants.SessionUserIDKey];
             var data = db.Users.Select(p => new
             {
                 p.CreditcardNumber,
@@ -406,17 +407,41 @@ namespace AirlineReservation.Controllers
 
                     var fsu = FlightScheduleUtilities.GetSharedInstance();
 
-                    if (RequestType == TicketStatus.Confirmed)
+                    Ticket result;
+                    switch (RequestType)
                     {
-                        var result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Confirmed);
+                        case TicketStatus.Confirmed:
+                            result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Confirmed);
 
-                        return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        var result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
+                            return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
 
-                        return Json(result.BlockNo.ToString(), JsonRequestBehavior.AllowGet);
+                        case TicketStatus.Blocked:
+                            result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
+
+                            return Json(result.BlockNo.ToString(), JsonRequestBehavior.AllowGet);
+
+                        case TicketStatus.Rescheduled:
+                            //Cancel the old ticket
+                            int ticketNumber;
+                            if (int.TryParse((string)Session[Constants.SessionRescheduledTicketKey], out ticketNumber))
+                            {
+                                var ticket = db.Tickets.Single(p => p.TicketNo == ticketNumber);
+                                ticket.CancellationNo = RequestType.ToString("D2") + ticket.TicketNo.ToString();
+                                ticket.Status = TicketStatus.Cancelled;
+                                db.SaveChanges();
+
+                                //Create new ticket
+                                result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total - ticket.Price, TicketStatus.Confirmed);
+
+                                return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+                                throw new Exception("The number of the ticket being rescheduled is not valid");
+                            }
+
+                        default:
+                            throw new Exception("Request type is invalid");
                     }
                 }
             }
