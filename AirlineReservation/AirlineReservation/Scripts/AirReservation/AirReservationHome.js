@@ -1,4 +1,6 @@
 ﻿$(document).ready(function () {
+    //Help Page init
+    //document.body.style.zoom = "90%"
     //Set default hide return date
     $("#returnDateForm").hide();
     $("#lblReturnClass").hide();
@@ -19,6 +21,13 @@
     $("#aboutUsPage").hide();
     $("#registerFormMain").hide();
     $("#forgotPasswordFormMain").hide();
+
+    $('.btn-eclipse').click(function () {
+        $(".btn-eclipse").each(function (index) {
+            $(this).removeClass('active');
+        });
+        $(this).toggleClass('active');
+    });
 });
 
 function formMain(mode) {
@@ -51,5 +60,13 @@ function aboutUs() {
         $("#aboutUsPage").slideUp("slow");
     } else {
         $("#aboutUsPage").slideDown("slow");
+    }
+}
+
+function helpPage() {
+    if ($("#helpPage").is(":visible")) {
+        $("#helpPage").slideUp("slow");
+    } else {
+        $("#helpPage").slideDown("slow");
     }
 }
