@@ -516,6 +516,41 @@ function initStep4() {
     });
 }
 
+function recoveryPassword() {
+    var emailRecovery = $("#recoveryEmailMain").val();
+    if (emailRecovery == "") {
+        swal("Error", "Please fill in your email", "error");
+        return false;
+    }
+    var obj = {
+        "Email": emailRecovery
+    };
+
+    $.ajax({
+        url: 'Home/RecoveryPassword',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(obj),
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                swal("Successfully!", "Your account password was reset to default password", "success");
+                $('#myModal').modal('toggle');
+            } else {
+                if (result == "-1") {
+                    swal("Error", "Your email is not found", "error");
+                }
+                if (result == "0") {
+                    swal("Error", "Cannot recovery", "error");
+                }
+            }
+        }
+    });
+}
+
 function loginValidation(form) {
     var flag = true;
     var error_msg = "";

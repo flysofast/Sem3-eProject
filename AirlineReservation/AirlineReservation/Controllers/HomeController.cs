@@ -273,6 +273,20 @@ namespace AirlineReservation.Controllers
             return Json(sSession, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult RecoveryPassword(string Email)
+        {
+            var data = db.Users.Where(p => p.Email == Email).FirstOrDefault();
+            try
+            {
+                data.Password = "123456";
+                return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
+            }
+            catch (NullReferenceException ex)
+            {
+                return Json("-1", JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public JsonResult isCurrentUserAdmin()
         {
             var sSession = Session[Constants.SessionIsAdminLogged];
