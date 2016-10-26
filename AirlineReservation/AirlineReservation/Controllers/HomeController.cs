@@ -15,6 +15,7 @@ namespace AirlineReservation.Controllers
 
         public ActionResult Index()
         {
+            Session[Constants.SessionRescheduledTicketKey] = Request.QueryString["Reschedule"];
             return View();
         }
 
@@ -273,6 +274,11 @@ namespace AirlineReservation.Controllers
             return Json(sSession, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Recover the password
+        /// </summary>
+        /// <param name="Email"></param>
+        /// <returns></returns>
         public JsonResult RecoveryPassword(string Email)
         {
             var data = db.Users.Where(p => p.Email == Email).FirstOrDefault();
@@ -287,6 +293,10 @@ namespace AirlineReservation.Controllers
             }
         }
 
+        /// <summary>
+        /// Check if the current logged in user is an admin
+        /// </summary>
+        /// <returns></returns>
         public JsonResult isCurrentUserAdmin()
         {
             var sSession = Session[Constants.SessionIsAdminLogged];
@@ -302,6 +312,12 @@ namespace AirlineReservation.Controllers
             //var sSession = (string)Session[Constants.SessionIsAdminLogged] ?? "false";
         }
 
+        /// <summary>
+        /// Login validation
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
         public JsonResult LoginValidation(string UserID, string Password)
         {
             try
@@ -328,6 +344,19 @@ namespace AirlineReservation.Controllers
             }
         }
 
+        /// <summary>
+        /// Create new user
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="Password"></param>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <param name="Email"></param>
+        /// <param name="Gender"></param>
+        /// <param name="Phone"></param>
+        /// <param name="DOB"></param>
+        /// <param name="CreditCard"></param>
+        /// <returns></returns>
         public JsonResult CreateNewUserValidation(string UserID, string Password, string FirstName, string LastName, string Email, bool Gender, string Phone, DateTime DOB, string CreditCard)
         {
             try
@@ -373,9 +402,13 @@ namespace AirlineReservation.Controllers
 
         #region Step 5
 
+        /// <summary>
+        /// Get current user information
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetCurrentUserInformation()
         {
-            var UserID = Session[Constants.SessionUserIDKey];
+            var UserID = (string)Session[Constants.SessionUserIDKey];
             var data = db.Users.Select(p => new
             {
                 p.CreditcardNumber,
@@ -391,6 +424,14 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Book a ticket
+        /// </summary>
+        /// <param name="SelectedFlights">List of flights</param>
+        /// <param name="Classes">Selected classes</param>
+        /// <param name="Passengers">Passenger configuration</param>
+        /// <param name="RequestType">Type of request (Confirm, block, reschedule)</param>
+        /// <returns></returns>
         public JsonResult BookTicketAPI(List<BookedFlightInfo> SelectedFlights, string[] Classes, int[] Passengers, int RequestType)
         {
             try
@@ -420,17 +461,41 @@ namespace AirlineReservation.Controllers
 
                     var fsu = FlightScheduleUtilities.GetSharedInstance();
 
-                    if (RequestType == TicketStatus.Confirmed)
+                    Ticket result;
+                    switch (RequestType)
                     {
-                        var result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Confirmed);
+                        case TicketStatus.Confirmed:
+                            result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Confirmed);
 
-                        return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        var result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
+                            return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
 
-                        return Json(result.BlockNo.ToString(), JsonRequestBehavior.AllowGet);
+                        case TicketStatus.Blocked:
+                            result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total, TicketStatus.Blocked);
+
+                            return Json(result.BlockNo.ToString(), JsonRequestBehavior.AllowGet);
+
+                        case TicketStatus.Rescheduled:
+                            //Cancel the old ticket
+                            int ticketNumber;
+                            if (int.TryParse((string)Session[Constants.SessionRescheduledTicketKey], out ticketNumber))
+                            {
+                                var ticket = db.Tickets.Single(p => p.TicketNo == ticketNumber);
+                                ticket.CancellationNo = RequestType.ToString("D2") + ticket.TicketNo.ToString();
+                                ticket.Status = TicketStatus.Cancelled;
+                                db.SaveChanges();
+
+                                //Create new ticket
+                                result = fsu.CreateTicket((string)UserID, SelectedFlights, Passengers, total - ticket.Price, TicketStatus.Confirmed);
+
+                                return Json(result.ConfirmationNo.ToString(), JsonRequestBehavior.AllowGet);
+                            }
+                            else
+                            {
+                                throw new Exception("The number of the ticket being rescheduled is not valid");
+                            }
+
+                        default:
+                            throw new Exception("Request type is invalid");
                     }
                 }
             }
@@ -444,6 +509,10 @@ namespace AirlineReservation.Controllers
 
         #endregion Step 5
 
+        /// <summary>
+        /// Show thank you page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Thanks()
         {
             return View();

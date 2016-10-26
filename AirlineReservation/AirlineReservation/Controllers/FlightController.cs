@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AirlineReservation.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using AirlineReservation.Models;
 
 namespace AirlineReservation.Controllers
 {
@@ -11,26 +11,33 @@ namespace AirlineReservation.Controllers
     {
         //
         // GET: /Ticket/
-        AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+        private AirlineReservationSystemEntities db = new AirlineReservationSystemEntities();
+
         public ActionResult Index()
         {
             return View();
         }
+
+        /// <summary>
+        /// Search for a flight by the flight number
+        /// </summary>
+        /// <param name="FlightNo"></param>
+        /// <returns></returns>
         public JsonResult SearchFlightById(string FlightNo)
         {
             var data = db.Flights.Join(db.Routes,
                                     f => f.RouteID,
                                     r => r.RouteID,
-                                    (f,r) => new { Route = r, Flight = f}
-                                ) .Join(db.Cities,
+                                    (f, r) => new { Route = r, Flight = f }
+                                ).Join(db.Cities,
                                 r => r.Route.OriginalCityID,
                                 c => c.CityID,
-                                (r, c) => new {r.Flight, Route = r, City = c }
+                                (r, c) => new { r.Flight, Route = r, City = c }
                                 )
                                 .Join(db.Cities,
                                 r => r.Route.Route.DestinationCityID,
                                 c2 => c2.CityID,
-                                (r, c2) => new {r.Flight, r.City, Route = r, City2 = c2 }
+                                (r, c2) => new { r.Flight, r.City, Route = r, City2 = c2 }
                                 ).Select(p => new
                                 {
                                     p.Flight.FlightNo,
@@ -44,6 +51,11 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Search for a ticket by its number
+        /// </summary>
+        /// <param name="TicketNo"></param>
+        /// <returns></returns>
         public JsonResult SearchTicketById(int TicketNo)
         {
             var data = db.Tickets.Join(db.Ticket_Flight,
@@ -63,12 +75,12 @@ namespace AirlineReservation.Controllers
                                 .Join(db.Cities,
                                 r => r.Route.OriginalCityID,
                                 c => c.CityID,
-                                (r, c) => new { r.Ticket, r.Ticket_Flight, r.Flight, Route = r, City = c}
+                                (r, c) => new { r.Ticket, r.Ticket_Flight, r.Flight, Route = r, City = c }
                                 )
                                 .Join(db.Cities,
                                 r => r.Route.Route.DestinationCityID,
                                 c2 => c2.CityID,
-                                (r, c2) => new { r.Ticket, r.Ticket_Flight, r.Flight,r.City, Route = r, City2 = c2 }
+                                (r, c2) => new { r.Ticket, r.Ticket_Flight, r.Flight, r.City, Route = r, City2 = c2 }
                                 )
                                 .Select(p => new
                                 {
@@ -92,92 +104,6 @@ namespace AirlineReservation.Controllers
                                     Status = p.Ticket.Status == TicketStatus.Blocked ? "Blocked" : p.Ticket.Status == TicketStatus.Confirmed ? "Confirmed" : p.Ticket.Status == TicketStatus.Cancelled ? "Canceled" : "Undefined"
                                 }).Where(p => p.TicketNo == TicketNo).ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
-        }
-        
-        //
-        // GET: /Ticket/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Ticket/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /Ticket/Create
-
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        //
-        // GET: /Ticket/Edit/5
- 
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Ticket/Edit/5
-
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /Ticket/Delete/5
- 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Ticket/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

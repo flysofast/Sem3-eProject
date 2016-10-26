@@ -15,6 +15,11 @@ public class Constants
     /// If the user is not an admin, the session value associated with this key will be null
     /// </summary>
     public const string SessionIsAdminLogged = "isAdmin";
+
+    /// <summary>
+    /// If the ticket is being rescheduled, store it number in this field
+    /// </summary>
+    public const string SessionRescheduledTicketKey = "RescheduledTicketNumber";
 }
 
 public class TicketStatus
@@ -23,6 +28,7 @@ public class TicketStatus
     public const int Confirmed = 1;
     public const int Cancelled = 2;
     public const int Blocked = 3;
+    public const int Rescheduled = 4;
 }
 
 public class ClassNames

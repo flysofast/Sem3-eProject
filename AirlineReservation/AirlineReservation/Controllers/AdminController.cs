@@ -22,6 +22,10 @@ namespace AirlineReservation.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Get the list of administrators
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAdministratorList()
         {
             var data = db.Users.Select(p => new
@@ -39,6 +43,10 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get list of users
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetNormalUserList()
         {
             var data = db.Users.Select(p => new
@@ -56,6 +64,16 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Create a flight
+        /// </summary>
+        /// <param name="FlightNo"></param>
+        /// <param name="Price"></param>
+        /// <param name="DepartureTime"></param>
+        /// <param name="RouteID"></param>
+        /// <param name="CancellationFee"></param>
+        /// <param name="Duration"></param>
+        /// <returns></returns>
         public JsonResult CreateFlight(string FlightNo, decimal Price, DateTime DepartureTime, int RouteID, float CancellationFee, float Duration)
         {
             var data = new Flight();
@@ -69,6 +87,13 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Create a city
+        /// </summary>
+        /// <param name="CityID"></param>
+        /// <param name="CityName"></param>
+        /// <param name="InService"></param>
+        /// <returns></returns>
         public JsonResult CreateCity(string CityID, string CityName, bool InService)
         {
             var data = new City();
@@ -79,6 +104,13 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Update a city
+        /// </summary>
+        /// <param name="CityID"></param>
+        /// <param name="CityName"></param>
+        /// <param name="InService"></param>
+        /// <returns></returns>
         public JsonResult UpdateCity(string CityID, string CityName, bool InService)
         {
             var data = db.Cities.Where(p => p.CityID == CityID).FirstOrDefault();
@@ -87,6 +119,11 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get a city by its ID
+        /// </summary>
+        /// <param name="CityID"></param>
+        /// <returns></returns>
         public JsonResult GetCityByCityID(string CityID)
         {
             var data = db.Cities.Select(p => new
@@ -98,6 +135,11 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get a route by its ID
+        /// </summary>
+        /// <param name="RouteID"></param>
+        /// <returns></returns>
         public JsonResult GetRouteByRouteID(int RouteID)
         {
             var data = db.Routes.Select(p => new
@@ -111,6 +153,14 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Create a route
+        /// </summary>
+        /// <param name="OriginalCityID"></param>
+        /// <param name="DestinateCityID"></param>
+        /// <param name="Distance"></param>
+        /// <param name="InService"></param>
+        /// <returns></returns>
         public JsonResult CreateRoute(string OriginalCityID, string DestinateCityID, int Distance, bool InService)
         {
             var data = new Route();
@@ -122,6 +172,15 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Update a route
+        /// </summary>
+        /// <param name="RouteID"></param>
+        /// <param name="OriginalCityID"></param>
+        /// <param name="DestinateCityID"></param>
+        /// <param name="Distance"></param>
+        /// <param name="InService"></param>
+        /// <returns></returns>
         public JsonResult UpdateRoute(int RouteID, string OriginalCityID, string DestinateCityID, int Distance, bool InService)
         {
             var data = db.Routes.Where(p => p.RouteID == RouteID).FirstOrDefault();
@@ -131,6 +190,10 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get a list of all routes
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAllRoute()
         {
             var data = db.Routes.Select(p => new
@@ -144,6 +207,10 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get a list of all flights
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAllFlight()
         {
             var data = db.Flights.Select(p => new
@@ -159,6 +226,10 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get a list of the cites
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAllCity()
         {
             var data = db.Cities.Select(p => new
@@ -170,7 +241,11 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-
+        /// <summary>
+        /// Get a flight by its number
+        /// </summary>
+        /// <param name="FlightNo"></param>
+        /// <returns></returns>
         public JsonResult GetFlightByFlightNo(string FlightNo)
         {
             var data = db.Flights.Select(p => new
@@ -185,6 +260,16 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Update a flight
+        /// </summary>
+        /// <param name="FlightNo"></param>
+        /// <param name="Price"></param>
+        /// <param name="DepartureTime"></param>
+        /// <param name="RouteID"></param>
+        /// <param name="CancellationFee"></param>
+        /// <param name="Duration"></param>
+        /// <returns></returns>
         public JsonResult UpdateFlight(string FlightNo, decimal Price, DateTime DepartureTime, int RouteID, float CancellationFee, float Duration)
         {
             var data = db.Flights.Where(p => p.FlightNo == FlightNo).FirstOrDefault();
@@ -196,6 +281,12 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Grant admin permission
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="IsAdmin"></param>
+        /// <returns></returns>
         public JsonResult UpdateAdmin(string UserID, bool IsAdmin)
         {
             var data = db.Users.Where(p => p.UserID == UserID).FirstOrDefault();
@@ -203,6 +294,10 @@ namespace AirlineReservation.Controllers
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get the list of seats
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAllSeat()
         {
             var data = db.Seats.Select(p => new
@@ -213,6 +308,11 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get seats by their class
+        /// </summary>
+        /// <param name="ClassType"></param>
+        /// <returns></returns>
         public JsonResult GetSeatByClassType(string ClassType)
         {
             var data = db.Seats.Select(p => new
@@ -223,7 +323,13 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateSeat(string[] SeatID,string ClassType)
+        /// <summary>
+        /// Update the seat
+        /// </summary>
+        /// <param name="SeatID"></param>
+        /// <param name="ClassType"></param>
+        /// <returns></returns>
+        public JsonResult UpdateSeat(string[] SeatID, string ClassType)
         {
             foreach (string element in SeatID)
             {
@@ -231,9 +337,8 @@ namespace AirlineReservation.Controllers
                 data.Class = ClassType;
                 db.SaveChanges();
             }
-            
+
             return Json(db.SaveChanges(), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

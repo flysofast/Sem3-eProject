@@ -30,6 +30,10 @@ namespace AirlineReservation.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Sign the user out
+        /// </summary>
+        /// <returns></returns>
         public ActionResult SignOut()
         {
             Session[Constants.SessionUserIDKey] = null;
@@ -37,6 +41,10 @@ namespace AirlineReservation.Controllers
             return Index();
         }
 
+        /// <summary>
+        /// Search all the tickets of a user
+        /// </summary>
+        /// <returns></returns>
         public JsonResult SearchAllTicketByUserId()
         {
             var userID = (string)(Session[Constants.SessionUserIDKey]);
@@ -85,6 +93,10 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get the profile of the signed in user
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetCurrentUserInfor()
         {
             VerifyLogin();
@@ -105,6 +117,10 @@ namespace AirlineReservation.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Get the active tickets of the user
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetCurrentUserTicketList()
         {
             VerifyLogin();
@@ -146,7 +162,10 @@ namespace AirlineReservation.Controllers
             }
         }
 
-        //More information
+        /// <summary>
+        /// Get more details of the selected ticket
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetCurrentUserTicketList_new()
         {
             VerifyLogin();
@@ -286,6 +305,18 @@ namespace AirlineReservation.Controllers
             }
         }
 
+        /// <summary>
+        /// Update user profile
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <param name="Email"></param>
+        /// <param name="Gender"></param>
+        /// <param name="Phone"></param>
+        /// <param name="DOB"></param>
+        /// <param name="CreditCard"></param>
+        /// <returns></returns>
         public JsonResult UpdateUserValidation(string UserID, string FirstName, string LastName, string Email, bool Gender, string Phone, DateTime DOB, string CreditCard)
         {
             VerifyLogin();
