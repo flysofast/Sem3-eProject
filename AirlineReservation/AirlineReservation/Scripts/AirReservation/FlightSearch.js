@@ -516,6 +516,41 @@ function initStep4() {
     });
 }
 
+function recoveryPassword() {
+    var emailRecovery = $("#recoveryEmailMain").val();
+    if (emailRecovery == "") {
+        swal("Error", "Please fill in your email", "error");
+        return false;
+    }
+    var obj = {
+        "Email": emailRecovery
+    };
+
+    $.ajax({
+        url: 'Home/RecoveryPassword',
+        contentType: "application/json; charset=utf-8",
+        dataType: 'json',
+        data: JSON.stringify(obj),
+        type: 'POST',
+        error: function (data) {
+            swal("Error", data.responseText, "error");
+        },
+        success: function (result) {
+            if (result == "1") {
+                swal("Successfully!", "Your account password was reset to default password", "success");
+                $('#myModal').modal('toggle');
+            } else {
+                if (result == "-1") {
+                    swal("Error", "Your email is not found", "error");
+                }
+                if (result == "0") {
+                    swal("Error", "Cannot recovery", "error");
+                }
+            }
+        }
+    });
+}
+
 function loginValidation(form) {
     var flag = true;
     var error_msg = "";
@@ -855,9 +890,8 @@ function initStep5() {
             $("#confirm_show_senior").html(_passengers[2]);
             $("#confirm_show_total").html($("#step3-grand-total-price").html());
 
-            $("#confirm_show_departure").html();
-            $("#confirm_show_return").html();
-
+            $("#confirm_show_departure").html("");
+            $("#confirm_show_return").html("");
             console.log(_selectedFlights);
             $.each(_selectedFlights, function (key, value) {
                 console.log(value['IsReturning'])
@@ -880,7 +914,7 @@ function initStep5() {
                             html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
                             html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
                             html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
-                            $("#confirm_show_return").html(html);
+                            $("#confirm_show_return").append(html);
                         }
                     });
                 } else {
@@ -902,7 +936,7 @@ function initStep5() {
                             html += '<tr><td>From:</td><td>' + result[0]['Original'] + '</td></tr>';
                             html += '<tr><td>To:</td><td>' + result[0]['Destination'] + '</td></tr>';
                             html += '<tr><td>Departure date:</td><td>' + ToJavaScriptDateWithHM(result[0]['DepartureTime']) + '</td></tr>';
-                            $("#confirm_show_departure").html(html);
+                            $("#confirm_show_departure").append(html);
                         }
                     });
                 }

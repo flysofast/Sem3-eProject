@@ -12,9 +12,9 @@
         });
     </script>
     <div class="float-button-container" id="float-button-group" style="display: none">
-        <div class="float-button" style="background-image: url(../../Images/job-search_small.png)" onclick="changePage('information')"></div>
-        <div class="float-button" style="background-image: url(../../Images/ticket_small.png)" onclick="changePage('ticket')"></div>
-        <div class="float-button" style="background-image: url(../../Images/notebook_small.png)" onclick="changePage('log')"></div>
+        <div class="float-button" title="Personal Information" style="background-image: url(../../Images/job-search_small.png)" onclick="changePage('information')"></div>
+        <div class="float-button" title="View / Edit Current Ticket" style="background-image: url(../../Images/ticket_small.png)" onclick="changePage('ticket')"></div>
+        <div class="float-button" title="View Log" style="background-image: url(../../Images/notebook_small.png)" onclick="changePage('log')"></div>
     </div>
 
     <style>

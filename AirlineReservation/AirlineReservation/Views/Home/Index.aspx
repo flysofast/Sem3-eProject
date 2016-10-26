@@ -425,7 +425,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <h4>Forget your account</h4>
-                                                        <a href="#" onclick="$('#registerFormToggle').click()">Recovery your account here</a>
+                                                        <a href="#" onclick="$('#nav-menu-login').click()">Recovery your account here</a>
                                                     </div>
                                                 </div>
                                             </div>

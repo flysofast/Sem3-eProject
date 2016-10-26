@@ -13,10 +13,10 @@
         });
     </script>
     <div class="float-button-container" id="float-button-group" style="display: none">
-        <div class="float-button" style="background-image: url(../../Images/reunion_small.png)" onclick="changePage('information')"></div>
-        <div class="float-button" style="background-image: url(../../Images/travel_small.png)" onclick="changePage('ticket')"></div>
-        <div class="float-button" style="background-image: url(../../Images/cityscape_small.png)" onclick="changePage('log')"></div>
-        <div class="float-button" style="background-image: url(../../Images/cinema-small.png)" onclick="changePage('seat')"></div>
+        <div class="float-button" title="Administrator Management" style="background-image: url(../../Images/reunion_small.png)" onclick="changePage('information')"></div>
+        <div class="float-button" title="Flight Management" style="background-image: url(../../Images/travel_small.png)" onclick="changePage('ticket')"></div>
+        <div class="float-button" title="City Management" style="background-image: url(../../Images/cityscape_small.png)" onclick="changePage('log')"></div>
+        <div class="float-button" title="Seat Management" style="background-image: url(../../Images/cinema-small.png)" onclick="changePage('seat')"></div>
     </div>
 
     <style>
@@ -214,12 +214,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <a href="#" class="btn btn-primary btn-lg" onclick="createFlight()">Create new</a>
-                    <a id="updateFlightBtn" style="display: none" href="#" class="btn btn-primary btn-lg" onclick="updateFlight()">Update</a>
+                    <a href="#" class="btn btn-primary btn-md" onclick="createFlight()">Create new</a>
+                    <a id="updateFlightBtn" style="display: none" href="#" class="btn btn-primary btn-md" onclick="updateFlight()">Update</a>
                 </div>
             </div>
         </div>
-        <div class="container" style="height: 300px; display: block; overflow-y: scroll; overflow-x: hidden;">
+        <div class="container" style="height: 280px; display: block; overflow-y: scroll; overflow-x: hidden;">
             <div class="row">
                 <div class="col-md-2 vcenter">Flight No</div>
                 <div class="col-md-2 vcenter">Current Price</div>

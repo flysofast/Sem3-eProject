@@ -462,7 +462,7 @@ function editFlight(flightNo) {
             $("#admin-flight-register-flightNo-choose").val(result['FlightNo']);
             $("#admin-flight-register-flightNo").val(result['FlightNo']);
             $("#admin-flight-register-price").val(result['CurrentPrice']);
-            document.getElementById("admin-flight-register-departureTime").valueAsDate = new Date(ToJavaScriptDate(result['DepartureTime']));
+            //document.getElementById("admin-flight-register-departureTime").value = new Date(ToJavaScriptDate(result['DepartureTime'])).toJSON().slice(0, 19);
             $("#admin-flight-register-routeID").val(result['RouteID']);
             $("#admin-flight-register-cancellationFee").val(result['CancellationFee']);
             $("#admin-flight-register-duration").val(result['Duration']);
